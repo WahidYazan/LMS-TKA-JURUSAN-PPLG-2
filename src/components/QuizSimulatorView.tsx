@@ -57,8 +57,7 @@ export const QuizSimulatorView: React.FC = () => {
             Simulasi Ujian TKA PPLG
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            50 soal studi kasus industri. Pilih modul, jawab, lalu periksa
-            penjelasan.
+            50 soal studi kasus industri. Pilih modul, jawab.
           </p>
         </div>
 
