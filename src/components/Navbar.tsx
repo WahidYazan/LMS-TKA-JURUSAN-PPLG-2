@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { BookOpen, FileText, Globe, List, Menu, X } from 'lucide-react';
 import { ModuleContent } from '../types';
 
@@ -45,21 +46,18 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
         <div
-          onClick={onGoHome}
+          onClick={onOpenLanding}
           className="flex items-center gap-2 sm:gap-3.5 cursor-pointer group select-none min-w-0"
         >
-          <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-500 p-0.5 shadow-md shadow-blue-500/20 flex items-center justify-center shrink-0">
-            <div className="w-full h-full rounded-full bg-white flex items-center justify-center p-1.5 overflow-hidden">
-              <svg viewBox="0 0 40 40" className="w-full h-full text-blue-700" fill="currentColor">
-                <circle cx="20" cy="20" r="18" fill="#eff6ff" stroke="#2563eb" strokeWidth="1.5" />
-                <path d="M12 20 L17 14 L18.5 15.5 L15 20 L18.5 24.5 L17 26 Z" fill="#2563eb" />
-                <path d="M28 20 L23 14 L21.5 15.5 L25 20 L21.5 24.5 L23 26 Z" fill="#2563eb" />
-                <circle cx="20" cy="20" r="2.5" fill="#f59e0b" />
-              </svg>
-            </div>
-            <span className="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[8px] sm:text-[9px] font-black px-1 rounded-sm shadow-xs border border-white">
-              PPLG
-            </span>
+          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
+            <Image
+              src="/images/brands/TTH-nobg.webp"
+              alt="SMK Telekomunikasi Tunas Harapan"
+              width={48}
+              height={48}
+              className="w-full h-full object-contain drop-shadow-lg"
+              priority
+            />
           </div>
 
           <div className="min-w-0">
