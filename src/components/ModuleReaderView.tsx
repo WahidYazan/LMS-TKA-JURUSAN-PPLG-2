@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Home } from 'lucide-react';
+import { ArrowBigLeft, ArrowBigRight, ArrowDown, ArrowRight, Home, HomeIcon } from 'lucide-react';
 import { ModuleContent } from '../types';
 
 interface ModuleReaderViewProps {
@@ -78,8 +78,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               onClick={onBack}
               className="flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer py-2"
             >
-              <Home className="w-4 h-4 text-slate-400" />
-              <span>Ke Menu Utama</span>
+              <ArrowBigLeft className="w-4 h-4 text-slate-400" />
+              <span>Ke Halaman Modul</span>
             </button>
 
             {hasNextModule && (
@@ -88,7 +88,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all cursor-pointer"
               >
                 <span>Lanjut ke Modul {module.number + 1}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowBigRight className="w-4 h-4" />
               </button>
             )}
           </div>

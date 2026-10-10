@@ -94,26 +94,49 @@ export const QuizSimulatorView: React.FC<QuizSimulatorViewProps> = ({
                       {q.caseText}
                     </p>
                   </div>
-
                   <div className="space-y-2.5 ml-0 sm:ml-9">
                     {q.options.map((opt, optIdx) => {
                       const isThisSelected = selectedOpt === optIdx;
+                      const isCorrectOption = optIdx === q.correctIndex;
+                      const isWrongSelected = isThisSelected && !isCorrectOption;
+
+                      let optionClass = '';
+                      let radioClass = '';
+
+                      if (isCurrentModuleEvaluated) {
+                        if (isCorrectOption) {
+                          optionClass = 'border-emerald-600 bg-emerald-50/50 text-emerald-900 font-semibold';
+                          radioClass = 'border-emerald-600 bg-emerald-600';
+                        } else if (isWrongSelected) {
+                          optionClass = 'border-rose-600 bg-rose-50/50 text-rose-900 font-semibold';
+                          radioClass = 'border-rose-600 bg-rose-600';
+                        } else {
+                          optionClass = 'border-slate-200 text-slate-400 cursor-not-allowed';
+                          radioClass = 'border-slate-300 bg-white';
+                        }
+                      } else {
+                        optionClass = isThisSelected
+                          ? 'border-blue-600 bg-blue-50/50 text-slate-900 font-semibold'
+                          : 'border-slate-200 hover:bg-slate-50 text-slate-700';
+                        radioClass = isThisSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300 bg-white';
+                      }
+
                       return (
                         <div
                           key={optIdx}
-                          onClick={() => handleSelectOption(q.id, optIdx)}
-                          className={`p-3 sm:p-3.5 rounded-xl border text-xs sm:text-sm flex items-center gap-3 transition-all cursor-pointer ${
-                            isThisSelected
-                              ? 'border-blue-600 bg-blue-50/50 text-slate-900 font-semibold'
-                              : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                          }`}
+                          onClick={() => !isCurrentModuleEvaluated && handleSelectOption(q.id, optIdx)}
+                          className={`p-3 sm:p-3.5 rounded-xl border text-xs sm:text-sm flex items-center gap-3 transition-all ${
+                            isCurrentModuleEvaluated ? 'cursor-default' : 'cursor-pointer'
+                          } ${optionClass}`}
                         >
                           <div
-                            className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                              isThisSelected ? 'border-blue-600 bg-blue-600' : 'border-slate-300 bg-white'
-                            }`}
+                            className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${radioClass}`}
                           >
-                            {isThisSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                            {(isThisSelected || isCorrectOption) && isCurrentModuleEvaluated ? (
+                              <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                            ) : isThisSelected && !isCurrentModuleEvaluated ? (
+                              <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                            ) : null}
                           </div>
                           <span className="leading-relaxed">{opt}</span>
                         </div>

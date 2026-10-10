@@ -31,7 +31,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onEnterLMS, onOpenExam
 
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-5 sm:mb-6 leading-tight">
           Portal & LMS Asesmen <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-blue-200 to-cyan-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-blue-400">
             TKA PPLG SMK
           </span>
         </h1>
