@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Globe, List, Menu, X, ChevronRight } from "lucide-react";
+import { BookOpen, Globe, List, Menu, X, ChevronRight, ArrowBigLeft } from "lucide-react";
 import { ModuleContent } from "../types";
 
 interface NavbarProps {
@@ -246,6 +246,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                   ))}
                 </nav>
+              </div>
+            )}
+
+            {/* MOBILE: Kembali ke Menu - saat di Quiz atau Modul */}
+            {(isQuiz || isModule) && (
+              <div className="border-t border-slate-100 pt-2 mt-2">
+                <Link
+                  href="/modul"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base text-slate-600 hover:text-blue-600 hover:bg-slate-50"
+                >
+                  <ArrowBigLeft className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                  <span>Kembali ke Menu Utama</span>
+                </Link>
               </div>
             )}
           </nav>

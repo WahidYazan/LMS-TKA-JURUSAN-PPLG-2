@@ -1,18 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowBigLeft, ArrowBigRight, ArrowRight } from 'lucide-react';
+import { ArrowBigLeft, ArrowBigRight, ArrowRight, ArrowLeft } from 'lucide-react';
 import { ModuleContent } from '../types';
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
   hasNextModule: boolean;
   nextModuleId?: string | null;
+  hasPrevModule: boolean;
+  prevModuleId?: string | null;
 }
 
 export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
   module,
   hasNextModule,
   nextModuleId,
+  hasPrevModule,
+  prevModuleId,
 }) => {
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
@@ -97,27 +101,87 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               <span>Ke Halaman Modul</span>
             </Link>
 
-            {hasNextModule && nextModuleId && (
-              <Link
-                href={`/module/${nextModuleId}`}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
-              >
-                <span className="hidden xs:inline">Lanjut ke Modul {module.number + 1}</span>
-                <span className="xs:hidden">Modul {module.number + 1}</span>
-                <ArrowBigRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
-            )}
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              {hasPrevModule && prevModuleId && (
+                <Link
+                  href={`/module/${prevModuleId}`}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer min-h-[48px]"
+                >
+                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden xs:inline">Modul {module.number - 1}</span>
+                  <span className="xs:inline">Modul {module.number - 1}</span>
+                </Link>
+              )}
 
-            {!hasNextModule && (
-              <Link
-                href="/quiz"
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
-              >
-                <span className="hidden xs:inline">Mulai Simulasi Ujian</span>
-                <span className="xs:hidden">Simulasi Ujian</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
-            )}
+              {hasNextModule && nextModuleId && (
+                <Link
+                  href={`/module/${nextModuleId}`}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
+                >
+                  <span className="hidden xs:inline">Lanjut ke Modul {module.number + 1}</span>
+                  <span className="xs:hidden">Modul {module.number + 1}</span>
+                  <ArrowBigRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              )}
+
+              {!hasNextModule && (
+                <Link
+                  href="/quiz"
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
+                >
+                  <span className="hidden xs:inline">Mulai Simulasi Ujian</span>
+                  <span className="xs:hidden">Simulasi Ujian</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-40 animate-slide-up">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <Link
+              href="/modul"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
+            >
+              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <span className="hidden">Menu</span>
+            </Link>
+
+            <div className="flex gap-2 flex-1">
+              {hasPrevModule && prevModuleId && (
+                <Link
+                  href={`/module/${prevModuleId}`}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-sm transition-all cursor-pointer min-h-[44px]"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Prev</span>
+                </Link>
+              )}
+
+              {hasNextModule && nextModuleId && (
+                <Link
+                  href={`/module/${nextModuleId}`}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
+                >
+                  <span>Next</span>
+                  <ArrowBigRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+              )}
+
+              {!hasNextModule && (
+                <Link
+                  href="/quiz"
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
+                >
+                  <span>Ujian</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

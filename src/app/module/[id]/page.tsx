@@ -30,6 +30,8 @@ function ModuleContent({ params }: ModulePageProps) {
   const currentIndex = modulesList.findIndex((m) => m.id === module.id);
   const hasNextModule = currentIndex < modulesList.length - 1;
   const nextModule = hasNextModule ? modulesList[currentIndex + 1] : null;
+  const hasPrevModule = currentIndex > 0;
+  const prevModule = hasPrevModule ? modulesList[currentIndex - 1] : null;
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
@@ -38,6 +40,8 @@ function ModuleContent({ params }: ModulePageProps) {
         module={module}
         hasNextModule={hasNextModule}
         nextModuleId={nextModule?.id || null}
+        hasPrevModule={hasPrevModule}
+        prevModuleId={prevModule?.id || null}
       />
     </div>
   );

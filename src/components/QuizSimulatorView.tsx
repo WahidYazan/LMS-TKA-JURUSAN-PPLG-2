@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { quizQuestionsPPLG } from "../data/quiz";
 import {
@@ -10,6 +11,8 @@ import {
   XCircle,
   ChevronLeft,
   ChevronRight,
+  Home,
+  BookOpen,
 } from "lucide-react";
 
 export const QuizSimulatorView: React.FC = () => {
@@ -51,7 +54,18 @@ export const QuizSimulatorView: React.FC = () => {
 
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif] pb-16 sm:pb-20">
-      <div className="max-w-4xl mx-auto px-4 pt-6 sm:pt-8 pb-4 sm:pb-6">
+      {/* Mobile Back Button */}
+      <div className="lg:hidden px-4 pt-4 pb-2">
+        <Link
+          href="/modul"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all cursor-pointer min-h-[44px]"
+        >
+          <ArrowBigLeft className="w-5 h-5" />
+          <span>Kembali ke Menu</span>
+        </Link>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 pt-2 sm:pt-6 pb-4 sm:pb-6">
         <div className="text-center mb-4 sm:mb-6">
           <h1 className="text-lg sm:text-2xl font-bold text-slate-900">
             Simulasi Ujian TKA PPLG
@@ -279,6 +293,51 @@ export const QuizSimulatorView: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Sticky Bottom Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-40 animate-slide-up">
+        <div className="max-w-4xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <Link
+              href="/modul"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
+            >
+              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <span className="hidden">Menu</span>
+            </Link>
+
+            <div className="flex gap-2 flex-1">
+              {activeModuleTab > 1 && (
+                <button
+                  onClick={() => handleTabChange(activeModuleTab - 1)}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-sm transition-all cursor-pointer min-h-[44px]"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Prev</span>
+                </button>
+              )}
+
+              {activeModuleTab < 5 && (
+                <button
+                  onClick={() => handleTabChange(activeModuleTab + 1)}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </button>
+              )}
+
+              <Link
+                href="/modul"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs shadow-sm transition-all cursor-pointer min-h-[44px]"
+              >
+                <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Modul</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
