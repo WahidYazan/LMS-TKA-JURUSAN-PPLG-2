@@ -1,29 +1,28 @@
 import React from 'react';
-import { ArrowBigLeft, ArrowBigRight, ArrowDown, ArrowRight, Home, HomeIcon } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowBigLeft, ArrowBigRight, ArrowRight } from 'lucide-react';
 import { ModuleContent } from '../types';
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
-  onBack: () => void;
-  onNextModule: () => void;
   hasNextModule: boolean;
+  nextModuleId?: string | null;
 }
 
 export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
   module,
-  onBack,
-  onNextModule,
   hasNextModule,
+  nextModuleId,
 }) => {
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8">
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-5 sm:p-10 shadow-xs">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs">
           <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
             {module.moduleBadge}
           </span>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
             {module.title}
           </h1>
 
@@ -31,22 +30,22 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
             {module.shortDesc}
           </p>
 
-          <div className="rounded-2xl overflow-hidden mb-8 sm:mb-10 border border-slate-200 shadow-xs">
+          <div className="rounded-2xl overflow-hidden mb-6 sm:mb-8 border border-slate-200 shadow-xs">
             <img
               src={module.heroImage}
               alt={module.title}
-              className="w-full h-48 sm:h-64 lg:h-96 object-cover"
+              className="w-full h-40 sm:h-48 lg:h-64 xl:h-80 object-cover"
             />
           </div>
 
-          <div className="space-y-10 text-slate-700">
+          <div className="space-y-8 text-slate-700">
             {module.sections.map((section) => (
               <section
                 key={section.id}
                 id={section.id}
                 className="scroll-mt-24 sm:scroll-mt-28"
               >
-                <h2 className="text-lg sm:text-xl font-bold text-slate-900 pb-2 border-b border-slate-100 mb-4">
+                <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 pb-2 border-b border-slate-100 mb-4">
                   {section.numberPrefix} {section.title}
                 </h2>
 
@@ -57,10 +56,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 ))}
 
                 {section.bulletPoints && section.bulletPoints.length > 0 && (
-                  <ul className="space-y-2.5 my-4">
+                  <ul className="space-y-2 my-4">
                     {section.bulletPoints.map((bp, bIdx) => (
                       <li key={bIdx} className="text-xs sm:text-sm leading-relaxed flex items-start gap-2">
-                        <span className="text-slate-400 font-bold select-none">•</span>
+                        <span className="text-slate-400 font-bold select-none flex-shrink-0 mt-0.5">•</span>
                         <div>
                           <strong className="text-slate-900 font-bold">{bp.label}: </strong>
                           <span className="text-slate-700">{bp.description}</span>
@@ -69,27 +68,55 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                     ))}
                   </ul>
                 )}
+
+                {section.codeSnippet && (
+                  <div className="relative mt-4">
+                    <pre className="bg-slate-900 rounded-xl p-4 overflow-x-auto text-xs sm:text-sm text-slate-100">
+                      <code className={`language-${section.codeSnippet.language}`}>
+                        {section.codeSnippet.code}
+                      </code>
+                    </pre>
+                    {section.codeSnippet.explanation && (
+                      <p className="text-xs text-slate-500 mt-2 italic">
+                        {section.codeSnippet.explanation}
+                      </p>
+                    )}
+                  </div>
+                )}
               </section>
             ))}
           </div>
 
-          <div className="mt-10 sm:mt-12 pt-6 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <button
-              onClick={onBack}
-              className="flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer py-2"
+          {/* Navigation Buttons - Stacked on mobile, side by side on desktop */}
+          <div className="mt-8 sm:mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <Link
+              href="/modul"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[48px] border border-slate-200"
             >
-              <ArrowBigLeft className="w-4 h-4 text-slate-400" />
+              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
               <span>Ke Halaman Modul</span>
-            </button>
+            </Link>
 
-            {hasNextModule && (
-              <button
-                onClick={onNextModule}
-                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all cursor-pointer"
+            {hasNextModule && nextModuleId && (
+              <Link
+                href={`/module/${nextModuleId}`}
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
               >
-                <span>Lanjut ke Modul {module.number + 1}</span>
-                <ArrowBigRight className="w-4 h-4" />
-              </button>
+                <span className="hidden xs:inline">Lanjut ke Modul {module.number + 1}</span>
+                <span className="xs:hidden">Modul {module.number + 1}</span>
+                <ArrowBigRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            )}
+
+            {!hasNextModule && (
+              <Link
+                href="/quiz"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
+              >
+                <span className="hidden xs:inline">Mulai Simulasi Ujian</span>
+                <span className="xs:hidden">Simulasi Ujian</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
             )}
           </div>
         </div>
