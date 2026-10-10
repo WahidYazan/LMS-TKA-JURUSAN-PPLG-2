@@ -154,7 +154,7 @@ export const QuizSimulatorView: React.FC<QuizSimulatorViewProps> = ({
                           <div className="bg-rose-50 border border-rose-200 text-rose-800 text-xs p-3.5 rounded-xl">
                             <span className="font-bold">Analisis kurang tepat. </span>
                             <span>
-                              Kunci yang benar adalah opsi ke-{q.correctIndex + 1}. {q.explanation}
+                              Kunci yang benar adalah pilihan ke {q.correctIndex + 1}.  {q.explanation}
                             </span>
                           </div>
                         )}
