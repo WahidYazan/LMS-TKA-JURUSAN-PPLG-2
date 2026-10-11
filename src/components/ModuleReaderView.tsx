@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowBigLeft, ArrowBigRight, ArrowRight, ArrowLeft } from 'lucide-react';
-import { ModuleContent } from '../types';
+import { ModuleContent, ModuleMedia } from '../types';
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
@@ -85,6 +85,47 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                         {section.codeSnippet.explanation}
                       </p>
                     )}
+                  </div>
+                )}
+
+                {section.media && section.media.length > 0 && (
+                  <div className="space-y-4 mt-4">
+                    {section.media.map((media, mIdx) => (
+                      <div key={mIdx} className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
+                        {media.type === 'image' && (
+                          <figure className="m-0">
+                            <img
+                              src={media.src}
+                              alt={media.alt || section.title}
+                              className="w-full h-auto max-h-[500px] object-contain"
+                              style={{ width: media.width, height: media.height }}
+                            />
+                            {media.caption && (
+                              <figcaption className="px-4 py-2 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
+                                {media.caption}
+                              </figcaption>
+                            )}
+                          </figure>
+                        )}
+                        {media.type === 'video' && (
+                          <div className="relative">
+                            <video
+                              src={media.src}
+                              controls
+                              className="w-full max-h-[500px]"
+                              style={{ width: media.width, height: media.height }}
+                            >
+                              {media.alt && <track kind="captions" src={media.alt} default />}
+                            </video>
+                            {media.caption && (
+                              <p className="px-4 py-2 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
+                                {media.caption}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 )}
               </section>

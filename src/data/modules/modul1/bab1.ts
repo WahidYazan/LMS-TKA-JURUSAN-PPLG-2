@@ -1,4 +1,19 @@
-import { ModuleSection } from '../../../types';
+import { ModuleSection, ModuleMedia } from '../../../types';
+
+const bab1Media: ModuleMedia[] = [
+  {
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Software engineer working on code',
+    caption: 'Gambar 1: Seorang Software Engineer sedang mengembangkan aplikasi web modern',
+  },
+  {
+    type: 'video',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    alt: 'Video pengenalan karier PPLG',
+    caption: 'Video 1: Pengenalan prospek karier lulusan PPLG',
+  },
+];
 
 export const bab1: ModuleSection = {
   id: "bab1",
@@ -29,5 +44,6 @@ export const bab1: ModuleSection = {
       label: "Database Administrator & Data Engineer",
       description: "Merancang arsitektur basis data, memastikan integritas ACID, normalisasi relasional, optimasi kueri berkecepatan tinggi, serta backup disaster recovery."
     }
-  ]
+  ],
+  media: bab1Media,
 };

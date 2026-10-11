@@ -50,6 +50,15 @@ export interface ModuleBulletPoint {
   description: string;
 }
 
+export interface ModuleMedia {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+}
+
 export interface ModuleSection {
   id: string;
   numberPrefix?: string;
@@ -61,6 +70,7 @@ export interface ModuleSection {
     code: string;
     explanation?: string;
   };
+  media?: ModuleMedia[];
 }
 
 export interface ModuleContent {
