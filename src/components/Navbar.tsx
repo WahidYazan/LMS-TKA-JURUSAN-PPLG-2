@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="w-3.5 h-3.5 text-slate-500"
                 aria-hidden="true"
               />
-              <span>Landing Page</span>
+              <span>Beranda</span>
             </Link>
 
             <Link
@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-current={isLanding ? "page" : undefined}
             >
               <Globe className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
-              <span>Landing Page</span>
+              <span>Beranda</span>
             </Link>
 
             {/* MOBILE: Navigasi Modul Belajar */}
