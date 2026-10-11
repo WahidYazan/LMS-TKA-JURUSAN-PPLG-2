@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { ModuleReaderView } from '@/components/ModuleReaderView';
-import { Navbar } from '@/components/Navbar';
-import { modulesList } from '@/data/modules';
-import { notFound } from 'next/navigation';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState, Suspense } from 'react';
+import { ModuleReaderView } from "@/components/ModuleReaderView";
+import { Navbar } from "@/components/Navbar";
+import { modulesList } from "@/data/modules";
+import { notFound } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
 
 interface ModulePageProps {
   params: Promise<{ id: string }>;
@@ -13,7 +13,7 @@ interface ModulePageProps {
 
 function ModuleContent({ params }: ModulePageProps) {
   const pathname = usePathname();
-  const [id, setId] = useState<string>('');
+  const [id, setId] = useState<string>("");
 
   useEffect(() => {
     params.then((p) => setId(p.id));
@@ -49,7 +49,13 @@ function ModuleContent({ params }: ModulePageProps) {
 
 export default function ModulePage({ params }: ModulePageProps) {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#f8fafc] flex items-center justify-center"><p>Memuat...</p></div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
+          <p>Memuat...</p>
+        </div>
+      }
+    >
       <ModuleContent params={params} />
     </Suspense>
   );

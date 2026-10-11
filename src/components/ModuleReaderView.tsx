@@ -1,7 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowBigLeft, ArrowBigRight, ArrowRight, ArrowLeft } from 'lucide-react';
-import { ModuleContent, ModuleMedia } from '../types';
+import React from "react";
+import Link from "next/link";
+import {
+  ArrowBigLeft,
+  ArrowBigRight,
+  ArrowRight,
+  ArrowLeft,
+} from "lucide-react";
+import { ModuleContent, ModuleMedia } from "../types";
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
@@ -54,7 +59,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 </h2>
 
                 {section.paragraphs?.map((p, pIdx) => (
-                  <p key={pIdx} className="text-xs sm:text-sm leading-relaxed mb-3 text-slate-700">
+                  <p
+                    key={pIdx}
+                    className="text-xs sm:text-sm leading-relaxed mb-3 text-slate-700"
+                  >
                     {p}
                   </p>
                 ))}
@@ -62,11 +70,20 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 {section.bulletPoints && section.bulletPoints.length > 0 && (
                   <ul className="space-y-2 my-4">
                     {section.bulletPoints.map((bp, bIdx) => (
-                      <li key={bIdx} className="text-xs sm:text-sm leading-relaxed flex items-start gap-2">
-                        <span className="text-slate-400 font-bold select-none flex-shrink-0 mt-0.5">•</span>
+                      <li
+                        key={bIdx}
+                        className="text-xs sm:text-sm leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="text-slate-400 font-bold select-none flex-shrink-0 mt-0.5">
+                          •
+                        </span>
                         <div>
-                          <strong className="text-slate-900 font-bold">{bp.label}: </strong>
-                          <span className="text-slate-700">{bp.description}</span>
+                          <strong className="text-slate-900 font-bold">
+                            {bp.label}:{" "}
+                          </strong>
+                          <span className="text-slate-700">
+                            {bp.description}
+                          </span>
                         </div>
                       </li>
                     ))}
@@ -76,7 +93,9 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 {section.codeSnippet && (
                   <div className="relative mt-4">
                     <pre className="bg-slate-900 rounded-xl p-4 overflow-x-auto text-xs sm:text-sm text-slate-100">
-                      <code className={`language-${section.codeSnippet.language}`}>
+                      <code
+                        className={`language-${section.codeSnippet.language}`}
+                      >
                         {section.codeSnippet.code}
                       </code>
                     </pre>
@@ -91,14 +110,20 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 {section.media && section.media.length > 0 && (
                   <div className="space-y-4 mt-4">
                     {section.media.map((media, mIdx) => (
-                      <div key={mIdx} className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
-                        {media.type === 'image' && (
+                      <div
+                        key={mIdx}
+                        className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50"
+                      >
+                        {media.type === "image" && (
                           <figure className="m-0">
                             <img
                               src={media.src}
                               alt={media.alt || section.title}
                               className="w-full h-auto max-h-[500px] object-contain"
-                              style={{ width: media.width, height: media.height }}
+                              style={{
+                                width: media.width,
+                                height: media.height,
+                              }}
                             />
                             {media.caption && (
                               <figcaption className="px-4 py-2 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
@@ -107,15 +132,24 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                             )}
                           </figure>
                         )}
-                        {media.type === 'video' && (
+                        {media.type === "video" && (
                           <div className="relative">
                             <video
                               src={media.src}
                               controls
                               className="w-full max-h-[500px]"
-                              style={{ width: media.width, height: media.height }}
+                              style={{
+                                width: media.width,
+                                height: media.height,
+                              }}
                             >
-                              {media.alt && <track kind="captions" src={media.alt} default />}
+                              {media.alt && (
+                                <track
+                                  kind="captions"
+                                  src={media.alt}
+                                  default
+                                />
+                              )}
                             </video>
                             {media.caption && (
                               <p className="px-4 py-2 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
@@ -138,7 +172,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               href="/modul"
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[48px] border border-slate-200"
             >
-              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <ArrowBigLeft
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span>Ke Halaman Modul</span>
             </Link>
 
@@ -148,7 +185,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   href={`/module/${prevModuleId}`}
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer min-h-[48px]"
                 >
-                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                  <ArrowBigLeft className="w-4 h-4" aria-hidden="true" />
                   <span>Modul {module.number - 1}</span>
                 </Link>
               )}
@@ -185,7 +222,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               href="/modul"
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
             >
-              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <ArrowBigLeft
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span className="hidden">Menu</span>
             </Link>
 
