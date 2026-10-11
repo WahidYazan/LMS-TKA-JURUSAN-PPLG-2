@@ -54,18 +54,7 @@ export const QuizSimulatorView: React.FC = () => {
 
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif] pb-16 sm:pb-20">
-      {/* Mobile Back Button */}
-      <div className="lg:hidden px-4 pt-4 pb-2">
-        <Link
-          href="/modul"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all cursor-pointer min-h-[44px]"
-        >
-          <ArrowBigLeft className="w-5 h-5" />
-          <span>Kembali ke Menu</span>
-        </Link>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 pt-2 sm:pt-6 pb-4 sm:pb-6">
+      <div className="max-w-4xl mx-auto px-4 pt-6 sm:pt-8 pb-4 sm:pb-6">
         <div className="text-center mb-4 sm:mb-6">
           <h1 className="text-lg sm:text-2xl font-bold text-slate-900">
             Simulasi Ujian TKA PPLG

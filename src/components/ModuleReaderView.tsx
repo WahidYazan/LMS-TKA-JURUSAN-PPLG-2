@@ -20,7 +20,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 }) => {
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 pb-20 lg:pb-0">
         <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs">
           <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
             {module.moduleBadge}
@@ -91,8 +91,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
             ))}
           </div>
 
-          {/* Navigation Buttons - Stacked on mobile, side by side on desktop */}
-          <div className="mt-8 sm:mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          {/* Navigation Buttons - Desktop only (hidden on mobile, sticky bottom nav used instead) */}
+          <div className="hidden lg:flex lg:items-center lg:justify-between gap-3 mt-8 pt-6 border-t border-slate-200">
             <Link
               href="/modul"
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[48px] border border-slate-200"
@@ -101,15 +101,14 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               <span>Ke Halaman Modul</span>
             </Link>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <div className="flex gap-3">
               {hasPrevModule && prevModuleId && (
                 <Link
                   href={`/module/${prevModuleId}`}
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer min-h-[48px]"
                 >
                   <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden xs:inline">Modul {module.number - 1}</span>
-                  <span className="xs:inline">Modul {module.number - 1}</span>
+                  <span>Modul {module.number - 1}</span>
                 </Link>
               )}
 
@@ -118,8 +117,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   href={`/module/${nextModuleId}`}
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
                 >
-                  <span className="hidden xs:inline">Lanjut ke Modul {module.number + 1}</span>
-                  <span className="xs:hidden">Modul {module.number + 1}</span>
+                  <span>Lanjut ke Modul {module.number + 1}</span>
                   <ArrowBigRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               )}
@@ -129,8 +127,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   href="/quiz"
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
                 >
-                  <span className="hidden xs:inline">Mulai Simulasi Ujian</span>
-                  <span className="xs:hidden">Simulasi Ujian</span>
+                  <span>Mulai Simulasi Ujian</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               )}
