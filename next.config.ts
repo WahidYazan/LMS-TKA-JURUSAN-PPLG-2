@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
   },
   turbopack: {
+    root: __dirname,
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
