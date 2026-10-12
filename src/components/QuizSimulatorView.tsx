@@ -287,7 +287,7 @@ export const QuizSimulatorView: React.FC = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-40 animate-slide-up">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-3">
-            <Link
+            {/*<Link
               href="/modul"
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
             >
@@ -296,7 +296,7 @@ export const QuizSimulatorView: React.FC = () => {
                 aria-hidden="true"
               />
               <span className="hidden">Menu</span>
-            </Link>
+            </Link>*/}
 
             <div className="flex gap-2 flex-1">
               {activeModuleTab > 1 && (
@@ -319,13 +319,13 @@ export const QuizSimulatorView: React.FC = () => {
                 </button>
               )}
 
-              <Link
+              {/*<Link
                 href="/modul"
                 className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs shadow-sm transition-all cursor-pointer min-h-[44px]"
               >
                 <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Modul</span>
-              </Link>
+              </Link>*/}
             </div>
           </div>
         </div>
