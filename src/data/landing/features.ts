@@ -10,7 +10,7 @@ export const landingFeatures = [
     id: 'practice',
     title: 'Latihan Studi Kasus',
     description:
-      'Simulasi CBT berisi 50 soal HOTS per modul. Periksa jawaban dan baca penjelasan tanpa timer atau papan skor.',
+      'Simulasi TKA berisi 50 soal HOTS per modul. Periksa jawaban dan baca penjelasan tanpa timer atau papan skor.',
     tone: 'indigo' as const,
   },
 ];

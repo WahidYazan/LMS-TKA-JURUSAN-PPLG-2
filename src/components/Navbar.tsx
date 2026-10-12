@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {isModule && selectedModule
                   ? `Modul ${selectedModule.number} • ${selectedModule.cardTitle}`
                   : isQuiz
-                    ? "Simulasi Ujian CBT"
+                    ? "Simulasi Ujian TKA"
                     : "SMK Telekomunikasi Tunas Harapan"}
               </p>
             </div>

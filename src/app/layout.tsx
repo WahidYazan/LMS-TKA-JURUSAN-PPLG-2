@@ -3,16 +3,16 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Portal TKA PPLG - SMK Telekomunikasi Tunas Harapan',
-  description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian CBT, dan rangkuman kompetensi.',
+  description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian TKA, dan rangkuman kompetensi.',
   openGraph: {
     title: 'Portal TKA PPLG - SMK Telekomunikasi Tunas Harapan',
-    description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian CBT, dan rangkuman kompetensi.',
+    description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian TKA, dan rangkuman kompetensi.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Portal TKA PPLG - SMK Telekomunikasi Tunas Harapan',
-    description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian CBT, dan rangkuman kompetensi.',
+    description: 'LMS dan Portal Pembelajaran TKA Pengembangan Perangkat Lunak dan Gim (PPLG) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian TKA, dan rangkuman kompetensi.',
   },
 };
 
