@@ -98,7 +98,7 @@ export const QuizSimulatorView: React.FC = () => {
                   <span
                     className={`text- font-medium mt-1 ${isActive ? "text-blue-200" : "text-slate-400"}`}
                   >
-                    Berisi {soalCount} Soal
+                    {soalCount} Soal
                   </span>
                 </div>
               </button>
@@ -291,7 +291,10 @@ export const QuizSimulatorView: React.FC = () => {
               href="/modul"
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
             >
-              <ArrowBigLeft className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <ArrowBigLeft
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span className="hidden">Menu</span>
             </Link>
 
