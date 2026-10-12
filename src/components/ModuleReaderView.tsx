@@ -133,7 +133,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                           </figure>
                         )}
                         {media.type === "video" && (
-                          <div className="relative">
+                          <div className="relative hidden">
                             <video
                               src={media.src}
                               controls
