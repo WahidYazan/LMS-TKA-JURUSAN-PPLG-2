@@ -9,6 +9,7 @@ import {
   X,
   ChevronRight,
   ArrowBigLeft,
+  LogIn,
 } from "lucide-react";
 import { ModuleContent } from "../types";
 import { SiteLogo } from "./SiteLogo";
@@ -52,6 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const ismodul = pathname === "/tka/modul";
   const isModule = pathname.startsWith("/tka/module/");
   const isQuiz = pathname.startsWith("/tka/quiz");
+  const isAdmin = pathname.startsWith("/tka/admin");
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
@@ -172,6 +174,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             )}
 
+            {/* DESKTOP: Login Admin — paling kanan */}
+            <Link
+              href="/tka/admin"
+              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border text-sm font-semibold transition-colors cursor-pointer min-h-[44px] ${isAdmin
+                  ? "border-blue-200 bg-blue-50 text-blue-700 font-extrabold"
+                  : "border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50"
+                }`}
+              aria-current={isAdmin ? "page" : undefined}
+            >
+              <LogIn className="w-4 h-4" aria-hidden="true" />
+              <span>Login Admin</span>
+            </Link>
+
             {/* MOBILE: Tombol hamburger menu - hanya muncul di lg ke bawah */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -263,6 +278,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Link>
               </div>
             )}
+
+            {/* MOBILE: Login Admin */}
+            <div className="border-t border-slate-100 pt-2 mt-2">
+              <Link
+                href="/tka/admin"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base ${isAdmin
+                    ? "text-blue-600 bg-blue-50 font-extrabold"
+                    : "text-slate-600 hover:text-blue-600 hover:bg-slate-50"
+                  }`}
+                aria-current={isAdmin ? "page" : undefined}
+              >
+                <LogIn className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                <span>Login Admin</span>
+              </Link>
+            </div>
           </nav>
         </div>
       )}

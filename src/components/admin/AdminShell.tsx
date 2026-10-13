@@ -101,14 +101,13 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
         </button>
 
         <div
-          className={`flex items-center py-3 ${
-            collapsed ? "justify-center" : "gap-2.5 px-2"
+          className={`flex items-center py-3 w-full ${
+            collapsed ? "justify-center" : "justify-between px-2"
           }`}
         >
           <Link
             href="/tka"
             className="flex items-center gap-3 cursor-pointer group select-none min-w-0"
-            aria-label="Simulasi TKA PPLG - Beranda"
           >
             <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
               <SiteLogo width={48} height={48} priority />
@@ -118,12 +117,20 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
                 <p className="text-sm font-extrabold text-slate-900 leading-tight truncate">
                   Portal TKA PPLG
                 </p>
-                <p className="text-[10px] text-slate-400 font-semibold truncate">
+                <p className="text- text-slate-400 font-semibold truncate">
                   Mode Admin
                 </p>
               </div>
             )}
           </Link>
+
+          {/* ini bakal auto paling kanan */}
+          {!collapsed && (
+            <button className="ml-auto p-1.5 rounded-lg hover:bg-slate-100">
+              {/* icon collapse lu */}
+              {"<"}
+            </button>
+          )}
         </div>
 
         <div className="-mx-4 h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent my-4" />

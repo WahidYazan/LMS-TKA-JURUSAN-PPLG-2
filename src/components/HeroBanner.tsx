@@ -7,8 +7,8 @@ export const HeroBanner: React.FC = () => {
       <div
         className="absolute right-0 top-0 h-full w-[55%] sm:w-[75%] md:w-[65%] opacity-80 sm:opacity-95 pointer-events-none select-none"
         style={{
-          maskImage: "linear-gradient(to left, rgb(0, 0, 0) 20%, rgba(0, 0, 0, 0) 100%)",
-          WebkitMaskImage: "linear-gradient(to left, rgb(0, 0, 0) 20%, rgba(0, 0, 0, 0) 100%)",
+          maskImage: "linear-gradient(to left, black 20%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to left, black 20%, transparent 100%)",
         }}
         aria-hidden="true"
       >
@@ -21,17 +21,17 @@ export const HeroBanner: React.FC = () => {
         />
       </div>
 
-
-      <div className="relative z-10 max-w-2xl">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold mb-4 border border-white/30">
+      <div className="relative z-10 max-w-xl">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-sm text-[11px] font-semibold mb-3 border border-white/30">
           <span>Asesmen Nasional</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+        {/* INI YANG GUA KECILIN */}
+        <h1 className="text-2xl sm:text-[28px] lg:text-[32px] font-extrabold tracking-tight text-white mb-2.5 leading-[1.15]">
           Simulasi TKA PPLG
         </h1>
 
-        <p className="text-blue-100 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
+        <p className="text-blue-100/90 text-[13px] sm:text-sm max-w-[480px] font-medium leading-relaxed">
           Tingkatkan kompetensi keahlian Pengembangan Perangkat Lunak dan Gim
           dengan modul interaktif berstandar Pusmendik.
         </p>
