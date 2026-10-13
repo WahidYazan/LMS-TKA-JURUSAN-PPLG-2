@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -8,6 +8,9 @@ import {
   Copy,
   Check,
   ListOrdered,
+  Clock,
+  Share2,
+  Laptop,
 } from "lucide-react";
 import { ModuleContent } from "../types";
 
@@ -27,6 +30,21 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
   prevModuleId,
 }) => {
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Track scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const currentProgress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, currentProgress)));
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleCopyCode = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -34,41 +52,75 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
     setTimeout(() => setCopiedIndex(null), 2000);
   };
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
+
   return (
-    <div className="flex-1 bg-[#f8fafc] text-slate-800 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 lg:pb-12">
+    <div className="flex-1 bg-[#f8fafc] text-slate-800 font-sans relative">
+      
+      {/* READING PROGRESS BAR AT TOP */}
+      <div className="fixed top-16 left-0 right-0 h-1 bg-slate-200 z-40">
+        <div
+          className="h-full bg-blue-600 transition-all duration-150"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24 lg:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* MAIN READER COLUMN (8 of 12) */}
-          <article className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-8 shadow-xs">
-            {/* Breadcrumb metadata */}
-            <div className="flex items-center gap-2 mb-3 text-xs text-slate-400 font-medium">
-              <Link href="/tka" className="hover:text-blue-600 transition-colors">Beranda</Link>
-              <span aria-hidden="true">/</span>
-              <Link href="/tka/modul" className="hover:text-blue-600 transition-colors">Modul Belajar</Link>
-              <span aria-hidden="true">/</span>
-              <span className="text-blue-600 font-bold">Modul {module.number}</span>
+          {/* MAIN READER ARTICLE (8 of 12) */}
+          <article className="lg:col-span-8 bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-xs">
+            
+            {/* Breadcrumb and utility bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                <Link href="/tka" className="hover:text-blue-600 transition-colors">Beranda</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/tka/modul" className="hover:text-blue-600 transition-colors">Modul Belajar</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-blue-600 font-bold">Modul 0{module.number}</span>
+              </div>
+
+              <div className="flex items-center gap-3 text-xs text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-slate-400" />
+                  <span>~20 Menit Belajar</span>
+                </span>
+                <span aria-hidden="true" className="text-slate-300">·</span>
+                <button
+                  onClick={handleCopyLink}
+                  className="flex items-center gap-1 text-slate-500 hover:text-blue-600 cursor-pointer transition-colors"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span>{copiedLink ? "Tersalin!" : "Bagikan"}</span>
+                </button>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 text-xs font-bold font-mono">
+            {/* Header Badge */}
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="font-mono text-xs font-black px-2.5 py-1 rounded-lg bg-blue-600 text-white">
                 MODUL 0{module.number}
               </span>
-              <span className="text-xs text-slate-400 font-medium">
-                {module.sections?.length || 5} Bab Pembahasan
+              <span className="text-xs font-semibold text-slate-500">
+                {module.sections?.length || 5} Bab Pembahasan · Standar Pusmendik
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
               {module.title}
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-8">
               {module.shortDesc}
             </p>
 
             {module.heroImage && (
-              <div className="rounded-xl overflow-hidden mb-8 border border-slate-200 bg-slate-100 aspect-video max-h-80 relative">
+              <div className="rounded-2xl overflow-hidden mb-10 border border-slate-200 bg-slate-900 aspect-video max-h-80 relative shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={module.heroImage}
@@ -79,62 +131,80 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               </div>
             )}
 
-            {/* Sections Content */}
-            <div className="space-y-10 text-slate-700">
+            {/* Sections Flow */}
+            <div className="space-y-12">
               {module.sections.map((section, sIdx) => (
                 <section
                   key={section.id}
                   id={section.id}
-                  className="scroll-mt-24 pb-8 border-b border-slate-100 last:border-b-0 last:pb-0"
+                  className="scroll-mt-28 pb-10 border-b border-slate-100 last:border-b-0 last:pb-0"
                 >
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-blue-100">
+                  {/* Section Title */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 font-mono text-xs font-black flex items-center justify-center shrink-0 border border-blue-100">
                       0{sIdx + 1}
                     </span>
-                    <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                    <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                       {section.numberPrefix ? `${section.numberPrefix} ` : ""}{section.title}
                     </h2>
                   </div>
 
+                  {/* Paragraphs */}
                   {section.paragraphs?.map((p, pIdx) => (
                     <p
                       key={pIdx}
-                      className="text-sm sm:text-base leading-relaxed mb-3.5 text-slate-700"
+                      className="text-sm sm:text-base leading-relaxed mb-4 text-slate-700"
                     >
                       {p}
                     </p>
                   ))}
 
+                  {/* Bullet Points with clean styling */}
                   {section.bulletPoints && section.bulletPoints.length > 0 && (
-                    <ul className="space-y-2.5 my-4 bg-slate-50/80 rounded-xl p-4 sm:p-5 border border-slate-200/80">
-                      {section.bulletPoints.map((bp, bIdx) => (
-                        <li
-                          key={bIdx}
-                          className="text-xs sm:text-sm leading-relaxed flex items-start gap-2.5"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0 select-none" />
-                          <div>
-                            <strong className="text-slate-900 font-bold">
-                              {bp.label}:{" "}
-                            </strong>
-                            <span className="text-slate-600">
-                              {bp.description}
-                            </span>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="my-5 bg-slate-50/80 rounded-2xl p-5 sm:p-6 border border-slate-200/80">
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                        Poin Kunci & Karakteristik
+                      </div>
+                      <ul className="space-y-3">
+                        {section.bulletPoints.map((bp, bIdx) => (
+                          <li
+                            key={bIdx}
+                            className="text-xs sm:text-sm leading-relaxed flex items-start gap-3"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-2 shrink-0 select-none" />
+                            <div>
+                              <strong className="text-slate-900 font-bold">
+                                {bp.label}:{" "}
+                              </strong>
+                              <span className="text-slate-600">
+                                {bp.description}
+                              </span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
 
+                  {/* Code Snippets with IDE look */}
                   {section.codeSnippet && (
-                    <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
-                      <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs text-slate-400">
-                        <span className="font-mono text-[11px] uppercase text-sky-400 font-semibold">
-                          {section.codeSnippet.language}
-                        </span>
+                    <div className="relative my-6 rounded-2xl overflow-hidden border border-slate-800 bg-[#090d16] shadow-md">
+                      {/* IDE Titlebar */}
+                      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 text-xs text-slate-400">
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1.5" aria-hidden="true">
+                            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                          </div>
+                          <span className="font-mono text-[11px] text-sky-400 font-bold ml-2">
+                            {section.codeSnippet.language.toUpperCase()}
+                          </span>
+                        </div>
+
                         <button
                           onClick={() => handleCopyCode(section.codeSnippet!.code, section.id)}
-                          className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white transition-colors cursor-pointer px-2 py-1 rounded bg-slate-800/80 hover:bg-slate-800"
+                          className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-slate-800"
                         >
                           {copiedIndex === section.id ? (
                             <>
@@ -149,23 +219,26 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                           )}
                         </button>
                       </div>
-                      <pre className="p-4 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed">
+
+                      <pre className="p-5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed">
                         <code>{section.codeSnippet.code}</code>
                       </pre>
+
                       {section.codeSnippet.explanation && (
-                        <div className="px-4 py-2.5 bg-slate-900/60 border-t border-slate-800/80 text-xs text-slate-400 italic">
-                          {section.codeSnippet.explanation}
+                        <div className="px-4 py-2.5 bg-slate-950 border-t border-slate-800 text-xs text-slate-400">
+                          <strong>Keterangan:</strong> {section.codeSnippet.explanation}
                         </div>
                       )}
                     </div>
                   )}
 
+                  {/* Media illustration if any */}
                   {section.media && section.media.length > 0 && (
-                    <div className="space-y-4 mt-4">
+                    <div className="space-y-4 my-6">
                       {section.media.map((media, mIdx) => (
                         <div
                           key={mIdx}
-                          className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50"
+                          className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50"
                         >
                           {media.type === "image" && (
                             <figure className="m-0">
@@ -173,15 +246,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                               <img
                                 src={media.src}
                                 alt={media.alt || section.title}
-                                className="mx-auto h-auto max-h-[500px] w-auto max-w-full object-contain"
-                                style={{
-                                  maxWidth: media.width
-                                    ? `${media.width}px`
-                                    : undefined,
-                                }}
+                                className="mx-auto h-auto max-h-[480px] w-auto max-w-full object-contain"
                               />
                               {media.caption && (
-                                <figcaption className="px-4 py-2 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
+                                <figcaption className="px-4 py-2.5 text-xs text-slate-500 text-center bg-white border-t border-slate-100">
                                   {media.caption}
                                 </figcaption>
                               )}
@@ -195,13 +263,13 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               ))}
             </div>
 
-            {/* Desktop Navigation Footer inside article container */}
-            <div className="hidden lg:flex items-center justify-between gap-3 mt-10 pt-6 border-t border-slate-200">
+            {/* End of article navigation */}
+            <div className="hidden lg:flex items-center justify-between gap-3 mt-12 pt-8 border-t border-slate-200">
               <Link
                 href="/tka/modul"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer border border-slate-200"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors border border-slate-200 cursor-pointer"
               >
-                <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Katalog Modul</span>
               </Link>
 
@@ -209,9 +277,9 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 {hasPrevModule && prevModuleId && (
                   <Link
                     href={`/tka/module/${prevModuleId}`}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-xs transition-all cursor-pointer"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-2xs transition-all cursor-pointer"
                   >
-                    <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                    <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Modul {module.number - 1}</span>
                   </Link>
                 )}
@@ -219,33 +287,37 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 {hasNextModule && nextModuleId && (
                   <Link
                     href={`/tka/module/${nextModuleId}`}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
                   >
                     <span>Lanjut ke Modul {module.number + 1}</span>
-                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 )}
 
                 {!hasNextModule && (
                   <Link
                     href="/tka/quiz"
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-sm transition-all cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-sm transition-all cursor-pointer"
                   >
-                    <span>Mulai Simulasi Ujian (50 Soal)</span>
-                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Mulai Simulasi 50 Soal</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 )}
               </div>
             </div>
+
           </article>
 
-          {/* SIDEBAR COLUMN (4 of 12) */}
-          <aside className="hidden lg:block lg:col-span-4 sticky top-24 space-y-5">
-            {/* Table of Contents card */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs">
+          {/* SIDEBAR (4 of 12) */}
+          <aside className="hidden lg:block lg:col-span-4 sticky top-28 space-y-5">
+            
+            {/* Table of contents card */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
               <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
-                <ListOrdered className="w-4 h-4 text-blue-600" aria-hidden="true" />
-                <h3 className="text-sm font-bold text-slate-900">Daftar Isi Modul {module.number}</h3>
+                <ListOrdered className="w-4 h-4 text-blue-600" />
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                  Daftar Bab Modul {module.number}
+                </h3>
               </div>
               <nav className="space-y-1" aria-label="Navigasi bab modul">
                 {module.tableOfContents?.map((item, idx) => (
@@ -263,26 +335,29 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               </nav>
             </div>
 
-            {/* Quick Practice Card */}
-            <div className="bg-gradient-to-br from-[#0c1328] via-[#0f1b3b] to-[#090d1a] text-white rounded-2xl p-5 border border-slate-800 shadow-md">
-              <p className="text-[11px] font-bold text-amber-300 uppercase tracking-wider mb-1 font-mono">
-                Uji Pemahaman
-              </p>
+            {/* Jump to quiz simulator */}
+            <div className="bg-gradient-to-br from-[#0b1328] via-[#0f1b3b] to-[#090d1a] text-white rounded-2xl p-5 border border-slate-800 shadow-md">
+              <div className="flex items-center gap-1.5 text-amber-300 text-[11px] font-bold uppercase tracking-wider mb-1.5">
+                <Laptop className="w-3.5 h-3.5" />
+                <span>Uji Pemahaman</span>
+              </div>
               <h4 className="text-sm font-bold text-white mb-2">
-                Simulasi Ujian TKA PPLG
+                Simulasi Ujian Modul {module.number}
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Selesaikan soal studi kasus untuk menguji seberapa jauh Anda menguasai materi modul ini.
+                Uji penguasaan Anda atas materi modul ini melalui 10 butir soal studi kasus HOTS dengan evaluasi instan.
               </p>
               <Link
                 href={`/tka/quiz?module=${module.number}`}
                 className="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm"
               >
                 <span>Kerjakan Soal Modul Ini</span>
-                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
+
           </aside>
+
         </div>
       </div>
 
@@ -294,7 +369,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               href="/tka/modul"
               className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer min-h-[40px] border border-slate-200"
             >
-              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+              <ArrowLeft className="w-3.5 h-3.5" />
               <span>Katalog</span>
             </Link>
 
@@ -302,9 +377,9 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
               {hasPrevModule && prevModuleId && (
                 <Link
                   href={`/tka/module/${prevModuleId}`}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs shadow-xs min-h-[40px]"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs min-h-[40px]"
                 >
-                  <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                  <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Modul {module.number - 1}</span>
                 </Link>
               )}
@@ -315,7 +390,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   className="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-sm min-h-[40px]"
                 >
                   <span>Modul {module.number + 1}</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               )}
 
@@ -325,13 +400,14 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   className="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs shadow-sm min-h-[40px]"
                 >
                   <span>Simulasi Ujian</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               )}
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };

@@ -9,10 +9,17 @@
   * {
     border-color: var(--color-slate-200, #e2e8f0);
   }
+  html {
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background-color: #38bdf8;
+    color: #082f49;
+  }
   body {
     font-family: var(--font-sans);
     background-color: #f8fafc;
-    color: #1e293b;
+    color: #0f172a;
     -webkit-font-smoothing: antialiased;
   }
   code, pre, kbd {
