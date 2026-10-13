@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loadQuizQuestions } from "../lib/content";
 import { quizQuestionsPPLG } from "../data/quiz";
@@ -47,10 +47,22 @@ export const QuizSimulatorView: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [evaluatedModules, setEvaluatedModules] = useState<Record<number, boolean>>({});
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<Record<string, boolean>>({});
+  const [mounted, setMounted] = useState(false);
+
+  // shuffle() memakai Math.random(); menunda sampai setelah mount menjaga
+  // render server & hidrasi pertama tetap identik (hindari hydration mismatch).
+  useEffect(() => {
+    const run = async () => {
+      await Promise.resolve();
+      setMounted(true);
+    };
+    void run();
+  }, []);
 
   const activeModuleTab = parseInt(searchParams.get("module") || "1", 10);
 
   const shuffledByModule = useMemo(() => {
+    if (!mounted) return null;
     if (!activeQuestions || activeQuestions.length === 0) return null;
     const map = new Map<number, ShuffledQuestion[]>();
     for (let m = 1; m <= 5; m++) {
@@ -63,7 +75,7 @@ export const QuizSimulatorView: React.FC = () => {
       );
     }
     return map;
-  }, [activeQuestions]);
+  }, [mounted, activeQuestions]);
 
   const currentQuestions = shuffledByModule?.get(activeModuleTab) ?? [];
   const totalQuestions = activeQuestions?.length ?? 50;
@@ -269,7 +281,7 @@ export const QuizSimulatorView: React.FC = () => {
               )}
             </div>
 
-            {loading && (
+            {loading || !mounted ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((n) => (
                   <div key={n} className="rounded-2xl border border-slate-100 bg-white p-6 animate-pulse space-y-3">
@@ -279,8 +291,8 @@ export const QuizSimulatorView: React.FC = () => {
                   </div>
                 ))}
               </div>
-            )}
-
+            ) : (
+              <>
             {/* Questions list */}
             <div className="space-y-6">
               {currentQuestions.map((sq, idx) => {
@@ -517,6 +529,8 @@ export const QuizSimulatorView: React.FC = () => {
                 )}
               </div>
             </div>
+              </>
+            )}
 
           </main>
 
