@@ -88,6 +88,15 @@ export const QuizSimulatorView: React.FC = () => {
     }));
   };
 
+  const handleClearAnswer = (questionId: string) => {
+    if (isCurrentModuleEvaluated) return;
+    setSelectedAnswers((prev) => {
+      const next = { ...prev };
+      delete next[questionId];
+      return next;
+    });
+  };
+
   const toggleBookmark = (questionId: string) => {
     setBookmarkedQuestions((prev) => ({
       ...prev,
@@ -306,20 +315,31 @@ export const QuizSimulatorView: React.FC = () => {
                         </span>
                       </div>
 
-                      <button
-                        onClick={() => toggleBookmark(q.id)}
-                        className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg transition-colors cursor-pointer ${
-                          isBookmarked
-                            ? "bg-amber-100 text-amber-800"
-                            : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
-                        }`}
-                        title="Tandai butir soal untuk review"
-                      >
-                        <Bookmark className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">
-                          {isBookmarked ? "Ditandai" : "Tandai"}
-                        </span>
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {isAnswered && !isCurrentModuleEvaluated && (
+                          <button
+                            onClick={() => handleClearAnswer(q.id)}
+                            className="text-[11px] font-bold text-slate-500 hover:text-rose-600 bg-slate-100 hover:bg-rose-50 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
+                            title="Batalkan pilihan jawaban"
+                          >
+                            Batalkan Pilihan
+                          </button>
+                        )}
+                        <button
+                          onClick={() => toggleBookmark(q.id)}
+                          className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg transition-colors cursor-pointer ${
+                            isBookmarked
+                              ? "bg-amber-100 text-amber-800"
+                              : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                          }`}
+                          title="Tandai butir soal untuk review"
+                        >
+                          <Bookmark className="w-3.5 h-3.5" />
+                          <span className="hidden sm:inline">
+                            {isBookmarked ? "Ditandai" : "Tandai"}
+                          </span>
+                        </button>
+                      </div>
                     </div>
 
                     {/* Question Scenario */}

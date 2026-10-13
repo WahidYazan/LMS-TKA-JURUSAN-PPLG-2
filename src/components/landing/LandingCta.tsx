@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { BookOpen, ClipboardCheck, ArrowRight, Sparkles } from "lucide-react";
+import { BookOpen, ClipboardCheck, ArrowRight } from "lucide-react";
 
 export const LandingCta: React.FC = () => {
   return (

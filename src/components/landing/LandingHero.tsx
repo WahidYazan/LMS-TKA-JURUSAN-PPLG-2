@@ -7,8 +7,6 @@ import {
   ClipboardCheck,
   FileCode2,
   GraduationCap,
-  Layers,
-  Terminal,
 } from "lucide-react";
 
 interface LandingHeroProps {
