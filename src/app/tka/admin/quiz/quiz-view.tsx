@@ -7,6 +7,7 @@ import { describeError } from "@/lib/adminError";
 import {
   createRow,
   deleteRow,
+  duplicateRow,
   updateRow,
 } from "@/lib/adminApi";
 import type { QuizQuestionRow } from "@/lib/dbTypes";
@@ -115,6 +116,32 @@ export default function AdminQuizPage() {
       alert(describeError("Gagal menghapus", err));
     } finally {
       setConfirming(false);
+    }
+  };
+
+  const handleToggleVisible = async (row: QuizQuestionRow) => {
+    setBusy(true);
+    try {
+      await updateRow("quiz_questions", row.id, {
+        is_visible: row.is_visible === false,
+      });
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal mengubah visibilitas", err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    setBusy(true);
+    try {
+      await duplicateRow("quiz_questions", id);
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal menduplikat", err));
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -230,6 +257,9 @@ export default function AdminQuizPage() {
                         title={`${i + 1}. ${r.case_text.slice(0, 90)}${r.case_text.length > 90 ? "..." : ""}`}
                         meta={`Jawaban benar: ${String.fromCharCode(65 + r.correct_index)} — ${r.options[r.correct_index]?.slice(0, 60)}`}
                         busy={busy}
+                        visible={r.is_visible !== false}
+                        onToggleVisible={() => void handleToggleVisible(r)}
+                        onDuplicate={() => void handleDuplicate(r.id)}
                         onEdit={() => setEditing(r)}
                         onDelete={() => setDeleting(r)}
                       />

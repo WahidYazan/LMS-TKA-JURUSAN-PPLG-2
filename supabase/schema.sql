@@ -66,6 +66,7 @@ create table if not exists public.quiz_questions (
   options jsonb not null check (jsonb_array_length(options) = 4),
   correct_index int not null check (correct_index between 0 and 3),
   explanation text not null default '',
+  is_visible boolean not null default true,
   sort_order int not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -81,6 +82,7 @@ create table if not exists public.modules (
   short_desc text not null default '',
   hero_image text not null default '',
   table_of_contents jsonb not null default '[]',
+  is_visible boolean not null default true,
   sort_order int not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -96,6 +98,7 @@ create table if not exists public.module_sections (
   bullet_points jsonb not null default '[]',
   code_snippet jsonb,
   media jsonb not null default '[]',
+  is_visible boolean not null default true,
   sort_order int not null default 0
 );
 create index if not exists module_sections_module_idx
@@ -105,6 +108,7 @@ create table if not exists public.cheatsheet_sections (
   id uuid primary key default gen_random_uuid(),
   key text not null unique,
   category text not null,
+  is_visible boolean not null default true,
   sort_order int not null default 0
 );
 
@@ -114,6 +118,7 @@ create table if not exists public.cheatsheet_items (
   command_or_concept text not null,
   description text not null,
   example text,
+  is_visible boolean not null default true,
   sort_order int not null default 0
 );
 create index if not exists cheatsheet_items_section_idx
@@ -124,6 +129,7 @@ create table if not exists public.landing_stats (
   value text not null,
   label text not null,
   color text not null default 'text-sky-600',
+  is_visible boolean not null default true,
   sort_order int not null default 0
 );
 
@@ -133,7 +139,14 @@ create table if not exists public.landing_features (
   title text not null,
   description text not null,
   tone text not null default 'blue',
+  is_visible boolean not null default true,
   sort_order int not null default 0
+);
+
+create table if not exists public.site_settings (
+  key text primary key,
+  value text,
+  updated_at timestamptz not null default now()
 );
 
 -- ============ ADMIN CHECK ============
@@ -160,6 +173,7 @@ alter table public.cheatsheet_sections enable row level security;
 alter table public.cheatsheet_items enable row level security;
 alter table public.landing_stats enable row level security;
 alter table public.landing_features enable row level security;
+alter table public.site_settings enable row level security;
 
 -- Public read (siswa/anon boleh melihat semua konten)
 drop policy if exists "public read quiz_questions" on public.quiz_questions;
@@ -176,6 +190,8 @@ drop policy if exists "public read landing_stats" on public.landing_stats;
 create policy "public read landing_stats" on public.landing_stats for select using (true);
 drop policy if exists "public read landing_features" on public.landing_features;
 create policy "public read landing_features" on public.landing_features for select using (true);
+drop policy if exists "public read site_settings" on public.site_settings;
+create policy "public read site_settings" on public.site_settings for select using (true);
 
 -- Admin write (hanya user login whose email terdaftar di is_admin())
 drop policy if exists "admin write quiz_questions" on public.quiz_questions;
@@ -204,5 +220,9 @@ create policy "admin write landing_stats" on public.landing_stats
   using (public.is_admin()) with check (public.is_admin());
 drop policy if exists "admin write landing_features" on public.landing_features;
 create policy "admin write landing_features" on public.landing_features
+  for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
+drop policy if exists "admin write site_settings" on public.site_settings;
+create policy "admin write site_settings" on public.site_settings
   for all to authenticated
   using (public.is_admin()) with check (public.is_admin());

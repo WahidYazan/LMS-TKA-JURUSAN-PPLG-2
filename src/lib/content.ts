@@ -32,7 +32,8 @@ export type ContentEntity =
   | "modules"
   | "cheatsheet"
   | "landingStats"
-  | "landingFeatures";
+  | "landingFeatures"
+  | "siteSettings";
 
 const cache = new Map<ContentEntity, Promise<unknown>>();
 
@@ -71,14 +72,16 @@ export function loadQuizQuestions(): Promise<QuizQuestion[]> {
           .order("sort_order", { ascending: true }),
       );
       if (error || !data || data.length === 0) return fallback;
-      return (data as QuizQuestionRow[]).map((row) => ({
-        id: row.id,
-        moduleNum: row.module_num,
-        caseText: row.case_text,
-        options: row.options,
-        correctIndex: row.correct_index,
-        explanation: row.explanation,
-      }));
+      return (data as QuizQuestionRow[])
+        .filter((row) => row.is_visible !== false)
+        .map((row) => ({
+          id: row.id,
+          moduleNum: row.module_num,
+          caseText: row.case_text,
+          options: row.options,
+          correctIndex: row.correct_index,
+          explanation: row.explanation,
+        }));
     } catch {
       return fallback;
     }
@@ -93,7 +96,9 @@ export function loadModules(): Promise<ModuleContent[]> {
         supabase.from("modules").select("*").order("sort_order"),
       );
       if (error || !moduleRows || moduleRows.length === 0) return modulesList;
-      const rows = moduleRows as ModuleRow[];
+      const rows = (moduleRows as ModuleRow[]).filter(
+        (m) => m.is_visible !== false,
+      );
       const { data: sectionRows } = await withTimeout(
         supabase
           .from("module_sections")
@@ -104,7 +109,9 @@ export function loadModules(): Promise<ModuleContent[]> {
           )
           .order("sort_order"),
       );
-      const sections = (sectionRows ?? []) as ModuleSectionRow[];
+      const sections = ((sectionRows ?? []) as ModuleSectionRow[]).filter(
+        (s) => s.is_visible !== false,
+      );
       return rows.map((m) => ({
         id: m.slug,
         number: m.number,
@@ -141,7 +148,9 @@ export function loadCheatsheet(): Promise<CheatSheetSection[]> {
       );
       if (error || !sectionRows || sectionRows.length === 0)
         return cheatsheetData;
-      const sections = sectionRows as CheatsheetSectionRow[];
+      const sections = (sectionRows as CheatsheetSectionRow[]).filter(
+        (s) => s.is_visible !== false,
+      );
       const { data: itemRows } = await withTimeout(
         supabase
           .from("cheatsheet_items")
@@ -152,7 +161,9 @@ export function loadCheatsheet(): Promise<CheatSheetSection[]> {
           )
           .order("sort_order"),
       );
-      const items = (itemRows ?? []) as CheatsheetItemRow[];
+      const items = ((itemRows ?? []) as CheatsheetItemRow[]).filter(
+        (i) => i.is_visible !== false,
+      );
       return sections.map((s) => ({
         id: s.key,
         category: s.category,
@@ -178,11 +189,13 @@ export function loadLandingStats(): Promise<LandingStat[]> {
         supabase.from("landing_stats").select("*").order("sort_order"),
       );
       if (error || !data || data.length === 0) return landingStats;
-      return (data as LandingStatRow[]).map((r) => ({
-        value: r.value,
-        label: r.label,
-        color: r.color,
-      }));
+      return (data as LandingStatRow[])
+        .filter((r) => r.is_visible !== false)
+        .map((r) => ({
+          value: r.value,
+          label: r.label,
+          color: r.color,
+        }));
     } catch {
       return landingStats;
     }
@@ -197,14 +210,43 @@ export function loadLandingFeatures(): Promise<LandingFeature[]> {
         supabase.from("landing_features").select("*").order("sort_order"),
       );
       if (error || !data || data.length === 0) return landingFeatures;
-      return (data as LandingFeatureRow[]).map((r) => ({
-        id: r.key,
-        title: r.title,
-        description: r.description,
-        tone: r.tone,
-      }));
+      return (data as LandingFeatureRow[])
+        .filter((r) => r.is_visible !== false)
+        .map((r) => ({
+          id: r.key,
+          title: r.title,
+          description: r.description,
+          tone: r.tone,
+        }));
     } catch {
       return landingFeatures;
+    }
+  });
+}
+
+export interface SiteSettings {
+  logoUrl: string | null;
+}
+
+export const DEFAULT_LOGO = "/images/brands/TTH-nobg.webp";
+
+export function loadSiteSettings(): Promise<SiteSettings> {
+  return cached("siteSettings", async () => {
+    if (!supabase) return { logoUrl: null };
+    try {
+      const { data, error } = await withTimeout(
+        supabase.from("site_settings").select("key, value"),
+      );
+      if (error || !data) return { logoUrl: null };
+      const map = new Map(
+        (data as { key: string; value: string | null }[]).map((r) => [
+          r.key,
+          r.value,
+        ]),
+      );
+      return { logoUrl: map.get("logo_url") || null };
+    } catch {
+      return { logoUrl: null };
     }
   });
 }

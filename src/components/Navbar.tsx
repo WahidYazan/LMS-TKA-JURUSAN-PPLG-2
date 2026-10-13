@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -12,6 +11,7 @@ import {
   ArrowBigLeft,
 } from "lucide-react";
 import { ModuleContent } from "../types";
+import { SiteLogo } from "./SiteLogo";
 
 interface NavbarProps {
   currentPath: string;
@@ -63,21 +63,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="Simulasi TKA PPLG - Beranda"
           >
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
-              <Image
-                src="/images/brands/TTH-nobg.webp"
-                alt="SMK Telekomunikasi Tunas Harapan"
-                width={48}
-                height={48}
-                className="w-full h-full object-contain drop-shadow-sm"
-                priority
-              />
+              <SiteLogo width={48} height={48} priority />
             </div>
 
-            <div className="min-w-0 hidden sm:block">
-              <div className="text-lg font-extrabold tracking-tight text-slate-800 leading-tight group-hover:text-blue-600 transition-colors truncate">
+            <div className="min-w-0 block">
+              <div className="text-base sm:text-lg font-extrabold tracking-tight text-slate-800 leading-tight group-hover:text-blue-600 transition-colors truncate">
                 Simulasi TKA PPLG
               </div>
-              <p className="text-xs font-medium text-slate-500 leading-tight truncate max-w-[180px]">
+              <p className="text-[11px] sm:text-xs font-medium text-slate-500 leading-tight truncate max-w-[160px] sm:max-w-[180px]">
                 {isModule && selectedModule
                   ? `Modul ${selectedModule.number} • ${selectedModule.cardTitle}`
                   : isQuiz

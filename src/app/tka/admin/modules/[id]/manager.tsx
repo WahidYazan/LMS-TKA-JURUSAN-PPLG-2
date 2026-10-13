@@ -8,6 +8,7 @@ import { describeError } from "@/lib/adminError";
 import {
   createRow,
   deleteRow,
+  duplicateRow,
   moveRow,
   updateRow,
 } from "@/lib/adminApi";
@@ -148,6 +149,32 @@ export default function SectionManager({ id }: { id: string }) {
     }
   };
 
+  const handleToggleVisible = async (row: ModuleSectionRow) => {
+    setBusy(true);
+    try {
+      await updateRow("module_sections", row.id, {
+        is_visible: row.is_visible === false,
+      });
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal mengubah visibilitas", err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    setBusy(true);
+    try {
+      await duplicateRow("module_sections", id);
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal menduplikat", err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const formValues: SectionFormValues = editing
     ? {
         section_key: editing.section_key,
@@ -223,6 +250,9 @@ export default function SectionManager({ id }: { id: string }) {
                 </>
               }
               busy={busy}
+              visible={r.is_visible !== false}
+              onToggleVisible={() => void handleToggleVisible(r)}
+              onDuplicate={() => void handleDuplicate(r.id)}
               onMoveUp={i > 0 ? () => void handleMove(r.id, "up") : undefined}
               onMoveDown={
                 i < rows.length - 1 ? () => void handleMove(r.id, "down") : undefined

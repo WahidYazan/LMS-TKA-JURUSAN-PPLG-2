@@ -7,6 +7,7 @@ import { describeError } from "@/lib/adminError";
 import {
   createRow,
   deleteRow,
+  duplicateRow,
   moveRow,
   updateRow,
 } from "@/lib/adminApi";
@@ -194,6 +195,21 @@ export default function AdminLandingPage() {
             title={`${r.value} — ${r.label}`}
             meta={<span className="font-mono">{r.color}</span>}
             busy={busy}
+            visible={r.is_visible !== false}
+            onToggleVisible={() =>
+              void withBusy(async () => {
+                await updateRow("landing_stats", r.id, {
+                  is_visible: r.is_visible === false,
+                });
+                await load();
+              })
+            }
+            onDuplicate={() =>
+              void withBusy(async () => {
+                await duplicateRow("landing_stats", r.id);
+                await load();
+              })
+            }
             onMoveUp={
               i > 0
                 ? () =>
@@ -233,6 +249,21 @@ export default function AdminLandingPage() {
                 </>
               }
               busy={busy}
+              visible={r.is_visible !== false}
+              onToggleVisible={() =>
+                void withBusy(async () => {
+                  await updateRow("landing_features", r.id, {
+                    is_visible: r.is_visible === false,
+                  });
+                  await load();
+                })
+              }
+              onDuplicate={() =>
+                void withBusy(async () => {
+                  await duplicateRow("landing_features", r.id);
+                  await load();
+                })
+              }
               onMoveUp={
                 i > 0
                   ? () =>

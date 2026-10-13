@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { GraduationCap } from 'lucide-react';
+import Image from 'next/image';
 
 const links = [
   { href: '/tka', label: 'Beranda' },
@@ -20,9 +20,19 @@ export const SiteFooter: React.FC = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex items-start gap-4">
-            <span className="h-12 w-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+            {/* <span className="h-12 w-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
               <GraduationCap className="w-6 h-6 text-sky-200" aria-hidden="true" />
-            </span>
+            </span> */}
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
+              <Image
+                src="/images/brands/TTH-nobg.webp"
+                alt="SMK Telekomunikasi Tunas Harapan"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain drop-shadow-sm"
+                priority
+              />
+            </div>
             <div className="min-w-0">
               <p className="text-base font-extrabold tracking-tight">
                 Simulasi TKA PPLG
@@ -53,10 +63,10 @@ export const SiteFooter: React.FC = () => {
 
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-200/80 mb-3">
-              Tentang Konten
+              Tentang
             </p>
             <p className="text-sm text-blue-100/90 leading-relaxed">
-              Soal dan rangkuman disusun mengikuti kisi-kisi TKA untuk kompetensi
+              Simulasi TKA untuk kompetensi
               keahlian Pengembangan Perangkat Lunak dan Gim.
             </p>
           </div>
@@ -64,7 +74,7 @@ export const SiteFooter: React.FC = () => {
 
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-blue-200/80">
           <p>&copy; {year} SMK Telekomunikasi Tunas Harapan. Semua hak dilindungi.</p>
-          <p>Platform latihan — bukan dokumen resmi negara.</p>
+          {/* <p>Platform latihan — bukan dokumen resmi negara.</p> */}
         </div>
       </div>
     </footer>

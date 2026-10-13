@@ -2,12 +2,13 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ChevronDown, ChevronRight, Inbox, EyeOff } from "lucide-react";
+import { ChevronDown, ChevronRight, Inbox, EyeOff, Eye, Copy } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { describeError } from "@/lib/adminError";
 import {
   createRow,
   deleteRow,
+  duplicateRow,
   moveRow,
   updateRow,
 } from "@/lib/adminApi";
@@ -191,7 +192,9 @@ export default function AdminCheatsheetPage() {
             return (
               <div
                 key={sec.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
+                className={`bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden ${
+                  sec.is_visible === false ? "opacity-60" : ""
+                }`}
               >
                 <div className="flex flex-wrap items-center gap-2 p-3 sm:p-4">
                   <button
@@ -213,6 +216,12 @@ export default function AdminCheatsheetPage() {
                     <span className="text-[11px] text-slate-400 font-semibold">
                       {secItems.length} item
                     </span>
+                    {sec.is_visible === false && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+                        <EyeOff className="w-3 h-3" aria-hidden="true" />
+                        Tersembunyi
+                      </span>
+                    )}
                   </button>
                   <div className="flex items-center gap-1 shrink-0">
                     <button
@@ -240,6 +249,48 @@ export default function AdminCheatsheetPage() {
                       aria-label="Turunkan section"
                     >
                       ↓
+                    </button>
+                    <button
+                      onClick={() =>
+                        void withBusy(async () => {
+                          await updateRow("cheatsheet_sections", sec.id, {
+                            is_visible: sec.is_visible === false,
+                          });
+                          await load();
+                        })
+                      }
+                      disabled={busy}
+                      className="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer disabled:opacity-40"
+                      aria-label={
+                        sec.is_visible === false
+                          ? "Tampilkan section ke publik"
+                          : "Sembunyikan section dari publik"
+                      }
+                      title={
+                        sec.is_visible === false
+                          ? "Tampilkan section ke publik"
+                          : "Sembunyikan section dari publik"
+                      }
+                    >
+                      {sec.is_visible === false ? (
+                        <Eye className="w-4 h-4" />
+                      ) : (
+                        <EyeOff className="w-4 h-4" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() =>
+                        void withBusy(async () => {
+                          await duplicateRow("cheatsheet_sections", sec.id);
+                          await load();
+                        })
+                      }
+                      disabled={busy}
+                      className="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer disabled:opacity-40"
+                      aria-label="Duplikat section"
+                      title="Duplikat section"
+                    >
+                      <Copy className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setSectionForm({ mode: "edit", row: sec })}
@@ -292,6 +343,21 @@ export default function AdminCheatsheetPage() {
                           </>
                         }
                         busy={busy}
+                        visible={it.is_visible !== false}
+                        onToggleVisible={() =>
+                          void withBusy(async () => {
+                            await updateRow("cheatsheet_items", it.id, {
+                              is_visible: it.is_visible === false,
+                            });
+                            await load();
+                          })
+                        }
+                        onDuplicate={() =>
+                          void withBusy(async () => {
+                            await duplicateRow("cheatsheet_items", it.id);
+                            await load();
+                          })
+                        }
                         onMoveUp={
                           i > 0
                             ? () =>

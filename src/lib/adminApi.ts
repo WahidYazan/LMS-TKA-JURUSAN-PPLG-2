@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 import { invalidateContent, type ContentEntity } from "./content";
-import type { ContentTableName } from "./dbTypes";
+import { NON_COPYABLE_COLUMNS, type ContentTableName } from "./dbTypes";
 
 const entityByTable: Partial<Record<ContentTableName, ContentEntity>> = {
   quiz_questions: "quiz",
@@ -122,4 +122,52 @@ export async function moveRow(
     .eq("id", neighborRow.id);
   if (err1 || err2) throw err1 ?? err2;
   invalidateContent(entityByTable[table]);
+}
+
+// Kolom unik (slug/key) yang harus diberi sufiks saat duplikat agar tidak
+// bentrok, plus kolom label yang diberi sufiks "(Salinan)" agar mudah dikenali.
+const duplicateMeta: Record<
+  ContentTableName,
+  { unique: string[]; label?: string }
+> = {
+  quiz_questions: { unique: [], label: "case_text" },
+  modules: { unique: ["slug"], label: "title" },
+  module_sections: { unique: [], label: "title" },
+  cheatsheet_sections: { unique: ["key"], label: "category" },
+  cheatsheet_items: { unique: [], label: "command_or_concept" },
+  landing_stats: { unique: [], label: "label" },
+  landing_features: { unique: ["key"], label: "title" },
+};
+
+/**
+ * Menyalin sebuah baris menjadi baris baru di akhir urutan.
+ * Kolom id/sort_order/timestamp dibuang; kolom unik diberi sufiks acak.
+ */
+export async function duplicateRow(
+  table: ContentTableName,
+  id: string,
+): Promise<string> {
+  const client = requireClient();
+  const { data: row, error } = await client
+    .from(table)
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error || !row) throw error ?? new Error("Baris tidak ditemukan");
+
+  const copy: Record<string, unknown> = { ...(row as Record<string, unknown>) };
+  for (const col of NON_COPYABLE_COLUMNS) delete copy[col];
+  delete copy["created_at"];
+  delete copy["updated_at"];
+
+  const suffix = Math.random().toString(36).slice(2, 7);
+  const meta = duplicateMeta[table];
+  for (const col of meta.unique) {
+    if (typeof copy[col] === "string") copy[col] = `${copy[col]}-copy-${suffix}`;
+  }
+  if (meta.label && typeof copy[meta.label] === "string") {
+    copy[meta.label] = `${copy[meta.label]} (Salinan)`;
+  }
+
+  return createRow(table, copy);
 }

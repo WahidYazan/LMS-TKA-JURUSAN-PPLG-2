@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Pencil, Trash2, ArrowUp, ArrowDown, Plus } from "lucide-react";
+import { Pencil, Trash2, ArrowUp, ArrowDown, Plus, Eye, EyeOff, Copy } from "lucide-react";
 
 export const AdminPageHeader: React.FC<{
   title: string;
@@ -47,11 +47,39 @@ export const AdminListRow: React.FC<{
   onDelete?: () => void;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
+  onToggleVisible?: () => void;
+  onDuplicate?: () => void;
+  visible?: boolean;
   busy?: boolean;
-}> = ({ title, meta, onEdit, onDelete, onMoveUp, onMoveDown, busy }) => (
-  <div className="flex items-center gap-3 p-3 sm:p-4 rounded-xl border border-slate-200 bg-white hover:border-sky-300 transition-colors">
+}> = ({
+  title,
+  meta,
+  onEdit,
+  onDelete,
+  onMoveUp,
+  onMoveDown,
+  onToggleVisible,
+  onDuplicate,
+  visible = true,
+  busy,
+}) => (
+  <div
+    className={`flex items-center gap-3 p-3 sm:p-4 rounded-xl border bg-white transition-colors ${
+      visible
+        ? "border-slate-200 hover:border-sky-300"
+        : "border-slate-200 opacity-60"
+    }`}
+  >
     <div className="flex-1 min-w-0">
-      <p className="text-sm font-bold text-slate-800 truncate">{title}</p>
+      <div className="flex items-center gap-2 min-w-0">
+        <p className="text-sm font-bold text-slate-800 truncate">{title}</p>
+        {!visible && (
+          <span className="shrink-0 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+            <EyeOff className="w-3 h-3" aria-hidden="true" />
+            Tersembunyi
+          </span>
+        )}
+      </div>
       {meta && (
         <p className="text-[11px] text-slate-400 mt-0.5 truncate">{meta}</p>
       )}
@@ -75,6 +103,34 @@ export const AdminListRow: React.FC<{
           aria-label="Turunkan urutan"
         >
           <ArrowDown className="w-4 h-4" />
+        </button>
+      )}
+      {onToggleVisible && (
+        <button
+          onClick={onToggleVisible}
+          disabled={busy}
+          className="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors disabled:opacity-40"
+          aria-label={
+            visible ? "Sembunyikan dari publik" : "Tampilkan ke publik"
+          }
+          title={visible ? "Sembunyikan dari publik" : "Tampilkan ke publik"}
+        >
+          {visible ? (
+            <Eye className="w-4 h-4" />
+          ) : (
+            <EyeOff className="w-4 h-4" />
+          )}
+        </button>
+      )}
+      {onDuplicate && (
+        <button
+          onClick={onDuplicate}
+          disabled={busy}
+          className="p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors disabled:opacity-40"
+          aria-label="Duplikat"
+          title="Duplikat"
+        >
+          <Copy className="w-4 h-4" />
         </button>
       )}
       {onEdit && (

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { HelpCircle, BookOpen, ListChecks, Home, DatabaseZap } from "lucide-react";
 import { ImportSeedButton } from "@/components/admin/ImportSeedButton";
+import { LogoSettings } from "@/components/admin/LogoSettings";
 import { AdminCard } from "@/components/admin/AdminPrimitives";
 
 const sections = [
@@ -76,7 +77,10 @@ export default function AdminDashboardPage() {
         })}
       </div>
 
-      <ImportSeedButton />
+      <div className="space-y-4">
+        <LogoSettings />
+        <ImportSeedButton />
+      </div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { describeError } from "@/lib/adminError";
 import {
   createRow,
   deleteRow,
+  duplicateRow,
   moveRow,
   updateRow,
 } from "@/lib/adminApi";
@@ -22,10 +23,7 @@ import {
   TextAreaField,
   TextField,
 } from "@/components/admin/AdminPrimitives";
-import {
-  AdminModal,
-  ConfirmDeleteDialog,
-} from "@/components/admin/AdminModal";
+import { AdminModal, ConfirmDeleteDialog } from "@/components/admin/AdminModal";
 import { AdminListSkeleton } from "@/components/admin/AdminLoading";
 import type { TableOfContentItem } from "@/types";
 
@@ -132,6 +130,32 @@ export default function AdminModulesPage() {
     }
   };
 
+  const handleToggleVisible = async (row: ModuleRow) => {
+    setBusy(true);
+    try {
+      await updateRow("modules", row.id, {
+        is_visible: row.is_visible === false,
+      });
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal mengubah visibilitas", err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    setBusy(true);
+    try {
+      await duplicateRow("modules", id);
+      await load();
+    } catch (err: unknown) {
+      alert(describeError("Gagal menduplikat", err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const formValues: ModuleFormValues = editing
     ? {
         slug: editing.slug,
@@ -187,7 +211,12 @@ export default function AdminModulesPage() {
                 </>
               }
               busy={busy}
-              onMoveUp={r !== rows[0] ? () => void handleMove(r.id, "up") : undefined}
+              visible={r.is_visible !== false}
+              onToggleVisible={() => void handleToggleVisible(r)}
+              onDuplicate={() => void handleDuplicate(r.id)}
+              onMoveUp={
+                r !== rows[0] ? () => void handleMove(r.id, "up") : undefined
+              }
               onMoveDown={
                 r !== rows[rows.length - 1]
                   ? () => void handleMove(r.id, "down")
@@ -201,14 +230,14 @@ export default function AdminModulesPage() {
       )}
 
       {!loading && rows.length > 0 && (
-        <AdminCard className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <AdminCard className="mt-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
               <Layers className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <p className="text-sm font-bold text-slate-800">
-                Edit isi section per modul
+                Edit isi per modul
               </p>
               <p className="text-xs text-slate-500">
                 Pilih modul di bawah untuk menambah / mengubah paragraf, poin,
@@ -216,11 +245,12 @@ export default function AdminModulesPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+
+          <div className="flex flex-wrap gap-2 mt-4">
             {rows.map((r) => (
               <Link
                 key={r.id}
-                href={`/admin/modules/${r.id}`}
+                href={`/tka/admin/modules/${r.id}`}
                 className="px-3 py-2 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold transition-colors min-h-[36px] inline-flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" aria-hidden="true" />
