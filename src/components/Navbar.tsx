@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Globe, List, Menu, X, ChevronRight, ArrowBigLeft } from "lucide-react";
+import {
+  BookOpen,
+  Globe,
+  List,
+  Menu,
+  X,
+  ChevronRight,
+  ArrowBigLeft,
+} from "lucide-react";
 import { ModuleContent } from "../types";
 
 interface NavbarProps {
@@ -14,7 +22,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   currentPath,
   selectedModule,
-  onOpenCheatsheet = () => {},
+  onOpenCheatsheet = () => { },
 }) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,10 +30,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [activeSectionId, setActiveSectionId] = useState<string>("");
 
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setIsModuleTocOpen(false);
-    setActiveSectionId(selectedModule?.tableOfContents[0]?.id || "");
-  }, [pathname, selectedModule?.id]);
+    const reset = async () => {
+      setIsMobileMenuOpen(false);
+      setIsModuleTocOpen(false);
+      setActiveSectionId(selectedModule?.tableOfContents[0]?.id || "");
+    };
+    void reset();
+  }, [pathname, selectedModule?.id, selectedModule?.tableOfContents]);
 
   const scrollToSection = (id: string) => {
     setActiveSectionId(id);
@@ -37,40 +48,40 @@ export const Navbar: React.FC<NavbarProps> = ({
     setIsMobileMenuOpen(false);
   };
 
-  const isLanding = pathname === "/";
-  const ismodul = pathname === "/modul";
-  const isModule = pathname.startsWith("/module/");
-  const isQuiz = pathname.startsWith("/quiz");
+  const isLanding = pathname === "/tka";
+  const ismodul = pathname === "/tka/modul";
+  const isModule = pathname.startsWith("/tka/module/");
+  const isQuiz = pathname.startsWith("/tka/quiz");
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-14 sm:h-16 flex lg:grid lg:grid-cols-3 items-center justify-between gap-4">
+        <div className="h-16 sm:h-20 flex lg:grid lg:grid-cols-3 items-center justify-between gap-4">
           <Link
-            href="/"
-            className="flex items-center justify-start gap-2 sm:gap-3.5 cursor-pointer group select-none min-w-0"
-            aria-label="TKA PPLG - Beranda"
+            href="/tka"
+            className="flex items-center justify-start gap-3 sm:gap-4 cursor-pointer group select-none min-w-0"
+            aria-label="Simulasi TKA PPLG - Beranda"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
               <Image
                 src="/images/brands/TTH-nobg.webp"
                 alt="SMK Telekomunikasi Tunas Harapan"
-                width={40}
-                height={40}
-                className="w-full h-full object-contain drop-shadow-lg"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain drop-shadow-sm"
                 priority
               />
             </div>
 
             <div className="min-w-0 hidden sm:block">
-              <div className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors truncate">
-                TKA PPLG
+              <div className="text-lg font-extrabold tracking-tight text-slate-800 leading-tight group-hover:text-blue-600 transition-colors truncate">
+                Simulasi TKA PPLG
               </div>
-              <p className="text-[10px] sm:text-xs font-medium text-slate-500 leading-tight truncate max-w-[140px] sm:max-w-[180px]">
+              <p className="text-xs font-medium text-slate-500 leading-tight truncate max-w-[180px]">
                 {isModule && selectedModule
                   ? `Modul ${selectedModule.number} • ${selectedModule.cardTitle}`
                   : isQuiz
-                    ? "Simulasi Ujian TKA"
+                    ? "Sedang Mengerjakan Soal"
                     : "SMK Telekomunikasi Tunas Harapan"}
               </p>
             </div>
@@ -78,16 +89,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* DESKTOP NAVIGATION - hanya muncul di layar besar (lg ke atas) */}
           <nav
-            className="hidden lg:flex items-center justify-center gap-1 text-xs font-bold text-slate-600"
+            className="hidden lg:flex items-center justify-center gap-1 text-sm font-semibold text-slate-600"
             aria-label="Navigasi utama"
           >
             <Link
-              href="/"
-              className={`px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 min-h-[44px] ${
-                isLanding
+              href="/tka"
+              className={`px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 min-h-[44px] ${isLanding
                   ? "text-blue-600 bg-blue-50 font-extrabold shadow-2xs"
                   : "hover:text-blue-600 hover:bg-slate-100 text-slate-600"
-              }`}
+                }`}
               aria-current={isLanding ? "page" : undefined}
             >
               <Globe
@@ -98,12 +108,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             </Link>
 
             <Link
-              href="/modul"
-              className={`px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 min-h-[44px] ${
-                ismodul || isModule
+              href="/tka/modul"
+              className={`px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 min-h-[44px] ${ismodul || isModule
                   ? "text-blue-600 bg-blue-50 font-extrabold shadow-2xs"
                   : "hover:text-blue-600 hover:bg-slate-100 text-slate-600"
-              }`}
+                }`}
               aria-current={ismodul || isModule ? "page" : undefined}
             >
               Modul Belajar
@@ -116,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative hidden lg:block">
                 <button
                   onClick={() => setIsModuleTocOpen(!isModuleTocOpen)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50 text-[11px] sm:text-xs font-semibold text-blue-700 hover:bg-blue-100 transition-colors cursor-pointer min-h-[40px]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50 text-xs sm:text-sm font-semibold text-blue-700 hover:bg-blue-100 transition-colors cursor-pointer min-h-[40px]"
                   aria-expanded={isModuleTocOpen}
                   aria-haspopup="true"
                   aria-label={`Daftar isi Modul ${selectedModule.number}`}
@@ -156,11 +165,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <button
                           key={item.id}
                           onClick={() => scrollToSection(item.id)}
-                          className={`w-full text-left px-3 py-2.5 text-xs sm:text-sm transition-colors cursor-pointer min-h-[44px] flex items-center ${
-                            activeSectionId === item.id
+                          className={`w-full text-left px-3 py-2.5 text-xs sm:text-sm transition-colors cursor-pointer min-h-[44px] flex items-center ${activeSectionId === item.id
                               ? "bg-blue-50 text-blue-700 font-semibold"
                               : "text-slate-700 hover:bg-slate-50 hover:text-blue-600"
-                          }`}
+                            }`}
                         >
                           {item.title}
                         </button>
@@ -197,13 +205,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             {/* MOBILE: Navigasi Landing Page */}
             <Link
-              href="/"
+              href="/tka"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base ${
-                isLanding
+              className={`w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base ${isLanding
                   ? "text-blue-600 bg-blue-50 font-extrabold"
                   : "hover:text-blue-600 hover:bg-slate-100 text-slate-600"
-              }`}
+                }`}
               aria-current={isLanding ? "page" : undefined}
             >
               <Globe className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
@@ -212,13 +219,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* MOBILE: Navigasi Modul Belajar */}
             <Link
-              href="/modul"
+              href="/tka/modul"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base ${
-                ismodul || isModule
+              className={`w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base ${ismodul || isModule
                   ? "text-blue-600 bg-blue-50 font-extrabold"
                   : "hover:text-blue-600 hover:bg-slate-100 text-slate-600"
-              }`}
+                }`}
               aria-current={ismodul || isModule ? "page" : undefined}
             >
               <BookOpen className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
@@ -236,11 +242,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button
                       key={item.id}
                       onClick={() => scrollToSection(item.id)}
-                      className={`w-full text-left px-3 py-2.5 pl-8 text-sm transition-colors cursor-pointer min-h-[44px] flex items-center ${
-                        activeSectionId === item.id
+                      className={`w-full text-left px-3 py-2.5 pl-8 text-sm transition-colors cursor-pointer min-h-[44px] flex items-center ${activeSectionId === item.id
                           ? "bg-blue-50 text-blue-700 font-semibold"
                           : "hover:bg-slate-50 text-slate-700 hover:text-blue-600"
-                      }`}
+                        }`}
                     >
                       {item.title}
                     </button>
@@ -253,11 +258,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             {(isQuiz || isModule) && (
               <div className="border-t border-slate-100 pt-2 mt-2">
                 <Link
-                  href="/modul"
+                  href="/tka/modul"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="w-full px-3 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[48px] text-base text-slate-600 hover:text-blue-600 hover:bg-slate-50"
                 >
-                  <ArrowBigLeft className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                  <ArrowBigLeft
+                    className="w-5 h-5 flex-shrink-0"
+                    aria-hidden="true"
+                  />
                   <span>Kembali ke Menu Utama</span>
                 </Link>
               </div>

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit 2>&1 | head -30)",
+      "Bash(npx tsc --noEmit 2>&1 | head -20)",
+      "Bash(ls -1 && echo \"---\" && cat package.json | head -40)",
+      "Bash(grep -rn -i -E \"ANBK|simulasi|TKA|LMS\" src public README.md next.config.ts 2>/dev/null | grep -v node_modules | head -80)",
+      "Bash(grep -rn -E \"Portal TKA PPLG|TKA PPLG|CMS TKA|\\\\\"TKA PPLG\\\\\"|Simulasi Ujian TKA|Simulasi TKA\" src --include=*.tsx --include=*.ts | head -60)"
+    ]
+  }
+}

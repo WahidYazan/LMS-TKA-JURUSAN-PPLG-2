@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Footer membacanya saat prerender, jadi tahun diambil dari konstanta build.
+  env: {
+    NEXT_PUBLIC_SITE_YEAR: String(new Date().getFullYear()),
+  },
 };
 
 export default nextConfig;

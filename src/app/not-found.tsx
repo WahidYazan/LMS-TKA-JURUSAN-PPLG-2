@@ -12,7 +12,7 @@ export default function NotFound() {
           Halaman yang Anda tuju tidak tersedia atau telah dipindahkan.
         </p>
         <Link
-          href="/"
+          href="/tka"
           className="inline-flex items-center justify-center w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-colors"
         >
           Kembali ke Beranda

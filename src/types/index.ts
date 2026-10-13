@@ -94,6 +94,17 @@ export interface HOTSQuestion {
   explanation: string;
 }
 
+// Domain type consumed by quiz UI: id is string so Supabase uuid and the
+// bundled numeric data share one shape (numeric ids are stringified).
+export interface QuizQuestion {
+  id: string;
+  moduleNum: number;
+  caseText: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
 export interface ExamQuestion {
   id: number;
   category: string;

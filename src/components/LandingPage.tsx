@@ -1,11 +1,7 @@
 import React from "react";
 import { LandingHero } from "./landing/LandingHero";
-import { LandingStats } from "./landing/LandingStats";
-import { LandingOfficial } from "./landing/LandingOfficial";
 import { LandingCurriculum } from "./landing/LandingCurriculum";
-import { LandingFeatures } from "./landing/LandingFeatures";
-import { LandingCta } from "./landing/LandingCta";
-import { LandingFooter } from "./landing/LandingFooter";
+import { SiteFooter } from "./SiteFooter";
 
 export const LandingPage: React.FC = () => {
   return (
@@ -16,7 +12,7 @@ export const LandingPage: React.FC = () => {
       <LandingCurriculum />
       {/*<LandingFeatures />*/}
       {/*<LandingCta />*/}
-      <LandingFooter />
+      <SiteFooter />
     </div>
   );
 };

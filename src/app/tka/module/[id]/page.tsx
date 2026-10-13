@@ -1,8 +1,10 @@
 "use client";
 
 import { ModuleReaderView } from "@/components/ModuleReaderView";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Navbar } from "@/components/Navbar";
-import { modulesList } from "@/data/modules";
+import { loadModules } from "@/lib/content";
+import { useContent } from "@/hooks/useContent";
 import { notFound } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
@@ -14,6 +16,7 @@ interface ModulePageProps {
 function ModuleContent({ params }: ModulePageProps) {
   const pathname = usePathname();
   const [id, setId] = useState<string>("");
+  const { data: modules, loading } = useContent(loadModules);
 
   useEffect(() => {
     params.then((p) => setId(p.id));
@@ -21,28 +24,37 @@ function ModuleContent({ params }: ModulePageProps) {
 
   if (!id) return null;
 
-  const module = modulesList.find((m) => m.id === id);
+  if (loading || !modules) {
+    return (
+      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
+        <p className="text-sm text-slate-400 animate-pulse">Memuat modul...</p>
+      </div>
+    );
+  }
 
-  if (!module) {
+  const moduleContent = modules.find((m) => m.id === id);
+
+  if (!moduleContent) {
     notFound();
   }
 
-  const currentIndex = modulesList.findIndex((m) => m.id === module.id);
-  const hasNextModule = currentIndex < modulesList.length - 1;
-  const nextModule = hasNextModule ? modulesList[currentIndex + 1] : null;
+  const currentIndex = modules.findIndex((m) => m.id === moduleContent.id);
+  const hasNextModule = currentIndex < modules.length - 1;
+  const nextModule = hasNextModule ? modules[currentIndex + 1] : null;
   const hasPrevModule = currentIndex > 0;
-  const prevModule = hasPrevModule ? modulesList[currentIndex - 1] : null;
+  const prevModule = hasPrevModule ? modules[currentIndex - 1] : null;
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
-      <Navbar currentPath={pathname} selectedModule={module} />
+      <Navbar currentPath={pathname} selectedModule={moduleContent} />
       <ModuleReaderView
-        module={module}
+        module={moduleContent}
         hasNextModule={hasNextModule}
         nextModuleId={nextModule?.id || null}
         hasPrevModule={hasPrevModule}
         prevModuleId={prevModule?.id || null}
       />
+      <SiteFooter />
     </div>
   );
 }

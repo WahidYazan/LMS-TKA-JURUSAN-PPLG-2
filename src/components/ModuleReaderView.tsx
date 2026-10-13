@@ -6,7 +6,7 @@ import {
   ArrowRight,
   ArrowLeft,
 } from "lucide-react";
-import { ModuleContent, ModuleMedia } from "../types";
+import { ModuleContent } from "../types";
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
@@ -27,15 +27,15 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-['Plus_Jakarta_Sans',sans-serif]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 pb-20 lg:pb-0">
         <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs">
-          <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
+          <span className="inline-block px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold uppercase tracking-wider mb-3">
             {module.moduleBadge}
           </span>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-800 tracking-tight mb-3">
             {module.title}
           </h1>
 
-          <p className="text-xs sm:text-base text-slate-500 leading-relaxed mb-6 max-w-3xl">
+          <p className="text-sm sm:text-base text-slate-500 leading-relaxed mb-6 max-w-3xl">
             {module.shortDesc}
           </p>
 
@@ -54,14 +54,14 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 id={section.id}
                 className="scroll-mt-24 sm:scroll-mt-28"
               >
-                <h2 className="text-base sm:text-lg lg:text-xl font-bold text-slate-900 pb-2 border-b border-slate-100 mb-4">
+                <h2 className="text-lg sm:text-xl font-bold text-slate-800 pb-2 border-b border-slate-100 mb-4">
                   {section.numberPrefix} {section.title}
                 </h2>
 
                 {section.paragraphs?.map((p, pIdx) => (
                   <p
                     key={pIdx}
-                    className="text-xs sm:text-sm leading-relaxed mb-3 text-slate-700"
+                    className="text-sm leading-relaxed mb-3 text-slate-700"
                   >
                     {p}
                   </p>
@@ -72,7 +72,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                     {section.bulletPoints.map((bp, bIdx) => (
                       <li
                         key={bIdx}
-                        className="text-xs sm:text-sm leading-relaxed flex items-start gap-2"
+                        className="text-sm leading-relaxed flex items-start gap-2"
                       >
                         <span className="text-slate-400 font-bold select-none flex-shrink-0 mt-0.5">
                           •
@@ -100,7 +100,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                       </code>
                     </pre>
                     {section.codeSnippet.explanation && (
-                      <p className="text-xs text-slate-500 mt-2 italic">
+                      <p className="text-sm text-slate-500 mt-2 italic">
                         {section.codeSnippet.explanation}
                       </p>
                     )}
@@ -119,10 +119,11 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                             <img
                               src={media.src}
                               alt={media.alt || section.title}
-                              className="w-full h-auto max-h-[500px] object-contain"
+                              className="mx-auto h-auto max-h-[500px] w-auto max-w-full object-contain"
                               style={{
-                                width: media.width,
-                                height: media.height,
+                                maxWidth: media.width
+                                  ? `${media.width}px`
+                                  : undefined,
                               }}
                             />
                             {media.caption && (
@@ -169,8 +170,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
           {/* Navigation Buttons - Desktop only (hidden on mobile, sticky bottom nav used instead) */}
           <div className="hidden lg:flex lg:items-center lg:justify-between gap-3 mt-8 pt-6 border-t border-slate-200">
             <Link
-              href="/modul"
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[48px] border border-slate-200"
+              href="/tka/modul"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[48px] border border-slate-200"
             >
               <ArrowBigLeft
                 className="w-4 h-4 text-slate-400"
@@ -182,8 +183,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
             <div className="flex gap-3">
               {hasPrevModule && prevModuleId && (
                 <Link
-                  href={`/module/${prevModuleId}`}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer min-h-[48px]"
+                  href={`/tka/module/${prevModuleId}`}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-sm shadow-sm transition-all cursor-pointer min-h-[48px]"
                 >
                   <ArrowBigLeft className="w-4 h-4" aria-hidden="true" />
                   <span>Modul {module.number - 1}</span>
@@ -192,8 +193,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
               {hasNextModule && nextModuleId && (
                 <Link
-                  href={`/module/${nextModuleId}`}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
+                  href={`/tka/module/${nextModuleId}`}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
                 >
                   <span>Lanjut ke Modul {module.number + 1}</span>
                   <ArrowBigRight className="w-4 h-4" aria-hidden="true" />
@@ -202,10 +203,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
               {!hasNextModule && (
                 <Link
-                  href="/quiz"
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
+                  href="/tka/quiz"
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-sm shadow-md transition-all cursor-pointer min-h-[48px]"
                 >
-                  <span>Mulai Simulasi Ujian</span>
+                  <span>Mulai Simulasi TKA PPLG</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               )}
@@ -219,7 +220,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             <Link
-              href="/modul"
+              href="/tka/modul"
               className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer min-h-[44px] border border-slate-200"
             >
               <ArrowBigLeft
@@ -232,7 +233,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
             <div className="flex gap-2 flex-1">
               {hasPrevModule && prevModuleId && (
                 <Link
-                  href={`/module/${prevModuleId}`}
+                  href={`/tka/module/${prevModuleId}`}
                   className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-sm transition-all cursor-pointer min-h-[44px]"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
@@ -242,8 +243,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
               {hasNextModule && nextModuleId && (
                 <Link
-                  href={`/module/${nextModuleId}`}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
+                  href={`/tka/module/${nextModuleId}`}
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
                 >
                   <span>Next</span>
                   <ArrowBigRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -252,7 +253,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
               {!hasNextModule && (
                 <Link
-                  href="/quiz"
+                  href="/tka/quiz"
                   className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs shadow-md transition-all cursor-pointer min-h-[44px]"
                 >
                   <span>Ujian</span>

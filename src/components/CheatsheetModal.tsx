@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { X, Search, FileText, Check, Copy } from 'lucide-react';
-import { cheatsheetData } from '../data/cheatsheet';
+import { loadCheatsheet } from '../lib/content';
+import { useContent } from '../hooks/useContent';
 
 interface CheatsheetModalProps {
   onClose: () => void;
 }
 
 export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => {
+  const { data: cheatsheetData, loading } = useContent(loadCheatsheet);
   const [activeTab, setActiveTab] = useState<string>('git');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -17,13 +19,17 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const currentSection = cheatsheetData.find(s => s.id === activeTab) || cheatsheetData[0];
+  const sections = cheatsheetData ?? [];
+  const currentSection =
+    sections.find(s => s.id === activeTab) || sections[0];
 
-  const filteredItems = currentSection.items.filter(item => 
-    item.commandOrConcept.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (item.example && item.example.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredItems = currentSection
+    ? currentSection.items.filter(item =>
+        item.commandOrConcept.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.example && item.example.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : [];
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in">
@@ -31,14 +37,14 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
         {/* Header */}
         <div className="px-4 sm:px-6 py-4 sm:py-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold">
               <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-slate-900">
+              <h3 className="text-xl font-extrabold text-slate-800">
                 Rangkuman TKA PPLG
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-sm text-slate-500">
                 Bank formula, sintaks ringkas, dan standar kompetensi Rekayasa Perangkat Lunak
               </p>
             </div>
@@ -55,13 +61,13 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
         {/* Filter bar */}
         <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white">
           <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
-            {cheatsheetData.map(sec => (
+            {sections.map(sec => (
               <button
                 key={sec.id}
                 onClick={() => setActiveTab(sec.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === sec.id
-                    ? 'bg-blue-600 text-white shadow-xs'
+                    ? 'bg-sky-500 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -77,16 +83,20 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
               placeholder="Cari konsep / perintah..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/30"
             />
           </div>
         </div>
 
         {/* Content list */}
         <div className="flex-1 overflow-y-auto p-6 space-y-3 bg-[#f8fafc]">
-          {filteredItems.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12 text-xs text-slate-400 animate-pulse">
+              Memuat rangkuman...
+            </div>
+          ) : filteredItems.length === 0 ? (
             <div className="text-center py-12 text-xs text-slate-400">
-              Tidak ada hasil yang sesuai dengan kata kunci "{searchQuery}"
+              Tidak ada hasil yang sesuai dengan kata kunci &quot;{searchQuery}&quot;
             </div>
           ) : (
             filteredItems.map((item, idx) => {
@@ -94,17 +104,17 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
               return (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-300 shadow-xs transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  className="p-4 rounded-xl bg-white border border-slate-200 hover:border-sky-300 shadow-xs transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="space-y-1 max-w-xl">
-                    <div className="font-mono text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded inline-block">
+                    <div className="font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded inline-block">
                       {item.commandOrConcept}
                     </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    <p className="text-sm text-slate-500 leading-relaxed">
                       {item.description}
                     </p>
                     {item.example && (
-                      <div className="mt-1 font-mono text-[11px] text-slate-500 bg-slate-100 px-2.5 py-1 rounded border border-slate-200/60 inline-block">
+                      <div className="mt-1 font-mono text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded border border-slate-200/60 inline-block">
                         {item.example}
                       </div>
                     )}
@@ -112,7 +122,7 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
 
                   <button
                     onClick={() => handleCopy(item.example || item.commandOrConcept, uniqueKey)}
-                    className="self-start sm:self-center flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-blue-600 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-blue-50 cursor-pointer shrink-0 transition-colors"
+                    className="self-start sm:self-center flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-sky-600 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-sky-50 cursor-pointer shrink-0 transition-colors"
                   >
                     {copiedKey === uniqueKey ? (
                       <>
