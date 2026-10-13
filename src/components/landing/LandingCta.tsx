@@ -14,13 +14,13 @@ export const LandingCta: React.FC = () => {
 
         <div className="relative z-10 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-sky-200 mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" aria-hidden="true" />
-            <span>Persiapan Terpadu Asesmen SMK 2026</span>
+            {/* <Sparkles className="w-3.5 h-3.5 text-amber-300" aria-hidden="true" /> */}
+            <span>Simulasi TKA PPLG</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-4 tracking-tight leading-tight text-balance">
             Siap Uji Pemahaman & Taklukkan{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-200 to-amber-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-200 to-blue-100">
               Simulasi TKA PPLG?
             </span>
           </h2>
@@ -49,7 +49,7 @@ export const LandingCta: React.FC = () => {
           </div>
 
           {/* Unboxed trust indicators */}
-          <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-4 text-xs font-medium text-slate-400">
+          {/* <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-4 text-xs font-medium text-slate-400">
             <span>100% Akses Terbuka</span>
             <span aria-hidden="true">·</span>
             <span>Tanpa Wajib Registrasi</span>
@@ -57,7 +57,7 @@ export const LandingCta: React.FC = () => {
             <span>Dilengkapi Kunci & Pembahasan</span>
             <span aria-hidden="true">·</span>
             <span>Standar Resmi Pusmendik</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

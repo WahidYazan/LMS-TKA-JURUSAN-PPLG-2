@@ -6,17 +6,42 @@ import { GraduationCap, ClipboardCheck, ArrowRight } from "lucide-react";
 export const HeroBanner: React.FC = () => {
   return (
     <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-[#0c1328] via-[#0f1b3b] to-[#090d1a] text-white shadow-xl mb-8 sm:mb-10 p-6 sm:p-8 lg:p-10">
-      {/* Background illustration */}
-      <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[45%] opacity-20 sm:opacity-30 pointer-events-none" aria-hidden="true">
+
+      {/* BACKGROUND - ini yang lu mau gradasi kayak logo-modul.png kemarin */}
+      <div
+        className="absolute right-0 top-0 bottom-0 w-full sm:w-[60%] pointer-events-none select-none"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 35%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 35%)",
+        }}
+        aria-hidden="true"
+      >
+        {/* kalo mau pake logo-modul.png lagi */}
         <Image
-          src="/images/hero/hero_workspace.jpg"
+          src="/images/brands/logo-modul.png"
           alt=""
           fill
-          className="object-cover object-center"
-          referrerPolicy="no-referrer"
+          className="object-cover object-right opacity-30 sm:opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0c1328] via-transparent to-transparent hidden sm:block" />
       </div>
+
+      {/* kalo mau double layer hero_workspace + logo-modul biar cakep */}
+      {/* <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[60%] pointer-events-none">
+        <Image src="/images/hero/hero_workspace.jpg" fill className="object-cover opacity-20" alt="" />
+        <div
+          className="absolute inset-0"
+          style={{
+            maskImage: "linear-gradient(to right, transparent, black 30%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 30%)",
+          }}
+        >
+          <Image src="/images/brands/logo-modul.png" fill className="object-cover object-right opacity-30" alt="" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0c1328] via-[#0c1328]/60 to-transparent" />
+      </div> */}
+
+      {/* overlay halus biar text kebaca */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0c1328] via-[#0c1328]/80 to-transparent sm:w-[75%] pointer-events-none" />
 
       <div className="relative z-10 max-w-2xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold mb-4 border border-white/15 text-sky-200">
@@ -35,15 +60,15 @@ export const HeroBanner: React.FC = () => {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/tka/quiz"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer min-h-[40px]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer min-h-"
           >
             <ClipboardCheck className="w-4 h-4" aria-hidden="true" />
             <span>Langsung ke Simulasi Ujian (50 Soal)</span>
             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </Link>
-          <span className="text-xs text-slate-400 hidden sm:inline">
+          {/* <span className="text-xs text-slate-400 hidden sm:inline">
             5 Modul · 25 Bab Materi Lengkap
-          </span>
+          </span> */}
         </div>
       </div>
     </div>

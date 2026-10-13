@@ -156,6 +156,7 @@ export default function AdminCheatsheetPage() {
     <div>
       <AdminPageHeader
         title="Cheatsheet"
+        kicker="Konten · Rangkuman TKA"
         description="Rangkuman TKA PPLG: section (Git, HTTP, SQL, OOP) beserta item per section."
         action={{
           label: "Tambah Section",

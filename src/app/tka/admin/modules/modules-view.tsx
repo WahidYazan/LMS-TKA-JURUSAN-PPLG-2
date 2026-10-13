@@ -173,6 +173,7 @@ export default function AdminModulesPage() {
     <div>
       <AdminPageHeader
         title="Materi Modul"
+        kicker="Konten · Modul Belajar"
         description="Data modul (samping). Isi tiap section diedit di halaman detail modul."
         action={{ label: "Tambah Modul", onClick: () => setCreating(true) }}
       />

@@ -14,6 +14,7 @@ import type { QuizQuestionRow } from "@/lib/dbTypes";
 import {
   AdminCard,
   AdminListRow,
+  AdminPageHeader,
   FormModalActions,
   NumberField,
   TextAreaField,
@@ -158,21 +159,15 @@ export default function AdminQuizPage() {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div>
-          <h1 className="text-lg sm:text-2xl font-extrabold tracking-tight text-slate-900">
-            Soal Quiz
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {rows.length} soal dalam database. Urutan tampil di quiz diacak
-            untuk setiap pengunjung.
-          </p>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Soal Quiz"
+        kicker="Konten · Simulasi Ujian"
+        description={`${rows.length} soal dalam database. Urutan tampil di quiz diacak untuk setiap pengunjung.`}
+      />
 
       <div className="relative mb-5">
         <Search
-          className="w-4 h-4 text-slate-400 absolute left-3 top-3.5"
+          className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
           aria-hidden="true"
         />
         <input
@@ -180,7 +175,7 @@ export default function AdminQuizPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari soal / opsi..."
-          className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-400"
+          className="w-full pl-10 pr-3 py-2.5 min-h-[44px] rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-400 transition-shadow"
         />
       </div>
 

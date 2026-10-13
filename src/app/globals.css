@@ -144,3 +144,33 @@
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
+
+/* ── Panel Admin: bahasa visual "Panel Internal" ──────────────
+   Terang, berani, dominan sky. Grid titik untuk hero + kicker
+   mono supaya tiap halaman punya identitas, bukan kartu datar. */
+.bg-blueprint {
+  background-image: radial-gradient(
+    circle,
+    rgba(2, 132, 199, 0.16) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+.bg-blueprint-strong {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.22) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 18px 18px;
+}
+
+/* Garis aksen tipis di atas panel/kartu — menggantikan border datar. */
+.accent-top::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
+}

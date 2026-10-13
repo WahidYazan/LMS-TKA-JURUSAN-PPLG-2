@@ -134,13 +134,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Simulasi Ujian</span>
             </Link>
 
-            <button
+            {/* <button
               onClick={handleOpenCheatsheet}
               className="px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap min-h-[40px] text-slate-600 hover:text-blue-600 hover:bg-slate-50"
             >
               <FileCode2 className="w-4 h-4 text-slate-400" aria-hidden="true" />
               <span>Cheatsheet</span>
-            </button>
+            </button> */}
           </nav>
 
           {/* ZONE 3: ACTIONS */}

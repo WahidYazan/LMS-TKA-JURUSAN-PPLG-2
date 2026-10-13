@@ -19,23 +19,28 @@ export const AdminModal: React.FC<{
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
       <div
-        className={`bg-white rounded-2xl w-full ${
+        className={`relative bg-white rounded-2xl w-full ${
           wide ? "max-w-3xl" : "max-w-xl"
         } max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden`}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* pita aksen gradient — konsisten dengan shell & header admin */}
+        <div
+          className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600"
+          aria-hidden="true"
+        />
         <div className="px-4 sm:px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3 shrink-0">
-          <h3 className="text-base font-extrabold text-slate-900">{title}</h3>
+          <h3 className="text-base font-extrabold tracking-tight text-slate-900">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
             aria-label="Tutup"
           >
             <X className="w-5 h-5" />
@@ -79,7 +84,7 @@ export const ConfirmDeleteDialog: React.FC<{
         <button
           onClick={onConfirm}
           disabled={confirming}
-          className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm cursor-pointer min-h-[44px] transition-colors disabled:opacity-60"
+          className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm cursor-pointer min-h-[44px] transition-colors disabled:opacity-60 shadow-md shadow-rose-600/20"
         >
           {confirming ? "Menghapus..." : "Ya, Hapus"}
         </button>

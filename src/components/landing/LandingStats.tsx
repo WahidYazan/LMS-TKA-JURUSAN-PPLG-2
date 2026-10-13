@@ -20,9 +20,9 @@ export const LandingStats: React.FC = () => {
                 }`}
                 style={isHex ? { color: stat.color } : undefined}
               >
-                {stat.value}
+                {/* {stat.value} */}
               </div>
-              <div className="text-xs font-bold text-slate-700 tracking-wide uppercase">
+              {/* <div className="text-xs font-bold text-slate-700 tracking-wide uppercase">
                 {stat.label}
               </div>
               <div className="text-[11px] text-slate-400 font-medium mt-0.5">
@@ -30,7 +30,7 @@ export const LandingStats: React.FC = () => {
                 {idx === 1 && 'Studi Kasus & Pembahasan'}
                 {idx === 2 && 'Git, SQL, OOP, HTTP'}
                 {idx === 3 && 'Langsung di Web Browser'}
-              </div>
+              </div> */}
             </div>
           );
         })}

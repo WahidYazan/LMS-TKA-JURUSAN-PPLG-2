@@ -222,9 +222,9 @@ export const LandingCurriculum: React.FC = () => {
                     aria-hidden="true"
                   />
                 </span>
-                <span className="text-[11px] font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded-md">
+                {/* <span className="text-[11px] font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded-md">
                   Gratis
-                </span>
+                </span> */}
               </div>
             </Link>
           );
@@ -253,33 +253,33 @@ export const LandingCurriculum: React.FC = () => {
                 <div className="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center shrink-0 shadow-md shadow-amber-400/20 group-hover:scale-105 transition-transform">
                   <Laptop className="w-6 h-6" aria-hidden="true" />
                 </div>
-                <span className="text-xs font-bold text-amber-300 uppercase tracking-wider font-mono">
+                {/* <span className="text-xs font-bold text-amber-300 uppercase tracking-wider font-mono">
                   SIMULASI RESMI
-                </span>
+                </span> */}
               </div>
 
               <div className="flex items-center gap-2 text-xs text-sky-200/80 font-medium mb-2">
                 <span>50 Soal HOTS</span>
-                <span aria-hidden="true">·</span>
-                <span>Evaluasi Real-Time</span>
+                {/* <span aria-hidden="true">·</span> */}
+                {/* <span>Evaluasi Real-Time</span> */}
               </div>
 
               <h3 className="text-lg font-bold text-white mb-2 leading-snug">
                 Simulasi Ujian TKA Lengkap
               </h3>
               <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed mb-4">
-                Uji kemampuan komprehensif Anda dari Modul 1 sampai Modul 5 dengan studi kasus industri nyata dan evaluasi skor instan.
+                Simulasi Tes Kemampuan Akademik dari Modul 1 sampai Modul {filteredModules.length}.
               </p>
 
               {/* Micro specs */}
-              <div className="flex flex-wrap gap-1.5 mb-4">
+              {/* <div className="flex flex-wrap gap-1.5 mb-4">
                 <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-white/10 text-sky-200">
                   Timer & Navigasi Cepat
                 </span>
                 <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-white/10 text-sky-200">
                   Pembahasan Setiap Opsi
                 </span>
-              </div>
+              </div> */}
             </div>
 
             <div className="relative z-10 pt-4 border-t border-white/10">

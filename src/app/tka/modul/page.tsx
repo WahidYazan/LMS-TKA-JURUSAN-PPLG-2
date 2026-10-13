@@ -52,9 +52,9 @@ export default function DashboardPage() {
               <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                 Materi Pembelajaran
               </h2>
-              <span className="text-xs font-bold text-slate-500 bg-slate-100 py-1 px-3 rounded-full">
+              {/* <span className="text-xs font-bold text-slate-500 bg-slate-100 py-1 px-3 rounded-full">
                 {filteredModules.length} Modul Ditampilkan
-              </span>
+              </span> */}
             </div>
 
             {/* Search Input and Filter */}

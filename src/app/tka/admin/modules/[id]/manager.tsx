@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Inbox } from "lucide-react";
+import { ArrowLeft, Inbox, Plus } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { describeError } from "@/lib/adminError";
 import {
@@ -189,30 +189,39 @@ export default function SectionManager({ id }: { id: string }) {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div>
-          <Link
-            href="/tka/admin/modules"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-sky-600 transition-colors mb-2"
+      <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-xs mb-6">
+        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-sky-400 to-blue-600" aria-hidden="true" />
+        <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 pl-6 pr-5 sm:pr-6 py-5 sm:py-6">
+          <div className="min-w-0">
+            <Link
+              href="/tka/admin/modules"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-sky-600 transition-colors mb-2"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+              Kembali ke Daftar Modul
+            </Link>
+            <p className="font-mono text-[10.5px] font-semibold tracking-[0.2em] uppercase text-sky-600 mb-1.5">
+              Konten · Section Modul
+            </p>
+            <h1 className="text-xl sm:text-[26px] font-extrabold tracking-[-0.02em] leading-tight text-slate-900 text-balance">
+              {module ? `Section — ${module.module_badge}` : "Section Modul"}
+            </h1>
+            <p className="text-[13px] sm:text-sm text-slate-500 mt-1.5 max-w-2xl leading-relaxed">
+              {rows.length} section. Publik menampilkan urutan ini di{" "}
+              <code className="font-mono text-[12px] text-sky-700 bg-sky-50 border border-sky-100 rounded px-1.5 py-0.5">
+                /module/{module?.slug ?? "..."}
+              </code>
+            </p>
+          </div>
+          <button
+            onClick={() => setCreating(true)}
+            disabled={loading || !!error}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white text-sm font-bold shadow-lg shadow-sky-500/25 transition-all cursor-pointer min-h-[44px] w-fit disabled:opacity-50 shrink-0 active:scale-[0.98]"
           >
-            <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-            Kembali ke Daftar Modul
-          </Link>
-          <h1 className="text-lg sm:text-2xl font-extrabold tracking-tight text-slate-900">
-            {module ? `Section — ${module.module_badge}` : "Section Modul"}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {rows.length} section. Publik menampilkan urutan ini di{" "}
-            <code className="font-mono">/module/{module?.slug ?? "..."}</code>
-          </p>
+            <Plus className="w-4 h-4" aria-hidden="true" />
+            Tambah Section
+          </button>
         </div>
-        <button
-          onClick={() => setCreating(true)}
-          disabled={loading || !!error}
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold shadow-lg shadow-sky-500/25 transition-all cursor-pointer min-h-[44px] w-fit disabled:opacity-50"
-        >
-          + Tambah Section
-        </button>
       </div>
 
       {loading && <AdminListSkeleton rows={4} />}

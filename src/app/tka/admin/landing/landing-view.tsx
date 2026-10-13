@@ -137,6 +137,7 @@ export default function AdminLandingPage() {
     <div>
       <AdminPageHeader
         title="Landing Page"
+        kicker="Konten · Halaman Depan"
         description="Statistik dan kartu fitur di halaman depan."
         action={{
           label: tab === "stats" ? "Tambah Statistik" : "Tambah Fitur",
@@ -147,7 +148,11 @@ export default function AdminLandingPage() {
         }}
       />
 
-      <div className="flex items-center gap-1.5 mb-5">
+      <div
+        className="inline-flex items-center gap-1 p-1 mb-5 rounded-xl bg-white border border-slate-200 shadow-xs"
+        role="tablist"
+        aria-label="Bagian landing page"
+      >
         {(
           [
             { id: "stats", label: `Statistik (${stats.length})` },
@@ -156,11 +161,13 @@ export default function AdminLandingPage() {
         ).map((t) => (
           <button
             key={t.id}
+            role="tab"
+            aria-selected={tab === t.id}
             onClick={() => setTab(t.id)}
-            className={`px-4 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer min-h-[40px] ${
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer min-h-[40px] ${
               tab === t.id
-                ? "bg-sky-500 text-white shadow-md shadow-sky-500/20"
-                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+                ? "bg-sky-500 text-white shadow-md shadow-sky-500/25"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
             }`}
           >
             {t.label}

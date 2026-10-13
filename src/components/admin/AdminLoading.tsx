@@ -46,13 +46,20 @@ export const FullscreenLoader: React.FC<{ label?: string }> = ({
   <div
     role="status"
     aria-live="polite"
-    className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center gap-5 font-['Plus_Jakarta_Sans',sans-serif]"
+    className="relative min-h-screen bg-[#f5f8fb] flex flex-col items-center justify-center gap-5 font-sans overflow-hidden"
   >
-    <div className="relative w-14 h-14">
-      <div className="absolute inset-0 rounded-full border-[3px] border-slate-200" />
-      <div className="absolute inset-0 rounded-full border-[3px] border-transparent border-t-sky-500 animate-spin" />
-      <div className="absolute inset-[20px] rounded-full bg-sky-500/10 animate-pulse" />
+    {/* pola blueprint samar sebagai latar */}
+    <div
+      className="absolute inset-0 bg-blueprint opacity-50 pointer-events-none"
+      aria-hidden="true"
+    />
+    <div className="relative w-16 h-16 flex items-center justify-center">
+      <div className="absolute inset-0 rounded-2xl bg-white border border-slate-200 shadow-xs" />
+      <div className="absolute inset-0 rounded-2xl border-[3px] border-transparent border-t-sky-500 border-r-blue-500 animate-spin" />
+      <span className="relative w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse" />
     </div>
-    <p className="text-sm font-semibold text-slate-400">{label}</p>
+    <p className="relative font-mono text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-400">
+      {label}
+    </p>
   </div>
 );

@@ -18,8 +18,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenCheatsheet }) =>
         <LandingHero onOpenCheatsheet={onOpenCheatsheet} />
         <LandingStats />
         <LandingCurriculum />
-        <LandingFeatures />
-        <LandingOfficial />
+        {/* <LandingFeatures /> */}
+        {/* <LandingOfficial /> */}
         <LandingCta />
       </main>
       <SiteFooter />

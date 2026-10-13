@@ -91,9 +91,9 @@ export const SiteFooter: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <p>&copy; {year} SMK Telekomunikasi Tunas Harapan. Semua hak cipta dilindungi.</p>
-          <p className="text-[11px] text-slate-500">
+          {/* <p className="text-[11px] text-slate-500">
             Platform Belajar & Asesmen Mandiri Siswa
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>

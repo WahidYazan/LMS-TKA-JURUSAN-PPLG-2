@@ -113,7 +113,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
               {/* Showcase Image */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
                 <Image
-                  src="/images/hero/hero_workspace.jpg"
+                  src="/images/brands/logo-modul.png"
                   alt="Ruang Praktik Rekayasa Perangkat Lunak dan Gim"
                   fill
                   priority
@@ -124,11 +124,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
                 
                 {/* Floating Top Badge */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/10 text-[11px] font-mono font-semibold text-sky-300">
+                <div className="absolute top-3 right-3">
+                  {/* <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/10 text-[11px] font-mono font-semibold text-sky-300">
                     <Terminal className="w-3.5 h-3.5 text-sky-400" aria-hidden="true" />
                     <span>SMK TTH · PPLG LAB</span>
-                  </div>
+                  </div> */}
                   <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 text-[11px] font-semibold text-emerald-300">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span>Aktif 2026</span>
@@ -137,7 +137,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
 
                 {/* Bottom Overlay Info */}
                 <div className="absolute bottom-3 left-3 right-3 p-3.5 rounded-xl bg-slate-900/90 backdrop-blur-md border border-white/10 text-left">
-                  <div className="flex items-center justify-between mb-1.5">
+                  {/* <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-sky-400" aria-hidden="true" />
                       5 Modul Kompetensi Kejuruan
@@ -146,15 +146,15 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
                   </div>
                   <p className="text-[11px] text-slate-300 leading-snug line-clamp-2">
                     Mulai dari Wawasan Industri, K3, Basis Data & Web, OOP Java/C#, hingga Dasar Engine Gim 2D/3D.
-                  </p>
+                  </p> */}
                   
                   {/* Topic mini tags */}
-                  <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-slate-800">
+                  {/* <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-slate-800">
                     <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-300">Git & CI/CD</span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-300">SQL & Relasional</span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-300">OOP & Polymorphism</span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-300">Game Loop & Physics</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
