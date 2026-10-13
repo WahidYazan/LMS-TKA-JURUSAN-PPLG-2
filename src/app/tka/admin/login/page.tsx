@@ -5,24 +5,29 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "@/lib/auth";
 import {
-  Lock,
   Mail,
-  ShieldCheck,
-  CheckCircle2,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
   ArrowLeft,
+  ClipboardList,
+  BookOpen,
+  Layers,
 } from "lucide-react";
 import { SiteLogo } from "@/components/SiteLogo";
 
 const features = [
-  "Sembunyikan atau tampilkan modul & soal tanpa menghapus data",
-  "Atur urutan, duplikat, dan edit seluruh konten pembelajaran",
-  "Ganti logo situs langsung dari dashboard",
+  { icon: ClipboardList, text: "Manajemen Soal & Evaluasi Real-Time" },
+  { icon: BookOpen, text: "Repositori Materi & Cheatsheet" },
+  { icon: Layers, text: "Hide/Show Konten Tanpa Hapus Data" },
 ];
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -49,62 +54,51 @@ export default function AdminLoginPage() {
   const year = process.env.NEXT_PUBLIC_SITE_YEAR;
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-2 font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* LEFT — panel brand (desktop saja) */}
-      <div className="hidden lg:flex relative flex-col justify-between p-12 text-white bg-gradient-to-br from-blue-700 via-blue-800 to-blue-950 overflow-hidden">
+    <div className="grid min-h-screen lg:grid-cols-2 bg-zinc-50 text-zinc-900 font-['Plus_Jakarta_Sans',sans-serif]">
+      {/* PANEL BRAND — kanan di desktop */}
+      <div className="relative hidden lg:flex flex-col justify-between p-16 text-white bg-gradient-to-b from-blue-600 via-blue-700 to-blue-900 overflow-hidden select-none lg:order-last">
         <div
-          className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sky-400/20 blur-3xl"
+          className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sky-400/25 blur-[90px]"
           aria-hidden="true"
         />
         <div
-          className="absolute -bottom-32 -right-16 w-96 h-96 rounded-full bg-blue-400/20 blur-3xl"
+          className="absolute -bottom-32 -right-16 w-96 h-96 rounded-full bg-blue-400/25 blur-[110px]"
           aria-hidden="true"
         />
 
-        <div className="relative flex items-center gap-3">
+        <Link
+          href="/tka"
+          className="relative flex items-center gap-3 cursor-pointer group w-fit"
+        >
           <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center backdrop-blur shrink-0">
-            <SiteLogo
-              width={40}
-              height={40}
-              className="w-9 h-9 object-contain"
-            />
+            <SiteLogo width={40} height={40} className="w-9 h-9 object-contain" />
           </div>
-          <div className="min-w-0">
-            <p className="text-base font-extrabold tracking-tight leading-tight truncate">
-              Simulasi TKA PPLG
-            </p>
-            <p className="text-xs text-blue-200/90 font-medium truncate">
-              SMK Telekomunikasi Tunas Harapan
-            </p>
-          </div>
-        </div>
-
-        <div className="relative max-w-md">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-[11px] font-bold uppercase tracking-wider mb-5">
-            <ShieldCheck className="w-4 h-4" aria-hidden="true" />
-            Portal Khusus Admin
-            <span className="text-xs text-blue-200/90 font-medium">
-              SMK Telekomunikasi Tunas Harapan
-            </span>
-          </div>
-          <h1 className="text-3xl xl:text-4xl font-extrabold leading-tight tracking-tight">
-            Kelola semua konten pembelajaran dalam satu tempat.
-          </h1>
-          <p className="text-sm text-blue-100/90 mt-4 leading-relaxed">
-            Masuk untuk mengatur soal, modul, cheatsheet, dan tampilan landing
-            page portal Simulasi TKA PPLG.
+          <p className="text-base font-extrabold tracking-tight truncate">
+            Simulasi TKA PPLG
           </p>
-          <ul className="mt-7 space-y-3">
-            {features.map((f) => (
-              <li
-                key={f}
-                className="flex items-start gap-3 text-sm text-blue-50/95"
-              >
-                <CheckCircle2
-                  className="w-5 h-5 text-sky-300 shrink-0 mt-0.5"
-                  aria-hidden="true"
-                />
-                <span>{f}</span>
+        </Link>
+
+        <div className="relative my-auto space-y-7 max-w-md">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200/90 mb-4">
+              SMK Telekomunikasi Tunas Harapan
+            </p>
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight">
+              Portal Admin <br /> Simulasi TKA PPLG
+            </h1>
+            <p className="text-sm text-blue-100/90 mt-5 leading-relaxed">
+              Masuk untuk mengelola soal, modul, cheatsheet, dan tampilan
+              landing page portal pembelajaran.
+            </p>
+          </div>
+
+          <ul className="space-y-4 border-t border-white/10 pt-7">
+            {features.map(({ icon: Icon, text }) => (
+              <li key={text} className="flex items-center gap-3.5">
+                <span className="w-9 h-9 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
+                  <Icon className="w-4.5 h-4.5 text-blue-300" aria-hidden="true" />
+                </span>
+                <span className="text-sm font-semibold text-blue-50">{text}</span>
               </li>
             ))}
           </ul>
@@ -115,11 +109,11 @@ export default function AdminLoginPage() {
         </p>
       </div>
 
-      {/* RIGHT — form login */}
-      <div className="relative flex items-center justify-center px-4 py-10 sm:py-14 bg-gradient-to-b from-blue-50/60 to-[#f8fafc]">
-        <div className="w-full max-w-sm">
+      {/* PANEL FORM — kiri */}
+      <div className="relative flex flex-col justify-center items-center p-6 sm:p-12 lg:p-20 bg-white">
+        <div className="w-full max-w-md p-8 sm:p-10 bg-white border border-zinc-200 rounded-2xl shadow-xl shadow-zinc-100/50">
           {/* Header brand — mobile saja */}
-          <div className="flex flex-col items-center text-center mb-6 lg:hidden">
+          <div className="flex flex-col items-center text-center mb-8 lg:hidden">
             <div className="w-14 h-14 mb-3">
               <SiteLogo
                 width={56}
@@ -127,38 +121,31 @@ export default function AdminLoginPage() {
                 className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
-            <h1 className="text-lg sm:text-xl font-extrabold text-slate-900">
-              Simulasi TKA PPLG
-            </h1>
-            <p className="text-xs text-slate-500 mt-1">
-              Portal Admin — SMK Telekomunikasi Tunas Harapan
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-blue-600">
+              SMK Telekomunikasi Tunas Harapan
             </p>
           </div>
 
-          {/* Header — desktop */}
-          <div className="hidden lg:block mb-6">
-            <h2 className="text-xl font-extrabold text-slate-900">
-              Masuk ke akun admin
+          <div className="mb-8">
+            <h2 className="text-2xl font-extrabold text-zinc-900 tracking-tight">
+              Selamat Datang
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Gunakan email &amp; password admin yang terdaftar.
+            <p className="text-sm text-zinc-500 mt-1.5">
+              Masuk dengan akun admin untuk mengelola konten.
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4"
-          >
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
                 htmlFor="admin-email"
-                className="block text-xs font-bold text-slate-600 mb-1.5"
+                className="block text-xs font-bold text-zinc-600 mb-1.5"
               >
-                Email
+                Alamat Email
               </label>
               <div className="relative">
                 <Mail
-                  className="w-4 h-4 text-slate-400 absolute left-3 top-3.5"
+                  className="w-4.5 h-4.5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2"
                   aria-hidden="true"
                 />
                 <input
@@ -168,7 +155,7 @@ export default function AdminLoginPage() {
                   autoComplete="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-400"
+                  className="w-full pl-10 pr-3 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/25 focus:border-blue-400 transition-colors"
                   placeholder="admin@sekolah.sch.id"
                 />
               </div>
@@ -177,25 +164,37 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="admin-password"
-                className="block text-xs font-bold text-slate-600 mb-1.5"
+                className="block text-xs font-bold text-zinc-600 mb-1.5"
               >
-                Password
+                Kata Sandi
               </label>
               <div className="relative">
                 <Lock
-                  className="w-4 h-4 text-slate-400 absolute left-3 top-3.5"
+                  className="w-4.5 h-4.5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2"
                   aria-hidden="true"
                 />
                 <input
                   id="admin-password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-400"
-                  placeholder="••••••••"
+                  className="w-full pl-10 pr-11 py-3 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/25 focus:border-blue-400 transition-colors"
+                  placeholder="Masukkan kata sandi"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Sembunyikan kata sandi" : "Lihat kata sandi"}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50 cursor-pointer transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-4.5 h-4.5" aria-hidden="true" />
+                  ) : (
+                    <Eye className="w-4.5 h-4.5" aria-hidden="true" />
+                  )}
+                </button>
               </div>
             </div>
 
@@ -208,22 +207,26 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm shadow-lg shadow-sky-500/25 transition-all cursor-pointer min-h-[48px] disabled:opacity-60 disabled:cursor-not-allowed"
+              className="group w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-600/25 transition-all cursor-pointer min-h-[48px] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {submitting ? "Memproses..." : "Masuk"}
+              <span>{submitting ? "Memproses..." : "Masuk"}</span>
+              {!submitting && (
+                <ArrowRight
+                  className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
+                  aria-hidden="true"
+                />
+              )}
             </button>
           </form>
-
-          <div className="mt-5 text-center">
-            <Link
-              href="/tka"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-              Kembali ke situs
-            </Link>
-          </div>
         </div>
+
+        <Link
+          href="/tka"
+          className="inline-flex items-center gap-1.5 mt-6 text-xs font-bold text-zinc-500 hover:text-blue-600 transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+          Kembali ke situs
+        </Link>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
   ChevronRight,
   RotateCcw,
   Trophy,
+  AlertCircle,
 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
@@ -67,6 +68,16 @@ export const QuizSimulatorView: React.FC = () => {
     ({ q }) => selectedAnswers[q.id] === q.correctIndex,
   ).length;
 
+  const firstUnanswered = currentQuestions.find(
+    ({ q }) => selectedAnswers[q.id] === undefined,
+  );
+  const unansweredCount = currentQuestions.filter(
+    ({ q }) => selectedAnswers[q.id] === undefined,
+  ).length;
+  const allAnswered =
+    currentQuestions.length > 0 &&
+    currentQuestions.every(({ q }) => selectedAnswers[q.id] !== undefined);
+
   const handleSelectOption = (questionId: string, optionIndex: number) => {
     setSelectedAnswers((prev) => ({
       ...prev,
@@ -75,6 +86,11 @@ export const QuizSimulatorView: React.FC = () => {
   };
 
   const handleEvaluateModule = (modNum: number) => {
+    const moduleQs = shuffledByModule?.get(modNum) ?? [];
+    const ready =
+      moduleQs.length > 0 &&
+      moduleQs.every(({ q }) => selectedAnswers[q.id] !== undefined);
+    if (!ready) return;
     setEvaluatedModules((prev) => ({
       ...prev,
       [modNum]: true,
@@ -90,6 +106,12 @@ export const QuizSimulatorView: React.FC = () => {
       return next;
     });
     setEvaluatedModules((prev) => ({ ...prev, [modNum]: false }));
+  };
+
+  const scrollToFirstUnanswered = () => {
+    if (!firstUnanswered) return;
+    const el = document.getElementById(`question-${firstUnanswered.q.id}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const handleTabChange = (num: number) => {
@@ -496,21 +518,49 @@ export const QuizSimulatorView: React.FC = () => {
               </div>
             )}
 
+            {!isCurrentModuleEvaluated && !allAnswered && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 flex items-start gap-2.5 animate-fade-in">
+                <AlertCircle
+                  className="w-4 h-4 text-amber-600 shrink-0 mt-0.5"
+                  aria-hidden="true"
+                />
+                <p className="text-xs sm:text-sm font-semibold text-amber-800 leading-relaxed">
+                  Masih ada{" "}
+                  <span className="font-extrabold">{unansweredCount}</span> soal
+                  yang belum dijawab di Modul {activeModuleTab}. Jawab semua
+                  soal dulu untuk memeriksa jawabanmu.
+                  <button
+                    type="button"
+                    onClick={scrollToFirstUnanswered}
+                    className="ml-1.5 underline underline-offset-2 text-amber-900 hover:text-amber-700 cursor-pointer font-bold"
+                  >
+                    Ke soal berikutnya
+                  </button>
+                </p>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => handleEvaluateModule(activeModuleTab)}
-                className={`flex-1 py-3.5 sm:py-4 text-white font-bold text-sm rounded-xl min-h-[48px] flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                  isCurrentModuleEvaluated
+                className={`flex-1 py-3.5 sm:py-4 text-white font-bold text-sm rounded-xl min-h-[48px] flex items-center justify-center gap-2 transition-all ${
+                  isCurrentModuleEvaluated || !allAnswered
                     ? "bg-slate-300 cursor-not-allowed shadow-none"
-                    : "bg-sky-500 hover:bg-sky-600 shadow-lg shadow-sky-600/25 hover:shadow-sky-600/35 active:scale-[0.99]"
+                    : "bg-sky-500 hover:bg-sky-600 shadow-lg shadow-sky-600/25 hover:shadow-sky-600/35 active:scale-[0.99] cursor-pointer"
                 }`}
-                disabled={isCurrentModuleEvaluated}
-                aria-disabled={isCurrentModuleEvaluated}
+                disabled={isCurrentModuleEvaluated || !allAnswered}
+                aria-disabled={isCurrentModuleEvaluated || !allAnswered}
               >
-                <Check className="w-4 h-4" aria-hidden="true" />
+                {isCurrentModuleEvaluated || !allAnswered ? (
+                  <AlertCircle className="w-4 h-4" aria-hidden="true" />
+                ) : (
+                  <Check className="w-4 h-4" aria-hidden="true" />
+                )}
                 {isCurrentModuleEvaluated
                   ? "Sudah Diperiksa"
-                  : `Periksa Jawaban Modul ${activeModuleTab}`}
+                  : allAnswered
+                    ? `Periksa Jawaban Modul ${activeModuleTab}`
+                    : `Isi ${unansweredCount} Soal Lagi`}
               </button>
 
               {isCurrentModuleEvaluated && (
