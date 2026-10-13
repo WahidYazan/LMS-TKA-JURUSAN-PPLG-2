@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loadQuizQuestions } from "../lib/content";
 import { quizQuestionsPPLG } from "../data/quiz";
@@ -14,11 +14,8 @@ import {
   RotateCcw,
   Trophy,
   AlertCircle,
-  Clock,
   Bookmark,
   ArrowRight,
-  Play,
-  Pause,
   Layers,
   GraduationCap,
 } from "lucide-react";
@@ -50,28 +47,6 @@ export const QuizSimulatorView: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [evaluatedModules, setEvaluatedModules] = useState<Record<number, boolean>>({});
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<Record<string, boolean>>({});
-  
-  // Stopwatch timer
-  const [secondsElapsed, setSecondsElapsed] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (isTimerRunning) {
-      interval = setInterval(() => {
-        setSecondsElapsed((prev) => prev + 1);
-      }, 1000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isTimerRunning]);
-
-  const formatTimer = (totalSeconds: number) => {
-    const mins = Math.floor(totalSeconds / 60);
-    const secs = totalSeconds % 60;
-    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-  };
 
   const activeModuleTab = parseInt(searchParams.get("module") || "1", 10);
 
@@ -186,21 +161,8 @@ export const QuizSimulatorView: React.FC = () => {
               </div>
             </div>
 
-            {/* Timer and Progress HUD */}
+            {/* Progress HUD */}
             <div className="flex items-center gap-3 self-end sm:self-auto">
-              {/* Timer */}
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono font-bold text-amber-300">
-                <Clock className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
-                <span>{formatTimer(secondsElapsed)}</span>
-                <button
-                  onClick={() => setIsTimerRunning(!isTimerRunning)}
-                  className="p-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
-                  title={isTimerRunning ? "Pause timer" : "Lanjutkan timer"}
-                >
-                  {isTimerRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 text-emerald-400" />}
-                </button>
-              </div>
-
               {/* Progress counter */}
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono font-bold text-sky-300">
                 <span>{totalAnswered}/{totalQuestions} Soal</span>
