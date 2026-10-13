@@ -3,9 +3,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loadQuizQuestions } from "../lib/content";
+import { quizQuestionsPPLG } from "../data/quiz";
 import { shuffle } from "../lib/shuffle";
 import { useContent } from "../hooks/useContent";
 import type { QuizQuestion } from "../types";
+
+const initialQuestions: QuizQuestion[] = quizQuestionsPPLG.map((q) => ({
+  ...q,
+  id: String(q.id),
+}));
 import {
   Check,
   CheckCircle2,
@@ -35,7 +41,8 @@ export const QuizSimulatorView: React.FC = () => {
   const [tabsScrollable, setTabsScrollable] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: questions, loading } = useContent(loadQuizQuestions);
+  const { data: questions, loading } = useContent(loadQuizQuestions, initialQuestions);
+  const activeQuestions = questions && questions.length > 0 ? questions : initialQuestions;
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<string, number>
   >({});
@@ -46,22 +53,22 @@ export const QuizSimulatorView: React.FC = () => {
   const activeModuleTab = parseInt(searchParams.get("module") || "1", 10);
 
   const shuffledByModule = useMemo(() => {
-    if (!questions) return null;
+    if (!activeQuestions || activeQuestions.length === 0) return null;
     const map = new Map<number, ShuffledQuestion[]>();
     for (let m = 1; m <= 5; m++) {
       map.set(
         m,
-        shuffle(questions.filter((q) => q.moduleNum === m)).map((q) => ({
+        shuffle(activeQuestions.filter((q) => q.moduleNum === m)).map((q) => ({
           q,
           optionOrder: shuffle([0, 1, 2, 3]),
         })),
       );
     }
     return map;
-  }, [questions]);
+  }, [activeQuestions]);
 
   const currentQuestions = shuffledByModule?.get(activeModuleTab) ?? [];
-  const totalQuestions = questions?.length ?? 50;
+  const totalQuestions = activeQuestions?.length ?? 50;
   const isCurrentModuleEvaluated = evaluatedModules[activeModuleTab] || false;
   const totalAnswered = Object.keys(selectedAnswers).length;
   const correctCount = currentQuestions.filter(

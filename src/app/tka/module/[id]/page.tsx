@@ -4,10 +4,11 @@ import { ModuleReaderView } from "@/components/ModuleReaderView";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Navbar } from "@/components/Navbar";
 import { loadModules } from "@/lib/content";
+import { modulesList } from "@/data/modules";
 import { useContent } from "@/hooks/useContent";
 import { notFound } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { use, Suspense } from "react";
 
 interface ModulePageProps {
   params: Promise<{ id: string }>;
@@ -15,34 +16,35 @@ interface ModulePageProps {
 
 function ModuleContent({ params }: ModulePageProps) {
   const pathname = usePathname();
-  const [id, setId] = useState<string>("");
-  const { data: modules, loading } = useContent(loadModules);
+  const resolvedParams = use(params);
+  const id = resolvedParams?.id || "";
+  const { data: modules } = useContent(loadModules, modulesList);
 
-  useEffect(() => {
-    params.then((p) => setId(p.id));
-  }, [params]);
+  const allModules = modules && modules.length > 0 ? modules : modulesList;
 
-  if (!id) return null;
-
-  if (loading || !modules) {
+  // Flexible match: "modul1", "1", "modul-1", "MODUL 1", case-insensitive
+  const normalizedId = id.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const moduleContent = allModules.find((m) => {
+    const mNorm = m.id.toLowerCase().replace(/[^a-z0-9]/g, "");
     return (
-      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
-        <p className="text-sm text-slate-400 animate-pulse">Memuat modul...</p>
-      </div>
+      m.id === id ||
+      m.id.toLowerCase() === id.toLowerCase() ||
+      String(m.number) === id ||
+      mNorm === normalizedId ||
+      mNorm === `modul${normalizedId}` ||
+      `modul${m.number}` === normalizedId
     );
-  }
-
-  const moduleContent = modules.find((m) => m.id === id);
+  });
 
   if (!moduleContent) {
     notFound();
   }
 
-  const currentIndex = modules.findIndex((m) => m.id === moduleContent.id);
-  const hasNextModule = currentIndex < modules.length - 1;
-  const nextModule = hasNextModule ? modules[currentIndex + 1] : null;
+  const currentIndex = allModules.findIndex((m) => m.id === moduleContent.id);
+  const hasNextModule = currentIndex < allModules.length - 1;
+  const nextModule = hasNextModule ? allModules[currentIndex + 1] : null;
   const hasPrevModule = currentIndex > 0;
-  const prevModule = hasPrevModule ? modules[currentIndex - 1] : null;
+  const prevModule = hasPrevModule ? allModules[currentIndex - 1] : null;
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">

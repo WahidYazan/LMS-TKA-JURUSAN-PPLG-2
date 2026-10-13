@@ -94,34 +94,41 @@ export function loadModules(): Promise<ModuleContent[]> {
     try {
       const { data: moduleRows, error } = await withTimeout(
         supabase.from("modules").select("*").order("sort_order"),
+        3500,
       );
       if (error || !moduleRows || moduleRows.length === 0) return modulesList;
       const rows = (moduleRows as ModuleRow[]).filter(
         (m) => m.is_visible !== false,
       );
-      const { data: sectionRows } = await withTimeout(
-        supabase
-          .from("module_sections")
-          .select("*")
-          .in(
-            "module_id",
-            rows.map((r) => r.id),
-          )
-          .order("sort_order"),
-      );
-      const sections = ((sectionRows ?? []) as ModuleSectionRow[]).filter(
-        (s) => s.is_visible !== false,
-      );
-      return rows.map((m) => ({
-        id: m.slug,
-        number: m.number,
-        moduleBadge: m.module_badge,
-        title: m.title,
-        cardTitle: m.card_title,
-        shortDesc: m.short_desc,
-        heroImage: m.hero_image,
-        tableOfContents: m.table_of_contents ?? [],
-        sections: sections
+      if (rows.length === 0) return modulesList;
+
+      let sections: ModuleSectionRow[] = [];
+      try {
+        const { data: sectionRows, error: secError } = await withTimeout(
+          supabase
+            .from("module_sections")
+            .select("*")
+            .in(
+              "module_id",
+              rows.map((r) => r.id),
+            )
+            .order("sort_order"),
+          3500,
+        );
+        if (!secError && sectionRows) {
+          sections = (sectionRows as ModuleSectionRow[]).filter(
+            (s) => s.is_visible !== false,
+          );
+        }
+      } catch {
+        // Fall back to local sections if section query fails
+      }
+
+      return rows.map((m) => {
+        const fallbackMod = modulesList.find(
+          (f) => f.id === m.slug || f.number === m.number,
+        );
+        const modSections = sections
           .filter((s) => s.module_id === m.id)
           .map((s) => ({
             id: s.section_key,
@@ -131,8 +138,26 @@ export function loadModules(): Promise<ModuleContent[]> {
             bulletPoints: s.bullet_points?.length ? s.bullet_points : undefined,
             codeSnippet: s.code_snippet ?? undefined,
             media: s.media?.length ? s.media : undefined,
-          })),
-      }));
+          }));
+
+        const finalSections =
+          modSections.length > 0 ? modSections : (fallbackMod?.sections ?? []);
+
+        return {
+          id: m.slug,
+          number: m.number,
+          moduleBadge: m.module_badge,
+          title: m.title,
+          cardTitle: m.card_title,
+          shortDesc: m.short_desc,
+          heroImage: m.hero_image,
+          tableOfContents:
+            m.table_of_contents && m.table_of_contents.length > 0
+              ? m.table_of_contents
+              : (fallbackMod?.tableOfContents ?? []),
+          sections: finalSections,
+        };
+      });
     } catch {
       return modulesList;
     }

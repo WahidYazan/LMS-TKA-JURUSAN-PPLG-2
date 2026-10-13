@@ -1,0 +1,7 @@
+{
+  "name": "Simulasi TKA PPLG",
+  "description": "Simulasi TKA PPLG (Pengembangan Perangkat Lunak dan Gim) SMK Telekomunikasi Tunas Harapan dengan modul interaktif, simulator ujian TKA, dan rangkuman kompetensi.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

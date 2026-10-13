@@ -1,40 +1,50 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { GraduationCap, ClipboardCheck, ArrowRight } from "lucide-react";
 
 export const HeroBanner: React.FC = () => {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-blue-200 dark:border-zinc-200 bg-gradient-to-r from-blue-950 via-blue-900/90 to-blue-950 text-white shadow-xl mb-8 sm:mb-12 p-6 sm:p-8 min-h-[140px]">
-      <div
-        className="absolute right-0 top-0 h-full w-[55%] sm:w-[75%] md:w-[65%] opacity-80 sm:opacity-95 pointer-events-none select-none"
-        style={{
-          maskImage: "linear-gradient(to left, black 20%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to left, black 20%, transparent 100%)",
-        }}
-        aria-hidden="true"
-      >
+    <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-[#0c1328] via-[#0f1b3b] to-[#090d1a] text-white shadow-xl mb-8 sm:mb-10 p-6 sm:p-8 lg:p-10">
+      {/* Background illustration */}
+      <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[45%] opacity-20 sm:opacity-30 pointer-events-none" aria-hidden="true">
         <Image
-          src="/images/brands/logo-modul.png"
+          src="/images/hero/hero_workspace.jpg"
           alt=""
           fill
-          sizes="65vw"
-          className="object-cover"
+          className="object-cover object-center"
+          referrerPolicy="no-referrer"
         />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0c1328] via-transparent to-transparent hidden sm:block" />
       </div>
 
-      <div className="relative z-10 max-w-xl">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-sm text-[11px] font-semibold mb-3 border border-white/30">
-          <span>Asesmen Nasional</span>
+      <div className="relative z-10 max-w-2xl">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold mb-4 border border-white/15 text-sky-200">
+          <GraduationCap className="w-3.5 h-3.5 text-sky-300" aria-hidden="true" />
+          <span>Kurikulum Pusmendik · SMK Telekomunikasi Tunas Harapan</span>
         </div>
 
-        {/* INI YANG GUA KECILIN */}
-        <h1 className="text-2xl sm:text-[28px] lg:text-[32px] font-extrabold tracking-tight text-white mb-2.5 leading-[1.15]">
-          Simulasi TKA PPLG
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white mb-3 leading-tight">
+          Katalog Modul Pembelajaran TKA PPLG
         </h1>
 
-        <p className="text-blue-100/90 text-[13px] sm:text-sm max-w-[480px] font-medium leading-relaxed">
-          Tingkatkan kompetensi keahlian Pengembangan Perangkat Lunak dan Gim
-          dengan modul interaktif berstandar Pusmendik.
+        <p className="text-slate-300 text-xs sm:text-sm max-w-xl font-normal leading-relaxed mb-6">
+          Pelajari 5 modul kejuruan secara bertahap dan mendalam. Setiap modul dilengkapi penjelasan konsep teoritis, studi kasus kode, serta rangkuman esensial.
         </p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/tka/quiz"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer min-h-[40px]"
+          >
+            <ClipboardCheck className="w-4 h-4" aria-hidden="true" />
+            <span>Langsung ke Simulasi Ujian (50 Soal)</span>
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </Link>
+          <span className="text-xs text-slate-400 hidden sm:inline">
+            5 Modul · 25 Bab Materi Lengkap
+          </span>
+        </div>
       </div>
     </div>
   );

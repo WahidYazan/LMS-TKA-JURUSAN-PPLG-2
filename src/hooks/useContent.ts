@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 
 export function useContent<T>(
   loader: () => Promise<T>,
+  initialData?: T,
 ): { data: T | null; loading: boolean; error: string | null } {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<T | null>(initialData ?? null);
+  const [loading, setLoading] = useState(initialData === undefined);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
