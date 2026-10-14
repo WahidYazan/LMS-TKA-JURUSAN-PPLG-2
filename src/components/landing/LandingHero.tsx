@@ -44,7 +44,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-black tracking-tight text-white mb-5 leading-[1.12] text-balance">
               Kuasai Materi & Taklukkan{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-200 to-amber-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-blue-300 to-blue-100">
                 Simulasi TKA PPLG
               </span>
             </h1>
@@ -73,7 +73,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
                 <span>Simulasi Ujian (50 Soal)</span>
               </Link>
 
-              {onOpenCheatsheet && (
+              {/* {onOpenCheatsheet && (
                 <button
                   onClick={onOpenCheatsheet}
                   className="inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 font-semibold text-sm border border-white/15 active:scale-95 transition-all cursor-pointer min-h-[48px]"
@@ -81,7 +81,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
                   <FileCode2 className="w-4.5 h-4.5 text-sky-400 shrink-0" aria-hidden="true" />
                   <span>Cheatsheet</span>
                 </button>
-              )}
+              )} */}
             </div>
 
             {/* Unboxed Metadata & Trust Indicators */}

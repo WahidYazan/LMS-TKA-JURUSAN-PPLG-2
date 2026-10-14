@@ -172,9 +172,9 @@ export const QuizSimulatorView: React.FC = () => {
                   <h1 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
                     Simulasi Asesmen Kejuruan PPLG
                   </h1>
-                  <span className="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded font-mono font-bold hidden sm:inline">
+                  {/* <span className="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded font-mono font-bold hidden sm:inline">
                     Pusmendik 2026
-                  </span>
+                  </span> */}
                 </div>
                 <p className="text-xs text-slate-400">
                   Modul {activeModuleTab}: {currentModuleInfo.title}
@@ -414,13 +414,13 @@ export const QuizSimulatorView: React.FC = () => {
 
                     {/* Clear/Cancel Answer Button below options */}
                     {isAnswered && !isCurrentModuleEvaluated && (
-                      <div className="mt-3 flex justify-end">
+                      <div className="mt-5 flex justify-start">
                         <button
                           onClick={() => handleClearAnswer(q.id)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-200 text-xs font-semibold transition-colors cursor-pointer shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 hover:border-rose-200 text-xs font-semibold transition-colors cursor-pointer shadow-xs"
                           title="Batalkan pilihan jawaban ini"
                         >
-                          <RotateCcw className="w-3.5 h-3.5" />
+                          <XCircle className="w-3.5 h-3.5" />
                           <span>Batalkan Pilihan Jawaban</span>
                         </button>
                       </div>
@@ -546,8 +546,11 @@ export const QuizSimulatorView: React.FC = () => {
               <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
                 <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                   <Layers className="w-4 h-4 text-blue-600" />
-                  <span>Navigasi Soal Modul {activeModuleTab}</span>
+                  <span>List Soal Modul Yang Sudah Di Jawab </span>
                 </span>
+                <div>
+
+                </div>
                 <span className="text-[11px] font-mono text-slate-400">
                   10 Butir Soal
                 </span>
@@ -610,7 +613,7 @@ export const QuizSimulatorView: React.FC = () => {
             </div>
 
             {/* Quick Curriculum Alignment Box */}
-            <div className="p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 text-xs">
+            {/* <div className="p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 text-xs">
               <div className="flex items-center gap-2 mb-2 font-bold text-sky-300">
                 <GraduationCap className="w-4 h-4 text-sky-400" />
                 <span>Standar Asesmen SMK</span>
@@ -618,7 +621,7 @@ export const QuizSimulatorView: React.FC = () => {
               <p className="text-slate-300 leading-relaxed text-[11px]">
                 Seluruh 50 soal dirancang berbasis studi kasus praktikal (HOTS) sesuai Keputusan Kepala BSKAP Nomor 046/H/KR/2025.
               </p>
-            </div>
+            </div> */}
 
           </aside>
 

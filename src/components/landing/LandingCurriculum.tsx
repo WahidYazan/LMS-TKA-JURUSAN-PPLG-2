@@ -79,7 +79,7 @@ export const LandingCurriculum: React.FC = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
         <div>
-          <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1.5">
+          <div className="text-md font-bold text-blue-600 uppercase tracking-wider mb-1.5">
             Kurikulum Kejuruan SMK TTH
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -186,8 +186,8 @@ export const LandingCurriculum: React.FC = () => {
                 {/* Metadata */}
                 <div className="flex items-center gap-2 text-xs text-slate-400 font-medium mb-2">
                   <span>{chaptersCount} Bab Materi</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Standar Pusmendik</span>
+                  {/* <span aria-hidden="true">·</span> */}
+                  {/* <span>Standar Pusmendik</span> */}
                 </div>
 
                 {/* Title */}

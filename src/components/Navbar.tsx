@@ -201,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
 
             {/* Quick action: Mulai Ujian button */}
-            {!isQuiz && (
+            {/* {!isQuiz && (
               <Link
                 href="/tka/quiz"
                 className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold shadow-xs active:scale-95 transition-all cursor-pointer min-h-[40px]"
@@ -209,7 +209,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ClipboardCheck className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Mulai Ujian</span>
               </Link>
-            )}
+            )} */}
 
             {/* Admin Login button */}
             <Link
