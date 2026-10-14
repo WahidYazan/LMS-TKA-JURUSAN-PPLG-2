@@ -13,6 +13,7 @@ import {
   Laptop,
 } from "lucide-react";
 import { ModuleContent } from "../types";
+import { useSiteStats } from "../hooks/useSiteStats";
 
 interface ModuleReaderViewProps {
   module: ModuleContent;
@@ -20,6 +21,10 @@ interface ModuleReaderViewProps {
   nextModuleId?: string | null;
   hasPrevModule: boolean;
   prevModuleId?: string | null;
+  /** Opsional: override jumlah total soal (default otomatis dari data). */
+  totalQuestionsOverride?: number;
+  /** Opsional: override jumlah soal modul ini (default otomatis dari data). */
+  moduleQuestionCountOverride?: number;
 }
 
 export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
@@ -28,7 +33,13 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
   nextModuleId,
   hasPrevModule,
   prevModuleId,
+  totalQuestionsOverride,
+  moduleQuestionCountOverride,
 }) => {
+  const { totalQuestions, questionsByModule } = useSiteStats();
+  const totalSoal = totalQuestionsOverride ?? totalQuestions;
+  const soalModulIni =
+    moduleQuestionCountOverride ?? questionsByModule[module.number] ?? 10;
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -299,7 +310,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                     href="/tka/quiz"
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-sm transition-all cursor-pointer"
                   >
-                    <span>Mulai Simulasi 50 Soal</span>
+                    <span>Mulai Simulasi {totalSoal} Soal</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 )}
@@ -345,7 +356,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 Simulasi Ujian Modul {module.number}
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Uji penguasaan Anda atas materi modul ini melalui 10 butir soal studi kasus HOTS dengan evaluasi instan.
+                Uji penguasaan Anda atas materi modul ini melalui {soalModulIni} butir soal studi kasus HOTS dengan evaluasi instan.
               </p>
               <Link
                 href={`/tka/quiz?module=${module.number}`}

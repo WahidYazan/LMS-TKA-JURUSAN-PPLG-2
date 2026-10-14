@@ -2,7 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { Terminal, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export const ExamBannerCard: React.FC = () => {
+interface ExamBannerCardProps {
+  moduleCount: number;
+  questionCount: number;
+}
+
+export const ExamBannerCard: React.FC<ExamBannerCardProps> = ({
+  moduleCount,
+  questionCount,
+}) => {
   return (
     <div
       className="relative rounded-3xl bg-gradient-to-br from-[#090e1a] via-[#0f1b3b] to-[#090d1a] text-white p-6 sm:p-7 flex flex-col justify-between shadow-xl border border-slate-800 overflow-hidden group min-h-[340px] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
@@ -17,14 +25,14 @@ export const ExamBannerCard: React.FC = () => {
             <Terminal className="w-6 h-6" aria-hidden="true" />
           </div>
           <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-white/10 text-amber-300 uppercase tracking-wider">
-            50 SOAL HOTS
+            {questionCount} SOAL HOTS
           </span>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-sky-200/90 font-medium mb-1.5">
           <span>Evaluasi Seketika</span>
-          <span aria-hidden="true">·</span>
-          <span>Standar Pusmendik</span>
+          {/* <span aria-hidden="true">·</span> */}
+          {/* <span>Standar Pusmendik</span> */}
         </div>
 
         <h3 className="font-black text-white text-lg sm:text-xl mb-2 group-hover:text-amber-200 transition-colors">
@@ -32,7 +40,7 @@ export const ExamBannerCard: React.FC = () => {
         </h3>
         
         <p className="text-slate-300 text-xs sm:text-sm line-clamp-3 leading-relaxed mb-4">
-          Uji kesiapan Anda menghadapi asesmen kejuruan nasional. Menganalisis studi kasus industri nyata dari Modul 1 sampai Modul 5.
+          Uji kesiapan Anda menghadapi asesmen kejuruan nasional lewat {questionCount} soal studi kasus HOTS dari {moduleCount} modul.
         </p>
 
         {/* Feature bullets */}

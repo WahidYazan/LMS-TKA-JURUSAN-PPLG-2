@@ -59,26 +59,40 @@ export const QuizSimulatorView: React.FC = () => {
     void run();
   }, []);
 
-  const activeModuleTab = parseInt(searchParams.get("module") || "1", 10);
+  const rawTab = parseInt(searchParams.get("module") || "1", 10);
+
+  // Daftar modul dihitung otomatis dari data soal yang ada
+  // (tidak lagi hardcode 1..5) agar tambah modul/soal langsung ikut.
+  const moduleNumbers = useMemo(() => {
+    const nums = [...new Set(activeQuestions.map((q) => q.moduleNum))].sort(
+      (a, b) => a - b,
+    );
+    return nums.length > 0 ? nums : [1, 2, 3, 4, 5];
+  }, [activeQuestions]);
+
+  const activeModuleTab = moduleNumbers.includes(rawTab)
+    ? rawTab
+    : (moduleNumbers[0] ?? 1);
 
   const shuffledByModule = useMemo(() => {
     if (!mounted) return null;
     if (!activeQuestions || activeQuestions.length === 0) return null;
     const map = new Map<number, ShuffledQuestion[]>();
-    for (let m = 1; m <= 5; m++) {
+    for (const m of moduleNumbers) {
       map.set(
         m,
         shuffle(activeQuestions.filter((q) => q.moduleNum === m)).map((q) => ({
           q,
           optionOrder: shuffle([0, 1, 2, 3]),
-        }))
+        })),
       );
     }
     return map;
-  }, [mounted, activeQuestions]);
+  }, [mounted, activeQuestions, moduleNumbers]);
 
   const currentQuestions = shuffledByModule?.get(activeModuleTab) ?? [];
-  const totalQuestions = activeQuestions?.length ?? 50;
+  const currentModuleCount = currentQuestions.length;
+  const totalQuestions = activeQuestions?.length ?? 0;
   const isCurrentModuleEvaluated = evaluatedModules[activeModuleTab] || false;
   const totalAnswered = Object.keys(selectedAnswers).length;
   
@@ -198,9 +212,13 @@ export const QuizSimulatorView: React.FC = () => {
         
         {/* MODULE SELECTOR TABS */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-8">
-          {[1, 2, 3, 4, 5].map((num) => {
-            const modInfo = moduleTitles[num];
+          {moduleNumbers.map((num) => {
+            const modInfo = moduleTitles[num] || {
+              title: `Modul ${num}`,
+              category: "Kejuruan",
+            };
             const modQs = shuffledByModule?.get(num) ?? [];
+            const modTotal = modQs.length;
             const answeredInMod = modQs.filter(({ q }) => selectedAnswers[q.id] !== undefined).length;
             const isEval = evaluatedModules[num];
             const isActive = activeModuleTab === num;
@@ -225,11 +243,11 @@ export const QuizSimulatorView: React.FC = () => {
                       <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
                         isActive ? "bg-white/20 text-white" : "bg-emerald-100 text-emerald-700"
                       }`}>
-                        {modCorrect}/10 Skor
+                        {modCorrect}/{modTotal} Skor
                       </span>
                     ) : (
                       <span className={`text-[10px] font-medium ${isActive ? "text-blue-100" : "text-slate-400"}`}>
-                        {answeredInMod}/10
+                        {answeredInMod}/{modTotal}
                       </span>
                     )}
                   </div>
@@ -244,7 +262,7 @@ export const QuizSimulatorView: React.FC = () => {
                     className={`h-full transition-all duration-300 ${
                       isEval ? "bg-emerald-400" : isActive ? "bg-white" : "bg-blue-600"
                     }`}
-                    style={{ width: `${(answeredInMod / 10) * 100}%` }}
+                    style={{ width: `${modTotal > 0 ? (answeredInMod / modTotal) * 100 : 0}%` }}
                   />
                 </div>
               </button>
@@ -275,7 +293,11 @@ export const QuizSimulatorView: React.FC = () => {
               {isCurrentModuleEvaluated && (
                 <div className="flex items-center gap-2">
                   <div className="px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
-                    Skor: {correctCount}/10 Benar ({correctCount * 10}%)
+                    Skor: {correctCount}/{currentModuleCount} Benar (
+                    {currentModuleCount > 0
+                      ? Math.round((correctCount / currentModuleCount) * 100)
+                      : 0}
+                    %)
                   </div>
                 </div>
               )}
@@ -469,12 +491,12 @@ export const QuizSimulatorView: React.FC = () => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base font-extrabold text-slate-900">
-                      Hasil Evaluasi Modul {activeModuleTab}: {correctCount}/10 Benar
+                      Hasil Evaluasi Modul {activeModuleTab}: {correctCount}/{currentModuleCount} Benar
                     </h3>
                     <p className="text-xs text-slate-600 mt-0.5">
-                      {correctCount >= 8
+                      {currentModuleCount > 0 && correctCount / currentModuleCount >= 0.8
                         ? "Luar biasa! Pemahaman konsep kejuruan Anda sudah di atas standar kelulusan asesmen."
-                        : correctCount >= 6
+                        : currentModuleCount > 0 && correctCount / currentModuleCount >= 0.6
                           ? "Bagus! Tinjau kembali beberapa butir soal dengan membaca pembahasan mendalam di atas."
                           : "Perlu penguatan konsep. Buka kembali materi modul pembelajaran terkait."}
                     </p>
@@ -487,7 +509,7 @@ export const QuizSimulatorView: React.FC = () => {
                 <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
                   <p className="text-xs text-amber-900 leading-relaxed">
-                    Masih ada <strong>{unansweredCount} soal</strong> yang belum dijawab di modul ini. Jawab seluruh 10 soal untuk membuka kunci evaluasi.
+                    Masih ada <strong>{unansweredCount} soal</strong> yang belum dijawab di modul ini. Jawab seluruh {currentModuleCount} soal untuk membuka kunci evaluasi.
                   </p>
                 </div>
               )}
@@ -523,15 +545,22 @@ export const QuizSimulatorView: React.FC = () => {
                   </button>
                 )}
 
-                {activeModuleTab < 5 && (
-                  <button
-                    onClick={() => handleTabChange(activeModuleTab + 1)}
-                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs min-h-[48px] flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors"
-                  >
-                    <span>Lanjut ke Modul {activeModuleTab + 1}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                )}
+                {(() => {
+                  const currentIdx = moduleNumbers.indexOf(activeModuleTab);
+                  const nextNum =
+                    currentIdx >= 0 && currentIdx < moduleNumbers.length - 1
+                      ? moduleNumbers[currentIdx + 1]
+                      : null;
+                  return nextNum !== null ? (
+                    <button
+                      onClick={() => handleTabChange(nextNum)}
+                      className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs min-h-[48px] flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors"
+                    >
+                      <span>Lanjut ke Modul {nextNum}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  ) : null;
+                })()}
               </div>
             </div>
               </>
@@ -552,7 +581,7 @@ export const QuizSimulatorView: React.FC = () => {
 
                 </div>
                 <span className="text-[11px] font-mono text-slate-400">
-                  10 Butir Soal
+                  {currentModuleCount} Butir Soal
                 </span>
               </div>
 
@@ -619,7 +648,7 @@ export const QuizSimulatorView: React.FC = () => {
                 <span>Standar Asesmen SMK</span>
               </div>
               <p className="text-slate-300 leading-relaxed text-[11px]">
-                Seluruh 50 soal dirancang berbasis studi kasus praktikal (HOTS) sesuai Keputusan Kepala BSKAP Nomor 046/H/KR/2025.
+                Seluruh {totalQuestions} soal dirancang berbasis studi kasus praktikal (HOTS) sesuai Keputusan Kepala BSKAP Nomor 046/H/KR/2025.
               </p>
             </div> */}
 

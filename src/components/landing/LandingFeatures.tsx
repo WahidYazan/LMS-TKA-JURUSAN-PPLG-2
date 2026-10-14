@@ -12,8 +12,11 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+import { useSiteStats } from "../../hooks/useSiteStats";
+
 export const LandingFeatures: React.FC = () => {
   const [copiedSnippet, setCopiedSnippet] = useState(false);
+  const { totalQuestions } = useSiteStats();
 
   const handleCopySnippet = () => {
     navigator.clipboard.writeText("git checkout -b feature/tka-pplg\ngit commit -m 'feat: complete module 03'");
@@ -49,7 +52,7 @@ export const LandingFeatures: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-slate-900">
-                    50 Soal Studi Kasus HOTS & Pembahasan Instan
+                    {totalQuestions} Soal Studi Kasus HOTS & Pembahasan Instan
                   </h3>
                   <p className="text-xs text-slate-400">
                     Menganalisis arsitektur sistem, debugging kode, dan kalkulasi query

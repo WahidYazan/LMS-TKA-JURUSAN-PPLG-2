@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,12 +10,14 @@ import {
   FileCode2,
   GraduationCap,
 } from "lucide-react";
+import { useSiteStats } from "../../hooks/useSiteStats";
 
 interface LandingHeroProps {
   onOpenCheatsheet?: () => void;
 }
 
 export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) => {
+  const { totalModules, totalQuestions } = useSiteStats();
   return (
     <section className="relative bg-[#090e1a] text-white pt-10 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24 overflow-hidden border-b border-slate-800/80">
       {/* Decorative ambient illumination */}
@@ -51,7 +55,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8 max-w-2xl text-balance">
-              Portal belajar interaktif resmi siswa SMK Rekayasa Perangkat Lunak dan Gim. Pelajari 5 modul kejuruan berbobot, uji kemampuan dengan 50 studi kasus HOTS standar Pusmendik, dan manfaatkan cheatsheet kode siap pakai.
+              Portal belajar interaktif resmi siswa SMK Rekayasa Perangkat Lunak dan Gim. Pelajari {totalModules} modul kejuruan berbobot, uji kemampuan dengan {totalQuestions} studi kasus HOTS standar Pusmendik, dan manfaatkan cheatsheet kode siap pakai.
             </p>
 
             {/* Action Buttons */}
@@ -70,7 +74,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
                 className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-lg shadow-amber-400/20 active:scale-95 transition-all cursor-pointer min-h-[48px]"
               >
                 <ClipboardCheck className="w-4.5 h-4.5 text-slate-950 shrink-0" aria-hidden="true" />
-                <span>Simulasi Ujian (50 Soal)</span>
+                <span>Simulasi Ujian ({totalQuestions} Soal)</span>
               </Link>
 
               {/* {onOpenCheatsheet && (
@@ -88,20 +92,20 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onOpenCheatsheet }) =>
             <div className="pt-6 border-t border-slate-800/90 flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-medium text-slate-400">
               <span className="flex items-center gap-1.5 text-slate-300">
                 <span className="w-2 h-2 rounded-full bg-sky-400" aria-hidden="true" />
-                5 Modul Kejuruan Lengkap
+                {totalModules} Modul Kejuruan Lengkap
               </span>
-              <span aria-hidden="true" className="text-slate-600">·</span>
+              {/* <span aria-hidden="true" className="text-slate-600">·</span> */}
               <span className="flex items-center gap-1.5 text-slate-300">
                 <span className="w-2 h-2 rounded-full bg-amber-400" aria-hidden="true" />
-                50 Soal Studi Kasus HOTS
+                {totalQuestions} Soal Studi Kasus HOTS
               </span>
-              <span aria-hidden="true" className="text-slate-600">·</span>
+              {/* <span aria-hidden="true" className="text-slate-600">·</span> */}
               <span className="flex items-center gap-1.5 text-slate-300">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" aria-hidden="true" />
                 Standar Pusmendik Kemendikdasmen
               </span>
-              <span aria-hidden="true" className="text-slate-600">·</span>
-              <span className="text-slate-400">Tanpa Login / Akses Bebas</span>
+              {/* <span aria-hidden="true" className="text-slate-600">·</span> */}
+              {/* <span className="text-slate-400">Tanpa Login / Akses Bebas</span> */}
             </div>
           </div>
 

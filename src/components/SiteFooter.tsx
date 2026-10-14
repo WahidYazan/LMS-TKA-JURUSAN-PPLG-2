@@ -1,16 +1,20 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-const links = [
-  { href: '/tka', label: 'Beranda Utama' },
-  { href: '/tka/modul', label: 'Modul Pembelajaran' },
-  { href: '/tka/quiz', label: 'Simulasi Ujian (50 Soal)' },
-  { href: '/tka/admin', label: 'Portal Admin' },
-];
+import { useSiteStats } from '../hooks/useSiteStats';
 
 export const SiteFooter: React.FC = () => {
   const year = process.env.NEXT_PUBLIC_SITE_YEAR || new Date().getFullYear();
+  const { totalQuestions } = useSiteStats();
+
+  const links = [
+    { href: '/tka', label: 'Beranda Utama' },
+    { href: '/tka/modul', label: 'Modul Pembelajaran' },
+    { href: '/tka/quiz', label: `Simulasi Ujian (${totalQuestions} Soal)` },
+    { href: '/tka/admin', label: 'Portal Admin' },
+  ];
 
   return (
     <footer className="relative overflow-hidden bg-[#070b14] text-white border-t border-slate-800">
@@ -82,9 +86,9 @@ export const SiteFooter: React.FC = () => {
             <p className="text-xs text-slate-400 leading-relaxed mb-3">
               Berpedoman pada Capaian Pembelajaran Fase F Pusmendik Kemendikdasmen untuk Mata Pelajaran Pilihan SMK/MAK Konsentrasi Keahlian PPLG.
             </p>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] text-sky-300 font-mono">
+            {/* <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] text-sky-300 font-mono">
               Kurikulum Merdeka 2026
-            </div>
+            </div> */}
           </div>
         </div>
 

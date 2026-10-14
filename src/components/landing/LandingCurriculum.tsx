@@ -12,9 +12,11 @@ import {
   Database,
   Briefcase,
 } from "lucide-react";
-import { loadModules } from "../../lib/content";
+import { loadModules, loadQuizQuestions } from "../../lib/content";
 import { modulesList } from "../../data/modules";
+import { quizQuestionsPPLG } from "../../data/quiz";
 import { useContent } from "../../hooks/useContent";
+import { computeStats } from "../../lib/stats";
 
 const moduleThemeMap: Record<
   number,
@@ -66,6 +68,8 @@ const moduleThemeMap: Record<
 export const LandingCurriculum: React.FC = () => {
   const { data: modules } = useContent(loadModules, modulesList);
   const displayModules = modules && modules.length > 0 ? modules : modulesList;
+  const { data: questions } = useContent(loadQuizQuestions, quizQuestionsPPLG.map((q) => ({ ...q, id: String(q.id) })));
+  const stats = computeStats(displayModules, questions && questions.length > 0 ? questions : quizQuestionsPPLG);
   const [filter, setFilter] = useState<string>("all");
 
   const filteredModules = displayModules.filter((mod) => {
@@ -83,7 +87,7 @@ export const LandingCurriculum: React.FC = () => {
             Kurikulum Kejuruan SMK TTH
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            5 Modul Pembelajaran Terstruktur
+            {stats.totalModules} Modul Pembelajaran Terstruktur
           </h2>
           <p className="text-sm text-slate-500 max-w-2xl mt-1.5 leading-relaxed">
             Disusun bertahap dari wawasan industri dan K3LH hingga pemrograman basis data, OOP, dan dasar pengembangan gim.
@@ -259,7 +263,7 @@ export const LandingCurriculum: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2 text-xs text-sky-200/80 font-medium mb-2">
-                <span>50 Soal HOTS</span>
+                <span>{stats.totalQuestions} Soal HOTS</span>
                 {/* <span aria-hidden="true">·</span> */}
                 {/* <span>Evaluasi Real-Time</span> */}
               </div>
@@ -268,7 +272,7 @@ export const LandingCurriculum: React.FC = () => {
                 Simulasi Ujian TKA Lengkap
               </h3>
               <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed mb-4">
-                Simulasi Tes Kemampuan Akademik dari Modul 1 sampai Modul {filteredModules.length}.
+                Simulasi Tes Kemampuan Akademik dari Modul {stats.moduleNumbers[0] ?? 1} sampai Modul {stats.moduleNumbers[stats.moduleNumbers.length - 1] ?? stats.totalModules}.
               </p>
 
               {/* Micro specs */}

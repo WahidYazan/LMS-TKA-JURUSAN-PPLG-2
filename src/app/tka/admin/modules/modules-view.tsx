@@ -13,6 +13,7 @@ import {
   updateRow,
 } from "@/lib/adminApi";
 import type { ModuleRow } from "@/lib/dbTypes";
+import { getLocalStats } from "@/lib/stats";
 import {
   AdminCard,
   AdminListRow,
@@ -193,8 +194,8 @@ export default function AdminModulesPage() {
             Database belum berisi modul
           </p>
           <p className="text-xs text-slate-400 mt-1">
-            Gunakan <strong>Import Sekarang</strong> di Dashboard untuk menyalin
-            5 modul bawaan, atau tambah manual.
+            Gunakan <strong>Import Sekarang</strong> di Dashboard untuk menyalin{" "}
+            {getLocalStats().totalModules} modul bawaan, atau tambah manual.
           </p>
         </AdminCard>
       )}

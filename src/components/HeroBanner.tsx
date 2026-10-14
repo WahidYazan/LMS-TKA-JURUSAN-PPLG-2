@@ -1,9 +1,13 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GraduationCap, ClipboardCheck, ArrowRight } from "lucide-react";
+import { useSiteStats } from "../hooks/useSiteStats";
 
 export const HeroBanner: React.FC = () => {
+  const { totalModules, totalQuestions, totalChapters } = useSiteStats();
   return (
     <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-[#0c1328] via-[#0f1b3b] to-[#090d1a] text-white shadow-xl mb-8 sm:mb-10 p-6 sm:p-8 lg:p-10">
 
@@ -54,7 +58,7 @@ export const HeroBanner: React.FC = () => {
         </h1>
 
         <p className="text-slate-300 text-xs sm:text-sm max-w-xl font-normal leading-relaxed mb-6">
-          Pelajari 5 modul kejuruan secara bertahap dan mendalam. Setiap modul dilengkapi penjelasan konsep teoritis, studi kasus kode, serta rangkuman esensial.
+          Pelajari {totalModules} modul kejuruan secara bertahap dan mendalam. Setiap modul dilengkapi penjelasan konsep teoritis, studi kasus kode, serta rangkuman esensial.
         </p>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -63,12 +67,12 @@ export const HeroBanner: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer min-h-"
           >
             <ClipboardCheck className="w-4 h-4" aria-hidden="true" />
-            <span>Langsung ke Simulasi Ujian (50 Soal)</span>
+            <span>Langsung ke Simulasi Ujian ({totalQuestions} Soal)</span>
             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </Link>
-          {/* <span className="text-xs text-slate-400 hidden sm:inline">
-            5 Modul · 25 Bab Materi Lengkap
-          </span> */}
+          <span className="text-xs text-slate-400 hidden sm:inline">
+            {totalModules} Modul · {totalChapters} Bab Materi Lengkap
+          </span>
         </div>
       </div>
     </div>

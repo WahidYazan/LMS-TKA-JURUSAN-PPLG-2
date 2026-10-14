@@ -22,31 +22,34 @@ import {
   LayoutTemplate,
 } from "lucide-react";
 import { SiteLogo } from "@/components/SiteLogo";
+import { useSiteStats } from "@/hooks/useSiteStats";
 
-const SCOPE = [
+const SCOPE_BASE = [
   {
     icon: BookOpenText,
     code: "MOD",
     title: "Modul belajar",
-    desc: "5 modul · bab, materi & contoh kode",
+    getDesc: (totalModules: number) =>
+      `${totalModules} modul · bab, materi & contoh kode`,
   },
   {
     icon: ClipboardList,
     code: "SOAL",
     title: "Soal simulasi TKA",
-    desc: "50 studi kasus HOTS + pembahasan",
+    getDesc: (_m: number, totalQuestions: number) =>
+      `${totalQuestions} studi kasus HOTS + pembahasan`,
   },
   {
     icon: FileCode2,
     code: "CHTS",
     title: "Cheatsheet",
-    desc: "Ringkasan Git, SQL, OOP, game loop",
+    getDesc: () => "Ringkasan Git, SQL, OOP, game loop",
   },
   {
     icon: LayoutTemplate,
     code: "LP",
     title: "Landing page",
-    desc: "Hero, fitur, statistik & footer",
+    getDesc: () => "Hero, fitur, statistik & footer",
   },
 ];
 
@@ -62,6 +65,7 @@ const RULES: React.ReactNode[] = [
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { totalModules, totalQuestions } = useSiteStats();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -351,7 +355,7 @@ export default function AdminLoginPage() {
                   <p className="font-mono text-[11px] text-sky-400">4 modul</p>
                 </div>
                 <ul className="relative divide-y divide-white/[0.07]">
-                  {SCOPE.map(({ icon: Icon, code, title, desc }) => (
+                  {SCOPE_BASE.map(({ icon: Icon, code, title, getDesc }) => (
                     <li key={code} className="flex items-center gap-3.5 px-5 sm:px-6 py-3.5">
                       <span className="w-9 h-9 rounded-lg bg-sky-500/15 border border-sky-400/20 flex items-center justify-center shrink-0">
                         <Icon className="w-[18px] h-[18px] text-sky-300" aria-hidden="true" />
@@ -361,7 +365,7 @@ export default function AdminLoginPage() {
                           {title}
                         </span>
                         <span className="block text-[12px] text-slate-400 leading-snug truncate">
-                          {desc}
+                          {getDesc(totalModules, totalQuestions)}
                         </span>
                       </span>
                       <span className="shrink-0 font-mono text-[10.5px] font-semibold tracking-widest text-sky-300 border border-sky-400/25 bg-sky-500/10 rounded px-1.5 py-1">

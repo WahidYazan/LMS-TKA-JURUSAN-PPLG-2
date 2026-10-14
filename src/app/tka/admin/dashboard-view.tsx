@@ -19,7 +19,7 @@ const sections = [
   {
     href: "/tka/admin/quiz",
     label: "Soal Quiz",
-    desc: "50 soal HOTS per modul, opsi & pembahasan.",
+    desc: "Soal HOTS per modul, opsi & pembahasan (jumlah otomatis).",
     icon: HelpCircle,
     table: "quiz_questions" as const,
     code: "SOAL",

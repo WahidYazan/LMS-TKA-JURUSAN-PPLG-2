@@ -158,9 +158,9 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
           <span>Mulai Belajar</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
         </Link>
-        <span className="text-[11px] font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded-md">
+        {/* <span className="text-[11px] font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded-md">
           Standar Pusmendik
-        </span>
+        </span> */}
       </div>
     </div>
   );

@@ -1,8 +1,12 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { BookOpen, ClipboardCheck, ArrowRight } from "lucide-react";
+import { useSiteStats } from "../../hooks/useSiteStats";
 
 export const LandingCta: React.FC = () => {
+  const { totalModules, totalQuestions } = useSiteStats();
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
       <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#0a1024] via-[#0f1b3b] to-[#090d1a] text-white p-8 sm:p-12 lg:p-16 border border-slate-800 shadow-2xl text-center">
@@ -26,7 +30,7 @@ export const LandingCta: React.FC = () => {
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed text-balance">
-            Pelajari 5 modul terstruktur dari Wawasan Kerja hingga OOP & Pemrograman Gim, lalu uji kesiapan Anda lewat 50 butir simulasi studi kasus industri.
+            Pelajari {totalModules} modul terstruktur dari Wawasan Kerja hingga OOP & Pemrograman Gim, lalu uji kesiapan Anda lewat {totalQuestions} butir simulasi studi kasus industri.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8">
@@ -43,7 +47,7 @@ export const LandingCta: React.FC = () => {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow-lg shadow-amber-400/20 active:scale-95 transition-all cursor-pointer min-h-[48px]"
             >
               <ClipboardCheck className="w-4 h-4 text-slate-950" aria-hidden="true" />
-              <span>Mulai Ujian 50 Soal</span>
+              <span>Mulai Ujian {totalQuestions} Soal</span>
               <ArrowRight className="w-4 h-4 text-slate-950" aria-hidden="true" />
             </Link>
           </div>

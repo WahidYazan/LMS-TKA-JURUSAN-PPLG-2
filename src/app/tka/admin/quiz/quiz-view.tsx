@@ -11,6 +11,7 @@ import {
   updateRow,
 } from "@/lib/adminApi";
 import type { QuizQuestionRow } from "@/lib/dbTypes";
+import { getLocalStats } from "@/lib/stats";
 import {
   AdminCard,
   AdminListRow,
@@ -195,15 +196,15 @@ export default function AdminQuizPage() {
           </p>
           <p className="text-xs text-slate-400 mt-1">
             Gunakan tombol <strong>Import Sekarang</strong> di Dashboard untuk
-            menyalin 50 soal bawaan, atau tambah manual lewat tombol modul di
-            bawah.
+            menyalin {getLocalStats().totalQuestions} soal bawaan, atau tambah
+            manual lewat tombol modul di bawah.
           </p>
         </AdminCard>
       )}
 
       {!loading && rows.length > 0 && (
         <div className="space-y-3">
-          {[1, 2, 3, 4, 5].map((num) => {
+          {[...new Set(rows.map((r) => r.module_num))].sort((a, b) => a - b).map((num) => {
             const moduleRows = filtered.filter((r) => r.module_num === num);
             const isOpen = openModule === num;
             return (

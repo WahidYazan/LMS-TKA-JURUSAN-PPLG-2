@@ -6,8 +6,9 @@ import { HeroBanner } from '@/components/HeroBanner';
 import { ModuleCard } from '@/components/ModuleCard';
 import { ExamBannerCard } from '@/components/ExamBannerCard';
 import { SiteFooter } from '@/components/SiteFooter';
-import { loadModules } from '@/lib/content';
+import { loadModules, loadQuizQuestions } from '@/lib/content';
 import { modulesList } from '@/data/modules';
+import { quizQuestionsPPLG } from '@/data/quiz';
 import { useContent } from '@/hooks/useContent';
 import { usePathname } from 'next/navigation';
 import { Search, X, BookOpen } from 'lucide-react';
@@ -16,6 +17,8 @@ export default function DashboardPage() {
   const pathname = usePathname();
   const { data: modules } = useContent(loadModules, modulesList);
   const displayModules = modules && modules.length > 0 ? modules : modulesList;
+  const { data: questions } = useContent(loadQuizQuestions);
+  const questionCount = questions?.length ?? quizQuestionsPPLG.length;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'wawasan' | 'k3' | 'db' | 'oop' | 'gim'>('all');
@@ -150,7 +153,12 @@ export default function DashboardPage() {
               {filteredModules.map((mod) => (
                 <ModuleCard key={mod.id} module={mod} />
               ))}
-              {selectedCategory === 'all' && !searchQuery && <ExamBannerCard />}
+              {selectedCategory === 'all' && !searchQuery && (
+                <ExamBannerCard
+                  moduleCount={displayModules.length}
+                  questionCount={questionCount}
+                />
+              )}
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center max-w-md mx-auto my-8">
