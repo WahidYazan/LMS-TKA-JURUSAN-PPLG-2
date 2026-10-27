@@ -4,12 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ChevronDown, ChevronRight, Search, Inbox } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { describeError } from "@/lib/adminError";
-import {
-  createRow,
-  deleteRow,
-  duplicateRow,
-  updateRow,
-} from "@/lib/adminApi";
+import { createRow, deleteRow, duplicateRow, updateRow } from "@/lib/adminApi";
 import type { QuizQuestionRow } from "@/lib/dbTypes";
 import { getLocalStats } from "@/lib/stats";
 import {
@@ -204,67 +199,69 @@ export default function AdminQuizPage() {
 
       {!loading && rows.length > 0 && (
         <div className="space-y-3">
-          {[...new Set(rows.map((r) => r.module_num))].sort((a, b) => a - b).map((num) => {
-            const moduleRows = filtered.filter((r) => r.module_num === num);
-            const isOpen = openModule === num;
-            return (
-              <div
-                key={num}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
-              >
-                <div className="flex items-center gap-2 p-3 sm:p-4">
-                  <button
-                    onClick={() => setOpenModule(isOpen ? null : num)}
-                    className="flex-1 flex items-center gap-2.5 cursor-pointer min-h-[40px] text-left"
-                    aria-expanded={isOpen}
-                  >
-                    {isOpen ? (
-                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
-                    )}
-                    <span className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-xs font-extrabold shrink-0">
-                      {num}
-                    </span>
-                    <span className="text-sm font-bold text-slate-800">
-                      Modul {num}
-                    </span>
-                    <span className="text-[11px] text-slate-400 font-semibold">
-                      {moduleRows.length} soal
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => setCreatingModule(num)}
-                    className="px-3 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shadow-sm cursor-pointer min-h-[36px] transition-colors shrink-0"
-                  >
-                    + Tambah
-                  </button>
-                </div>
-                {isOpen && (
-                  <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2">
-                    {moduleRows.length === 0 && (
-                      <p className="text-xs text-slate-400 py-2">
-                        Tidak ada soal yang cocok dengan pencarian.
-                      </p>
-                    )}
-                    {moduleRows.map((r, i) => (
-                      <AdminListRow
-                        key={r.id}
-                        title={`${i + 1}. ${r.case_text.slice(0, 90)}${r.case_text.length > 90 ? "..." : ""}`}
-                        meta={`Jawaban benar: ${String.fromCharCode(65 + r.correct_index)} — ${r.options[r.correct_index]?.slice(0, 60)}`}
-                        busy={busy}
-                        visible={r.is_visible !== false}
-                        onToggleVisible={() => void handleToggleVisible(r)}
-                        onDuplicate={() => void handleDuplicate(r.id)}
-                        onEdit={() => setEditing(r)}
-                        onDelete={() => setDeleting(r)}
-                      />
-                    ))}
+          {[...new Set(rows.map((r) => r.module_num))]
+            .sort((a, b) => a - b)
+            .map((num) => {
+              const moduleRows = filtered.filter((r) => r.module_num === num);
+              const isOpen = openModule === num;
+              return (
+                <div
+                  key={num}
+                  className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden"
+                >
+                  <div className="flex items-center gap-2 p-3 sm:p-4">
+                    <button
+                      onClick={() => setOpenModule(isOpen ? null : num)}
+                      className="flex-1 flex items-center gap-2.5 cursor-pointer min-h-[40px] text-left"
+                      aria-expanded={isOpen}
+                    >
+                      {isOpen ? (
+                        <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+                      )}
+                      <span className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-xs font-extrabold shrink-0">
+                        {num}
+                      </span>
+                      <span className="text-sm font-bold text-slate-800">
+                        Modul {num}
+                      </span>
+                      <span className="text-[11px] text-slate-400 font-semibold">
+                        {moduleRows.length} soal
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => setCreatingModule(num)}
+                      className="px-3 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shadow-sm cursor-pointer min-h-[36px] transition-colors shrink-0"
+                    >
+                      + Tambah
+                    </button>
                   </div>
-                )}
-              </div>
-            );
-          })}
+                  {isOpen && (
+                    <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2">
+                      {moduleRows.length === 0 && (
+                        <p className="text-xs text-slate-400 py-2">
+                          Tidak ada soal yang cocok dengan pencarian.
+                        </p>
+                      )}
+                      {moduleRows.map((r, i) => (
+                        <AdminListRow
+                          key={r.id}
+                          title={`${i + 1}. ${r.case_text.slice(0, 90)}${r.case_text.length > 90 ? "..." : ""}`}
+                          meta={`Jawaban benar: ${String.fromCharCode(65 + r.correct_index)} — ${r.options[r.correct_index]?.slice(0, 60)}`}
+                          busy={busy}
+                          visible={r.is_visible !== false}
+                          onToggleVisible={() => void handleToggleVisible(r)}
+                          onDuplicate={() => void handleDuplicate(r.id)}
+                          onEdit={() => setEditing(r)}
+                          onDelete={() => setDeleting(r)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
         </div>
       )}
 

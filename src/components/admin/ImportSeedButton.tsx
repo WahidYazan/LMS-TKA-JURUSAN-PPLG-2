@@ -32,7 +32,7 @@ export const ImportSeedButton: React.FC = () => {
     <>
       <AdminCard>
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0">
             <DatabaseZap className="w-5 h-5" aria-hidden="true" />
           </div>
           <div className="flex-1 min-w-0">
@@ -48,7 +48,7 @@ export const ImportSeedButton: React.FC = () => {
             {report && (
               <div className="mt-3 text-xs bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-1 animate-fade-in">
                 {report.inserted.map((line) => (
-                  <p key={line} className="text-emerald-700 font-semibold">
+                  <p key={line} className="text-red-700 font-semibold">
                     + {line}
                   </p>
                 ))}
@@ -69,7 +69,7 @@ export const ImportSeedButton: React.FC = () => {
             <button
               onClick={() => setConfirming(true)}
               disabled={!supabase || running}
-              className="mt-3 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-3 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-900 text-white text-sm font-bold shadow-md shadow-red-600/20 transition-all cursor-pointer min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <DatabaseZap className="w-4 h-4" aria-hidden="true" />
               {running ? "Mengimport..." : "Import Data Sekarang"}
@@ -81,7 +81,7 @@ export const ImportSeedButton: React.FC = () => {
       {confirming && (
         <ConfirmDeleteDialog
           label="data bawaan ke database"
-          detail="Seluruh konten default (soal, modul, cheatsheet, landing) akan disalin ke Supabase. Tabel yang sudah berisi data tidak akan disentuh. Lanjutkan?"
+          detail="Seluruh konten (soal, modul, cheatsheet, landing) akan reset ke bawaan. Tabel yang sudah berisi data tidak akan disentuh. Lanjutkan?"
           confirming={false}
           onCancel={() => setConfirming(false)}
           onConfirm={() => void run()}

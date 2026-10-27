@@ -73,6 +73,7 @@ export interface LandingStatRow {
   color: string;
   sort_order: number;
   is_visible?: boolean;
+  subtitle?: string;
 }
 
 export interface LandingFeatureRow {

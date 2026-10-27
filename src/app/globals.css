@@ -5,6 +5,59 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
+/* Preferensi mengubah ukuran teks tanpa mengubah jarak dan ukuran komponen. */
+:root {
+  --site-text-scale: 1;
+}
+
+[class~="text-[9.5px]"] { font-size: calc(9.5px * var(--site-text-scale, 1)) !important; }
+[class~="text-[10px]"] { font-size: calc(10px * var(--site-text-scale, 1)) !important; }
+[class~="text-[10.5px]"] { font-size: calc(10.5px * var(--site-text-scale, 1)) !important; }
+[class~="text-[11px]"] { font-size: calc(11px * var(--site-text-scale, 1)) !important; }
+[class~="text-[11.5px]"] { font-size: calc(11.5px * var(--site-text-scale, 1)) !important; }
+[class~="text-[12px]"] { font-size: calc(12px * var(--site-text-scale, 1)) !important; }
+[class~="text-[12.5px]"] { font-size: calc(12.5px * var(--site-text-scale, 1)) !important; }
+[class~="text-[13px]"] { font-size: calc(13px * var(--site-text-scale, 1)) !important; }
+[class~="text-[13.5px]"] { font-size: calc(13.5px * var(--site-text-scale, 1)) !important; }
+[class~="text-[14px]"] { font-size: calc(14px * var(--site-text-scale, 1)) !important; }
+[class~="text-[15px]"] { font-size: calc(15px * var(--site-text-scale, 1)) !important; }
+[class~="text-[26px]"] { font-size: calc(26px * var(--site-text-scale, 1)) !important; }
+[class~="text-[28px]"] { font-size: calc(28px * var(--site-text-scale, 1)) !important; }
+[class~="text-[32px]"] { font-size: calc(32px * var(--site-text-scale, 1)) !important; }
+[class~="text-[38px]"] { font-size: calc(38px * var(--site-text-scale, 1)) !important; }
+[class~="text-xs"] { font-size: calc(var(--text-xs) * var(--site-text-scale, 1)) !important; }
+[class~="text-sm"] { font-size: calc(var(--text-sm) * var(--site-text-scale, 1)) !important; }
+[class~="text-base"] { font-size: calc(var(--text-base) * var(--site-text-scale, 1)) !important; }
+[class~="text-lg"] { font-size: calc(var(--text-lg) * var(--site-text-scale, 1)) !important; }
+[class~="text-xl"] { font-size: calc(var(--text-xl) * var(--site-text-scale, 1)) !important; }
+[class~="text-2xl"] { font-size: calc(var(--text-2xl) * var(--site-text-scale, 1)) !important; }
+[class~="text-3xl"] { font-size: calc(var(--text-3xl) * var(--site-text-scale, 1)) !important; }
+[class~="text-4xl"] { font-size: calc(var(--text-4xl) * var(--site-text-scale, 1)) !important; }
+[class~="text-5xl"] { font-size: calc(var(--text-5xl) * var(--site-text-scale, 1)) !important; }
+
+@media (min-width: 40rem) {
+  [class~="sm:text-[15px]"] { font-size: calc(15px * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-[26px]"] { font-size: calc(26px * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-[38px]"] { font-size: calc(38px * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-sm"] { font-size: calc(var(--text-sm) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-base"] { font-size: calc(var(--text-base) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-lg"] { font-size: calc(var(--text-lg) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-xl"] { font-size: calc(var(--text-xl) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-2xl"] { font-size: calc(var(--text-2xl) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-3xl"] { font-size: calc(var(--text-3xl) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-4xl"] { font-size: calc(var(--text-4xl) * var(--site-text-scale, 1)) !important; }
+  [class~="sm:text-5xl"] { font-size: calc(var(--text-5xl) * var(--site-text-scale, 1)) !important; }
+}
+
+@media (min-width: 48rem) {
+  [class~="md:text-5xl"] { font-size: calc(var(--text-5xl) * var(--site-text-scale, 1)) !important; }
+}
+
+@media (min-width: 64rem) {
+  [class~="lg:text-4xl"] { font-size: calc(var(--text-4xl) * var(--site-text-scale, 1)) !important; }
+  [class~="lg:text-5xl"] { font-size: calc(var(--text-5xl) * var(--site-text-scale, 1)) !important; }
+}
+
 @layer base {
   * {
     border-color: var(--color-slate-200, #e2e8f0);

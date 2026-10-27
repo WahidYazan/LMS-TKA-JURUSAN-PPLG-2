@@ -39,28 +39,44 @@ const moduleThemeMap: Record<
     icon: HardHat,
     badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
     badgeText: "text-emerald-600",
-    topics: ["K3LH di Lab Komputer", "Ergonomi Developer", "SOP & Pencegahan Bahaya"],
+    topics: [
+      "K3LH di Lab Komputer",
+      "Ergonomi Developer",
+      "SOP & Pencegahan Bahaya",
+    ],
     category: "k3",
   },
   3: {
     icon: Database,
     badgeBg: "bg-amber-50 text-amber-700 border-amber-200",
     badgeText: "text-amber-600",
-    topics: ["DDL & DML Query", "Normalisasi 1NF-3NF", "Client-Server Architecture"],
+    topics: [
+      "DDL & DML Query",
+      "Normalisasi 1NF-3NF",
+      "Client-Server Architecture",
+    ],
     category: "database",
   },
   4: {
     icon: Code2,
     badgeBg: "bg-rose-50 text-rose-700 border-rose-200",
     badgeText: "text-rose-600",
-    topics: ["Enkapsulasi & Pewarisan", "Polimorfisme OOP", "Desain Kelas & Objek"],
+    topics: [
+      "Enkapsulasi & Pewarisan",
+      "Polimorfisme OOP",
+      "Desain Kelas & Objek",
+    ],
     category: "oop",
   },
   5: {
     icon: Gamepad2,
     badgeBg: "bg-purple-50 text-purple-700 border-purple-200",
     badgeText: "text-purple-600",
-    topics: ["Game Loop & Update", "Desain Mekanik & Rules", "2D/3D Asset Pipeline"],
+    topics: [
+      "Game Loop & Update",
+      "Desain Mekanik & Rules",
+      "2D/3D Asset Pipeline",
+    ],
     category: "gim",
   },
 };
@@ -68,8 +84,14 @@ const moduleThemeMap: Record<
 export const LandingCurriculum: React.FC = () => {
   const { data: modules } = useContent(loadModules, modulesList);
   const displayModules = modules && modules.length > 0 ? modules : modulesList;
-  const { data: questions } = useContent(loadQuizQuestions, quizQuestionsPPLG.map((q) => ({ ...q, id: String(q.id) })));
-  const stats = computeStats(displayModules, questions && questions.length > 0 ? questions : quizQuestionsPPLG);
+  const { data: questions } = useContent(
+    loadQuizQuestions,
+    quizQuestionsPPLG.map((q) => ({ ...q, id: String(q.id) })),
+  );
+  const stats = computeStats(
+    displayModules,
+    questions && questions.length > 0 ? questions : quizQuestionsPPLG,
+  );
   const [filter, setFilter] = useState<string>("all");
 
   const filteredModules = displayModules.filter((mod) => {
@@ -83,14 +105,15 @@ export const LandingCurriculum: React.FC = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
         <div>
-          <div className="text-md font-bold text-blue-600 uppercase tracking-wider mb-1.5">
+          {/* <div className="text-md font-bold text-blue-600 uppercase tracking-wider mb-1.5">
             Kurikulum Kejuruan SMK TTH
-          </div>
+          </div> */}
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             {stats.totalModules} Modul Pembelajaran Terstruktur
           </h2>
           <p className="text-sm text-slate-500 max-w-2xl mt-1.5 leading-relaxed">
-            Disusun bertahap dari wawasan industri dan K3LH hingga pemrograman basis data, OOP, dan dasar pengembangan gim.
+            Disusun bertahap dari wawasan industri dan K3LH hingga pemrograman
+            basis data, OOP, dan dasar pengembangan gim.
           </p>
         </div>
 
@@ -272,7 +295,11 @@ export const LandingCurriculum: React.FC = () => {
                 Simulasi Ujian TKA Lengkap
               </h3>
               <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed mb-4">
-                Simulasi Tes Kemampuan Akademik dari Modul {stats.moduleNumbers[0] ?? 1} sampai Modul {stats.moduleNumbers[stats.moduleNumbers.length - 1] ?? stats.totalModules}.
+                Simulasi Tes Kemampuan Akademik dari Modul{" "}
+                {stats.moduleNumbers[0] ?? 1} sampai Modul{" "}
+                {stats.moduleNumbers[stats.moduleNumbers.length - 1] ??
+                  stats.totalModules}
+                .
               </p>
 
               {/* Micro specs */}

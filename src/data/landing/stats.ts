@@ -5,6 +5,7 @@ export interface LandingStatItem {
   value: string;
   label: string;
   color: string;
+  subtitle?: string;
 }
 
 // Nilai default dihitung otomatis dari data bundled — jangan hardcode.
@@ -13,8 +14,8 @@ const totalModules = modulesList.length;
 const totalQuestions = quizQuestionsPPLG.length;
 
 export const landingStats: LandingStatItem[] = [
-  { value: `${totalModules}`, label: 'Modul Kejuruan', color: 'text-sky-600' },
-  { value: `${totalQuestions}+`, label: 'Soal Kasus HOTS', color: 'text-sky-500' },
-  { value: '100%', label: 'Standar BSKAP 2026', color: 'text-amber-500' },
-  { value: 'Free', label: 'Akses Tanpa Login', color: 'text-emerald-600' },
+  { value: `${totalModules}`, label: 'Modul Kejuruan', color: 'text-sky-600', subtitle: 'Materi Kejuruan PPLG' },
+  { value: `${totalQuestions}+`, label: 'Soal Kasus HOTS', color: 'text-sky-500', subtitle: 'Studi Kasus & Pembahasan' },
+  { value: '100%', label: 'Standar BSKAP 2026', color: 'text-amber-500', subtitle: 'Git, SQL, OOP, HTTP' },
+  { value: 'Free', label: 'Akses Tanpa Login', color: 'text-emerald-600', subtitle: 'Langsung di Web Browser' },
 ];

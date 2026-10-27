@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { Pencil, Trash2, ArrowUp, ArrowDown, Plus, Eye, EyeOff, Copy } from "lucide-react";
+import {
+  Pencil,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  Plus,
+  Eye,
+  EyeOff,
+  Copy,
+} from "lucide-react";
 
 /**
  * Header halaman admin: kicker mono + judul tebal + deskripsi + aksi.
@@ -16,7 +25,10 @@ export const AdminPageHeader: React.FC<{
 }> = ({ title, description, kicker, action }) => (
   <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-xs mb-6">
     {/* pita aksen + pola blueprint samar di sisi kanan */}
-    <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600" aria-hidden="true" />
+    {/* <div
+      className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600"
+      aria-hidden="true"
+    /> */}
     <div
       className="absolute -right-8 -top-10 w-48 h-48 bg-blueprint opacity-60 pointer-events-none"
       aria-hidden="true"
@@ -243,15 +255,7 @@ export const TextAreaField: React.FC<{
   placeholder?: string;
   required?: boolean;
   mono?: boolean;
-}> = ({
-  label,
-  value,
-  onChange,
-  rows = 3,
-  placeholder,
-  required,
-  mono,
-}) => (
+}> = ({ label, value, onChange, rows = 3, placeholder, required, mono }) => (
   <div>
     <label className={labelBase}>
       {label}

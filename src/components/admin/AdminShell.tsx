@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAdminAuth } from "../../contexts/AdminAuthContext";
 import { SiteLogo } from "../SiteLogo";
+import { TextSizeSettingsButton } from "../TextSizeSettings";
 import {
   LayoutDashboard,
   HelpCircle,
@@ -46,9 +47,9 @@ const BrandBlock: React.FC<{ compact?: boolean }> = ({ compact }) => (
         <span className="block text-[13.5px] font-extrabold tracking-tight text-slate-900 truncate">
           Portal TKA PPLG
         </span>
-        <span className="mt-1 block font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-sky-600 truncate">
+        {/* <span className="mt-1 block font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-sky-600 truncate">
           Mode Admin
-        </span>
+        </span> */}
       </span>
     )}
   </Link>
@@ -157,12 +158,6 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           collapsed ? "lg:w-[84px]" : "lg:w-64"
         }`}
       >
-        {/* pita aksen tipis di tepi atas sidebar */}
-        <div
-          className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 shrink-0"
-          aria-hidden="true"
-        />
-
         <button
           onClick={toggleCollapsed}
           aria-label={collapsed ? "Perlebar sidebar" : "Ciutkan sidebar"}
@@ -181,7 +176,7 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
         </div>
 
         <nav
-          className="flex flex-col gap-1 px-3 pt-3 mt-1 border-t border-slate-100"
+          className="flex flex-col gap-1 px-3 pt-3 mt-1 border-t border-slate-300"
           aria-label="Navigasi admin"
         >
           {!collapsed && (
@@ -201,7 +196,7 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           ))}
         </nav>
 
-        <div className="mt-auto p-3 pt-4 border-t border-slate-100">
+        <div className="mt-auto p-3 pt-4 border-t border-slate-300">
           {!collapsed ? (
             <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 mb-2">
               <p className="font-mono text-[9.5px] font-semibold tracking-[0.14em] uppercase text-slate-400">
@@ -230,7 +225,10 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
 
       {/* ── TOPBAR MOBILE ───────────────────────────────────── */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs">
-        <div className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600" aria-hidden="true" />
+        {/* <div
+          className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600"
+          aria-hidden="true"
+        /> */}
         <div className="flex items-center gap-1.5 px-3 h-16">
           <button
             onClick={() => setMobileOpen(true)}
@@ -252,17 +250,18 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
               <p className="text-sm font-extrabold text-slate-900 leading-tight truncate">
                 Portal TKA PPLG
               </p>
-              <p className="font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-sky-600 truncate">
+              {/* <p className="font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-sky-600 truncate">
                 Mode Admin
-              </p>
+              </p> */}
             </div>
           </Link>
           <button
             onClick={() => void logout()}
-            className="p-2 rounded-xl hover:bg-rose-50 text-rose-600 cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+            className="px-3 py-2 rounded-xl hover:bg-rose-50 text-rose-600 cursor-pointer min-h-[44px] flex items-center justify-center gap-2 shrink-0 text-sm font-semibold"
             aria-label="Keluar"
           >
-            <LogOut className="w-5 h-5" aria-hidden="true" />
+            {!collapsed && <span>Keluar</span>}
+            <LogOut className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -281,7 +280,10 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 shrink-0" aria-hidden="true" />
+        <div
+          className="h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 shrink-0"
+          aria-hidden="true"
+        />
         <div className="flex items-center justify-between gap-2 px-4 py-3">
           <BrandBlock />
           <button
@@ -293,7 +295,7 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 px-3 pt-3 mt-1 border-t border-slate-100 flex-1 overflow-y-auto">
+        <nav className="flex flex-col gap-1 px-3 pt-3 mt-1 border-t border-slate-300 flex-1 overflow-y-auto">
           <p className="font-mono text-[10px] font-semibold tracking-[0.18em] uppercase text-slate-400 px-3 mb-1">
             Konten
           </p>
@@ -310,24 +312,27 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           ))}
         </nav>
 
-        <div className="p-3 pt-4 border-t border-slate-100">
+        <div className="p-3 pt-4 border-t border-slate-300">
           {email && (
             <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 mb-2">
               <p className="font-mono text-[9.5px] font-semibold tracking-[0.14em] uppercase text-slate-400">
                 Masuk sebagai
               </p>
-              <p className="text-xs font-bold text-slate-700 truncate mt-0.5" title={email}>
+              <p
+                className="text-xs font-bold text-slate-700 truncate mt-0.5"
+                title={email}
+              >
                 {email}
               </p>
             </div>
           )}
-          <button
+          {/* <button
             onClick={() => void logout()}
             className="w-full flex items-center gap-3 px-3 rounded-xl text-[13px] font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer min-h-[44px]"
           >
             <LogOut className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
             <span>Keluar</span>
-          </button>
+          </button> */}
         </div>
       </aside>
 
@@ -337,7 +342,12 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           collapsed ? "lg:ml-[84px]" : "lg:ml-64"
         }`}
       >
-        <div className="max-w-5xl mx-auto">{children}</div>
+        <div className="w-full">
+          <div className="mb-4 flex justify-end">
+            <TextSizeSettingsButton />
+          </div>
+          {children}
+        </div>
       </main>
     </div>
   );

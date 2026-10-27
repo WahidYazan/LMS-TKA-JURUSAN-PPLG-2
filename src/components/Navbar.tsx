@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isModuleTocOpen, setIsModuleTocOpen] = useState(false);
   const [activeSectionId, setActiveSectionId] = useState<string>(
-    () => selectedModule?.tableOfContents[0]?.id || ""
+    () => selectedModule?.tableOfContents[0]?.id || "",
   );
   const [internalCheatsheetOpen, setInternalCheatsheetOpen] = useState(false);
 
@@ -70,7 +70,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-16 sm:h-18 flex items-center justify-between gap-6">
-          
           {/* ZONE 1: BRAND WORDMARK */}
           <Link
             href="/tka"
@@ -130,7 +129,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
               aria-current={isQuiz ? "page" : undefined}
             >
-              <ClipboardCheck className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <ClipboardCheck
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span>Simulasi Ujian</span>
             </Link>
 
@@ -177,7 +179,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <X className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
                     </div>
-                    <nav className="max-h-[60vh] overflow-y-auto py-1" aria-label="Navigasi bagian modul">
+                    <nav
+                      className="max-h-[60vh] overflow-y-auto py-1"
+                      aria-label="Navigasi bagian modul"
+                    >
                       {selectedModule.tableOfContents.map((item, idx) => (
                         <button
                           key={item.id}
@@ -245,12 +250,17 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md animate-slide-down">
-          <nav className="px-4 py-4 space-y-1 max-h-[75vh] overflow-y-auto" aria-label="Menu mobile">
+          <nav
+            className="px-4 py-4 space-y-1 max-h-[75vh] overflow-y-auto"
+            aria-label="Menu mobile"
+          >
             <Link
               href="/tka"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`w-full px-3.5 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 min-h-[44px] text-sm font-semibold ${
-                isLanding ? "text-blue-600 bg-blue-50 font-bold" : "text-slate-700 hover:bg-slate-50"
+                isLanding
+                  ? "text-blue-600 bg-blue-50 font-bold"
+                  : "text-slate-700 hover:bg-slate-50"
               }`}
             >
               <Globe className="w-4 h-4 text-slate-400" aria-hidden="true" />
@@ -261,7 +271,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="/tka/modul"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`w-full px-3.5 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 min-h-[44px] text-sm font-semibold ${
-                isModul || isModule ? "text-blue-600 bg-blue-50 font-bold" : "text-slate-700 hover:bg-slate-50"
+                isModul || isModule
+                  ? "text-blue-600 bg-blue-50 font-bold"
+                  : "text-slate-700 hover:bg-slate-50"
               }`}
             >
               <BookOpen className="w-4 h-4 text-slate-400" aria-hidden="true" />
@@ -272,10 +284,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="/tka/quiz"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`w-full px-3.5 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 min-h-[44px] text-sm font-semibold ${
-                isQuiz ? "text-blue-600 bg-blue-50 font-bold" : "text-slate-700 hover:bg-slate-50"
+                isQuiz
+                  ? "text-blue-600 bg-blue-50 font-bold"
+                  : "text-slate-700 hover:bg-slate-50"
               }`}
             >
-              <ClipboardCheck className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <ClipboardCheck
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span>Simulasi Ujian TKA</span>
             </Link>
 
@@ -283,7 +300,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={handleOpenCheatsheet}
               className="w-full px-3.5 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 text-left min-h-[44px] text-sm font-semibold text-slate-700 hover:bg-slate-50"
             >
-              <FileCode2 className="w-4 h-4 text-slate-400" aria-hidden="true" />
+              <FileCode2
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
               <span>Cheatsheet / Rangkuman</span>
             </button>
 
@@ -299,7 +319,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onClick={() => scrollToSection(item.id)}
                     className="w-full text-left px-3.5 py-2 text-xs text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg flex items-center gap-2"
                   >
-                    <span className="font-mono text-[10px] text-slate-400">{idx + 1}.</span>
+                    <span className="font-mono text-[10px] text-slate-400">
+                      {idx + 1}.
+                    </span>
                     <span className="truncate">{item.title}</span>
                   </button>
                 ))}

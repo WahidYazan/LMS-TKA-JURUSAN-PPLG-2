@@ -1,19 +1,19 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useSiteStats } from '../hooks/useSiteStats';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useSiteStats } from "../hooks/useSiteStats";
 
 export const SiteFooter: React.FC = () => {
   const year = process.env.NEXT_PUBLIC_SITE_YEAR || new Date().getFullYear();
   const { totalQuestions } = useSiteStats();
 
   const links = [
-    { href: '/tka', label: 'Beranda Utama' },
-    { href: '/tka/modul', label: 'Modul Pembelajaran' },
-    { href: '/tka/quiz', label: `Simulasi Ujian (${totalQuestions} Soal)` },
-    { href: '/tka/admin', label: 'Portal Admin' },
+    { href: "/tka", label: "Beranda Utama" },
+    { href: "/tka/modul", label: "Modul Pembelajaran" },
+    { href: "/tka/quiz", label: `Simulasi Ujian (${totalQuestions} Soal)` },
+    { href: "/tka/admin", label: "Portal Admin" },
   ];
 
   return (
@@ -26,7 +26,6 @@ export const SiteFooter: React.FC = () => {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          
           {/* Col 1: Brand & School */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3.5 mb-4">
@@ -51,7 +50,9 @@ export const SiteFooter: React.FC = () => {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 max-w-md leading-relaxed mb-4">
-              Portal edukasi resmi kejuruan Rekayasa Perangkat Lunak dan Gim. Mempersiapkan siswa menghadapi Asesmen Kemampuan Akademik Kejuruan dengan kurikulum terstruktur dan studi kasus berstandar industri.
+              Portal edukasi resmi kejuruan Rekayasa Perangkat Lunak dan Gim.
+              Mempersiapkan siswa menghadapi Asesmen Kemampuan Akademik Kejuruan
+              dengan kurikulum terstruktur dan studi kasus berstandar industri.
             </p>
 
             <div className="text-[11px] text-slate-500">
@@ -84,7 +85,9 @@ export const SiteFooter: React.FC = () => {
               Standar & Akreditasi
             </p>
             <p className="text-xs text-slate-400 leading-relaxed mb-3">
-              Berpedoman pada Capaian Pembelajaran Fase F Pusmendik Kemendikdasmen untuk Mata Pelajaran Pilihan SMK/MAK Konsentrasi Keahlian PPLG.
+              Berpedoman pada Capaian Pembelajaran Fase F Pusmendik
+              Kemendikdasmen untuk Mata Pelajaran Pilihan SMK/MAK Konsentrasi
+              Keahlian PPLG.
             </p>
             {/* <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] text-sky-300 font-mono">
               Kurikulum Merdeka 2026
@@ -94,7 +97,10 @@ export const SiteFooter: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <p>&copy; {year} SMK Telekomunikasi Tunas Harapan. Semua hak cipta dilindungi.</p>
+          <p>
+            &copy; {year} SMK Telekomunikasi Tunas Harapan. Semua hak cipta
+            dilindungi.
+          </p>
           {/* <p className="text-[11px] text-slate-500">
             Platform Belajar & Asesmen Mandiri Siswa
           </p> */}

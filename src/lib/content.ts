@@ -18,6 +18,7 @@ export interface LandingStat {
   value: string;
   label: string;
   color: string;
+  subtitle?: string;
 }
 
 export interface LandingFeature {
@@ -220,6 +221,7 @@ export function loadLandingStats(): Promise<LandingStat[]> {
           value: r.value,
           label: r.label,
           color: r.color,
+          subtitle: r.subtitle,
         }));
     } catch {
       return landingStats;
@@ -251,27 +253,77 @@ export function loadLandingFeatures(): Promise<LandingFeature[]> {
 
 export interface SiteSettings {
   logoUrl: string | null;
+  // Section visibility
+  landingHeroVisible: boolean;
+  landingStatsVisible: boolean;
+  landingCurriculumVisible: boolean;
+  landingFeaturesVisible: boolean;
+  landingOfficialVisible: boolean;
+  landingCtaVisible: boolean;
+  // Section width modes
+  landingStatsWidth: "auto" | "full";
+  landingFeaturesWidth: "auto" | "full";
 }
 
 export const DEFAULT_LOGO = "/images/brands/TTH-nobg.webp";
 
 export function loadSiteSettings(): Promise<SiteSettings> {
   return cached("siteSettings", async () => {
-    if (!supabase) return { logoUrl: null };
+    if (!supabase) return { 
+      logoUrl: null, 
+      landingHeroVisible: true,
+      landingStatsVisible: true, 
+      landingCurriculumVisible: true, 
+      landingFeaturesVisible: true, 
+      landingOfficialVisible: true, 
+      landingCtaVisible: true, 
+      landingStatsWidth: "auto", 
+      landingFeaturesWidth: "auto" 
+    };
     try {
       const { data, error } = await withTimeout(
         supabase.from("site_settings").select("key, value"),
       );
-      if (error || !data) return { logoUrl: null };
+      if (error || !data) return { 
+        logoUrl: null, 
+        landingHeroVisible: true,
+        landingStatsVisible: true, 
+        landingCurriculumVisible: true, 
+        landingFeaturesVisible: true, 
+        landingOfficialVisible: true, 
+        landingCtaVisible: true, 
+        landingStatsWidth: "auto", 
+        landingFeaturesWidth: "auto" 
+      };
       const map = new Map(
         (data as { key: string; value: string | null }[]).map((r) => [
           r.key,
           r.value,
         ]),
       );
-      return { logoUrl: map.get("logo_url") || null };
+      return { 
+        logoUrl: map.get("logo_url") || null,
+        landingHeroVisible: map.get("landing_hero_visible") !== "false",
+        landingStatsVisible: map.get("landing_stats_visible") !== "false",
+        landingCurriculumVisible: map.get("landing_curriculum_visible") !== "false",
+        landingFeaturesVisible: map.get("landing_features_visible") !== "false",
+        landingOfficialVisible: map.get("landing_official_visible") !== "false",
+        landingCtaVisible: map.get("landing_cta_visible") !== "false",
+        landingStatsWidth: (map.get("landing_stats_width") as "auto" | "full") || "auto",
+        landingFeaturesWidth: (map.get("landing_features_width") as "auto" | "full") || "auto",
+      };
     } catch {
-      return { logoUrl: null };
+      return { 
+        logoUrl: null, 
+        landingHeroVisible: true,
+        landingStatsVisible: true, 
+        landingCurriculumVisible: true, 
+        landingFeaturesVisible: true, 
+        landingOfficialVisible: true, 
+        landingCtaVisible: true, 
+        landingStatsWidth: "auto", 
+        landingFeaturesWidth: "auto" 
+      };
     }
   });
 }

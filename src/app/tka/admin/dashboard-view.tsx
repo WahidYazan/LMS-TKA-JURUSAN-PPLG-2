@@ -35,8 +35,8 @@ const sections = [
     table: "modules" as const,
     code: "MODUL",
     accent: "blue" as const,
-    ring: "group-hover:border-blue-300",
-    tile: "bg-blue-50 text-blue-600 group-hover:bg-blue-500 group-hover:text-white",
+    ring: "group-hover:border-sky-300",
+    tile: "bg-sky-50 text-sky-600 group-hover:bg-sky-500 group-hover:text-white",
   },
   {
     href: "/tka/admin/cheatsheet",
@@ -46,8 +46,8 @@ const sections = [
     table: "cheatsheet_items" as const,
     code: "CHTS",
     accent: "indigo" as const,
-    ring: "group-hover:border-indigo-300",
-    tile: "bg-indigo-50 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white",
+    ring: "group-hover:border-sky-300",
+    tile: "bg-sky-50 text-sky-600 group-hover:bg-sky-500 group-hover:text-white",
   },
   {
     href: "/tka/admin/landing",
@@ -57,8 +57,8 @@ const sections = [
     table: "landing_features" as const,
     code: "LP",
     accent: "cyan" as const,
-    ring: "group-hover:border-cyan-300",
-    tile: "bg-cyan-50 text-cyan-600 group-hover:bg-cyan-500 group-hover:text-white",
+    ring: "group-hover:border-sky-300",
+    tile: "bg-sky-50 text-sky-600 group-hover:bg-sky-500 group-hover:text-white",
   },
 ] as const;
 
@@ -109,7 +109,10 @@ export default function AdminDashboardPage() {
     <div>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-xs mb-6">
-        <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600" aria-hidden="true" />
+        {/* <div
+          className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-sky-400 via-sky-500 to-blue-600"
+          aria-hidden="true"
+        /> */}
         <div
           className="absolute -right-10 -top-12 w-72 h-72 bg-blueprint opacity-70 pointer-events-none"
           aria-hidden="true"
@@ -117,11 +120,11 @@ export default function AdminDashboardPage() {
         <div className="relative pl-7 pr-5 sm:pl-8 sm:pr-8 py-6 sm:py-8">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="min-w-0">
-              <p className="font-mono text-[10.5px] font-semibold tracking-[0.2em] uppercase text-sky-600">
-                Panel Internal · AD/01
-              </p>
+              {/* <p className="font-mono text-[10.5px] font-semibold tracking-[0.2em] uppercase text-sky-600">
+                Dashboard
+              </p> */}
               <h1 className="mt-2 text-[28px] sm:text-[38px] font-extrabold tracking-[-0.03em] leading-[1.05] text-balance text-slate-900">
-                Dashboard konten
+                Dashboard
               </h1>
               <p className="mt-2.5 text-[13.5px] sm:text-[15px] text-slate-500 max-w-xl leading-relaxed">
                 Kelola seluruh konten Simulasi TKA PPLG dari satu tempat.
@@ -130,15 +133,21 @@ export default function AdminDashboardPage() {
 
               {supabase ? (
                 <div className="mt-5 flex flex-wrap gap-2.5">
-                  <StatPill value={counts.quiz_questions ?? null} label="soal HOTS" />
-                  <StatPill value={counts.modules ?? null} label="modul" />
+                  <StatPill
+                    value={counts.quiz_questions ?? null}
+                    label="Soal Berhasil Di Buat"
+                  />
+                  <StatPill
+                    value={counts.modules ?? null}
+                    label="Modul Berhasil Di Buat"
+                  />
                   <StatPill
                     value={counts.cheatsheet_items ?? null}
-                    label="item cheatsheet"
+                    label="CheatSheet Berhasil Di Buat"
                   />
                   <StatPill
                     value={counts.landing_features ?? null}
-                    label="kartu fitur"
+                    label="LP Berhasil Di Buat"
                   />
                 </div>
               ) : (
@@ -149,10 +158,13 @@ export default function AdminDashboardPage() {
               )}
             </div>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-[11px] font-bold uppercase tracking-wider text-sky-700 w-fit shrink-0 self-start lg:self-auto">
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-500" aria-hidden="true" />
+            {/* <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-[11px] font-bold uppercase tracking-wider text-sky-700 w-fit shrink-0 self-start lg:self-auto">
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-sky-500"
+                aria-hidden="true"
+              />
               Halaman Admin
-            </span>
+            </span> */}
           </div>
         </div>
       </section>

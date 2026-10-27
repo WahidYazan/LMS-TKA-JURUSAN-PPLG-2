@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { LandingPage } from '@/components/LandingPage';
-import { Navbar } from '@/components/Navbar';
-import { CheatsheetModal } from '@/components/CheatsheetModal';
-import { usePathname } from 'next/navigation';
+import { useState } from "react";
+import { LandingPage } from "@/components/LandingPage";
+import { Navbar } from "@/components/Navbar";
+import { CheatsheetModal } from "@/components/CheatsheetModal";
+import { usePathname } from "next/navigation";
 
 export default function HomePage() {
   const pathname = usePathname();

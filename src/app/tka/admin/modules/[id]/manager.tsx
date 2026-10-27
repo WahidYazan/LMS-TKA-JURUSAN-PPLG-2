@@ -19,10 +19,7 @@ import {
   FormModalActions,
   TextField,
 } from "@/components/admin/AdminPrimitives";
-import {
-  AdminModal,
-  ConfirmDeleteDialog,
-} from "@/components/admin/AdminModal";
+import { AdminModal, ConfirmDeleteDialog } from "@/components/admin/AdminModal";
 import { AdminListSkeleton } from "@/components/admin/AdminLoading";
 import {
   BulletListEditor,
@@ -190,7 +187,10 @@ export default function SectionManager({ id }: { id: string }) {
   return (
     <div>
       <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-xs mb-6">
-        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-sky-400 to-blue-600" aria-hidden="true" />
+        <div
+          className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-sky-400 to-blue-600"
+          aria-hidden="true"
+        />
         <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 pl-6 pr-5 sm:pr-6 py-5 sm:py-6">
           <div className="min-w-0">
             <Link
@@ -264,7 +264,9 @@ export default function SectionManager({ id }: { id: string }) {
               onDuplicate={() => void handleDuplicate(r.id)}
               onMoveUp={i > 0 ? () => void handleMove(r.id, "up") : undefined}
               onMoveDown={
-                i < rows.length - 1 ? () => void handleMove(r.id, "down") : undefined
+                i < rows.length - 1
+                  ? () => void handleMove(r.id, "down")
+                  : undefined
               }
               onEdit={() => setEditing(r)}
               onDelete={() => setDeleting(r)}

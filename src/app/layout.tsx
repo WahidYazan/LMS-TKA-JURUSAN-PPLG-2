@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
+import { TextSizeSettingsProvider } from '@/components/TextSizeSettings';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -37,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased min-h-screen bg-[#f8fafc] text-slate-800 font-sans">
-        {children}
+        <TextSizeSettingsProvider>{children}</TextSizeSettingsProvider>
       </body>
     </html>
   );

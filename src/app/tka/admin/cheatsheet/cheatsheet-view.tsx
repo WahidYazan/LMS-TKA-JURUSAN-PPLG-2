@@ -2,7 +2,14 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ChevronDown, ChevronRight, Inbox, EyeOff, Eye, Copy } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Inbox,
+  EyeOff,
+  Eye,
+  Copy,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { describeError } from "@/lib/adminError";
 import {
@@ -12,10 +19,7 @@ import {
   moveRow,
   updateRow,
 } from "@/lib/adminApi";
-import type {
-  CheatsheetItemRow,
-  CheatsheetSectionRow,
-} from "@/lib/dbTypes";
+import type { CheatsheetItemRow, CheatsheetSectionRow } from "@/lib/dbTypes";
 import {
   AdminCard,
   AdminListRow,
@@ -24,10 +28,7 @@ import {
   TextAreaField,
   TextField,
 } from "@/components/admin/AdminPrimitives";
-import {
-  AdminModal,
-  ConfirmDeleteDialog,
-} from "@/components/admin/AdminModal";
+import { AdminModal, ConfirmDeleteDialog } from "@/components/admin/AdminModal";
 import { AdminListSkeleton } from "@/components/admin/AdminLoading";
 
 export default function AdminCheatsheetPage() {
@@ -50,9 +51,13 @@ export default function AdminCheatsheetPage() {
     useState<CheatsheetSectionRow | null>(null);
 
   const [itemForm, setItemForm] = useState<
-    { mode: "create"; sectionId: string } | { mode: "edit"; row: CheatsheetItemRow } | null
+    | { mode: "create"; sectionId: string }
+    | { mode: "edit"; row: CheatsheetItemRow }
+    | null
   >(null);
-  const [deletingItem, setDeletingItem] = useState<CheatsheetItemRow | null>(null);
+  const [deletingItem, setDeletingItem] = useState<CheatsheetItemRow | null>(
+    null,
+  );
 
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -363,7 +368,11 @@ export default function AdminCheatsheetPage() {
                           i > 0
                             ? () =>
                                 void withBusy(async () => {
-                                  await moveRow("cheatsheet_items", it.id, "up");
+                                  await moveRow(
+                                    "cheatsheet_items",
+                                    it.id,
+                                    "up",
+                                  );
                                   await load();
                                 })
                             : undefined
@@ -409,8 +418,8 @@ export default function AdminCheatsheetPage() {
                 </p>
                 <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                   Menu ini tidak ditampilkan ke pengunjung, jadi isinya{" "}
-                  <strong className="text-slate-700">tidak wajib</strong> diubah.
-                  Kelola hanya bila memang diperlukan.
+                  <strong className="text-slate-700">tidak wajib</strong>{" "}
+                  diubah. Kelola hanya bila memang diperlukan.
                 </p>
               </div>
             </div>
@@ -434,7 +443,9 @@ export default function AdminCheatsheetPage() {
                 }
               : { key: "", category: "" }
           }
-          title={sectionForm.mode === "edit" ? "Edit Section" : "Tambah Section"}
+          title={
+            sectionForm.mode === "edit" ? "Edit Section" : "Tambah Section"
+          }
           submitting={busy}
           onCancel={() => setSectionForm(null)}
           onSubmit={(v) => void submitSection(v)}

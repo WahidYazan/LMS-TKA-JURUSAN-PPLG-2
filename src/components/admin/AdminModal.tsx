@@ -31,13 +31,10 @@ export const AdminModal: React.FC<{
         } max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* pita aksen gradient — konsisten dengan shell & header admin */}
-        <div
-          className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600"
-          aria-hidden="true"
-        />
         <div className="px-4 sm:px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3 shrink-0">
-          <h3 className="text-base font-extrabold tracking-tight text-slate-900">{title}</h3>
+          <h3 className="text-base font-extrabold tracking-tight text-slate-900">
+            {title}
+          </h3>
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
@@ -66,9 +63,7 @@ export const ConfirmDeleteDialog: React.FC<{
           <AlertTriangle className="w-5 h-5" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-sm font-bold text-slate-900">
-            Hapus {label}?
-          </p>
+          <p className="text-sm font-bold text-slate-900">Hapus {label}?</p>
           <p className="text-xs text-slate-500 mt-1 leading-relaxed">
             {detail ?? "Tindakan ini tidak bisa dibatalkan."}
           </p>
