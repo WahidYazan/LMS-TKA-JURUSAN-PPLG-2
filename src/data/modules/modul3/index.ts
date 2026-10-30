@@ -9,30 +9,30 @@ export const modul3: ModuleContent = {
   id: "modul3",
   number: 3,
   moduleBadge: "MODUL 3",
-  title: "Arsitektur Jaringan, API & Komunikasi Client-Server",
-  cardTitle: "Arsitektur Jaringan & API",
-  shortDesc: "Komunikasi client-server, protokol HTTP/HTTPS, RESTful API JSON, dan troubleshooting.",
+  title: "Teknologi Jaringan Komputer",
+  cardTitle: "Teknologi Jaringan Komputer",
+  shortDesc: "Pemahaman konsep dasar jaringan komputer, konfigurasi lingkungan pengembangan, alamat IP, komunikasi client-server, protokol HTTP/HTTPS, akses basis data dan API, serta analisis kendala konektivitas.",
   heroImage: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
   tableOfContents: [
     {
       id: "bab1",
-      title: "1. Model Client-Server & Protokol Web"
+      title: "1. Sistem Operasi dan Lingkungan Pengembangan"
     },
     {
       id: "bab2",
-      title: "2. HTTP Methods & Response Status Codes"
+      title: "2. Infrastruktur, IP, Subnet, dan Perangkat Jaringan"
     },
     {
       id: "bab3",
-      title: "3. Port Layanan, Localhost & DNS"
+      title: "3. Lapisan TCP/IP dan Mekanisme Komunikasi"
     },
     {
       id: "bab4",
-      title: "4. Konsumsi REST API & Payload JSON"
+      title: "4. Client-Server, HTTP/HTTPS, API, dan Basis Data"
     },
     {
       id: "bab5",
-      title: "5. Troubleshooting Latency & Koneksi"
+      title: "5. Analisis Kendala Konektivitas"
     }
   ],
   sections: [bab1, bab2, bab3, bab4, bab5]

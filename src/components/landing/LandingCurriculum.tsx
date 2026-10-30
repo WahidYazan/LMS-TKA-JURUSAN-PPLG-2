@@ -9,7 +9,6 @@ import {
   Gamepad2,
   HardHat,
   Laptop,
-  Database,
   Briefcase,
 } from "lucide-react";
 import { loadModules, loadQuizQuestions } from "../../lib/content";
@@ -32,52 +31,40 @@ const moduleThemeMap: Record<
     icon: Briefcase,
     badgeBg: "bg-sky-50 text-sky-700 border-sky-200",
     badgeText: "text-sky-600",
-    topics: ["Revolusi Industri 4.0", "Profesi RPL & Gim", "Budaya Kerja 5S"],
+    topics: ["Profesi PPLG", "Proses Bisnis", "Proyek & HAKI"],
     category: "wawasan",
   },
   2: {
     icon: HardHat,
     badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
     badgeText: "text-emerald-600",
-    topics: [
-      "K3LH di Lab Komputer",
-      "Ergonomi Developer",
-      "SOP & Pencegahan Bahaya",
-    ],
-    category: "k3",
+    topics: ["K3LH & Ergonomi", "Perangkat dan Tools", "Budaya Kerja & Aset"],
+    category: "dasar",
   },
   3: {
-    icon: Database,
+    icon: Laptop,
     badgeBg: "bg-amber-50 text-amber-700 border-amber-200",
     badgeText: "text-amber-600",
-    topics: [
-      "DDL & DML Query",
-      "Normalisasi 1NF-3NF",
-      "Client-Server Architecture",
-    ],
-    category: "database",
+    topics: ["Sistem Operasi", "IP, Subnet, TCP/IP", "HTTP, API & Basis Data"],
+    category: "jaringan",
   },
   4: {
     icon: Code2,
     badgeBg: "bg-rose-50 text-rose-700 border-rose-200",
     badgeText: "text-rose-600",
     topics: [
-      "Enkapsulasi & Pewarisan",
-      "Polimorfisme OOP",
-      "Desain Kelas & Objek",
+      "Dekomposisi & Algoritma",
+      "Struktur Data",
+      "Fungsi & Modularisasi",
     ],
-    category: "oop",
+    category: "terstruktur",
   },
   5: {
     icon: Gamepad2,
     badgeBg: "bg-purple-50 text-purple-700 border-purple-200",
     badgeText: "text-purple-600",
-    topics: [
-      "Game Loop & Update",
-      "Desain Mekanik & Rules",
-      "2D/3D Asset Pipeline",
-    ],
-    category: "gim",
+    topics: ["Class & Object", "Access Modifier", "Inheritance & Polymorphism"],
+    category: "oop",
   },
 };
 
@@ -109,12 +96,12 @@ export const LandingCurriculum: React.FC = () => {
             Kurikulum Kejuruan SMK TTH
           </div> */}
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {stats.totalModules} Modul Pembelajaran Terstruktur
+            {stats.totalModules} Modul Pembelajaran
           </h2>
-          <p className="text-sm text-slate-500 max-w-2xl mt-1.5 leading-relaxed">
+          {/* <p className="text-sm text-slate-500 max-w-2xl mt-1.5 leading-relaxed">
             Disusun bertahap dari wawasan industri dan K3LH hingga pemrograman
             basis data, OOP, dan dasar pengembangan gim.
-          </p>
+          </p> */}
         </div>
 
         {/* Filter Tabs */}
@@ -140,24 +127,34 @@ export const LandingCurriculum: React.FC = () => {
             Wawasan Industri
           </button>
           <button
-            onClick={() => setFilter("k3")}
+            onClick={() => setFilter("dasar")}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-              filter === "k3"
+              filter === "dasar"
                 ? "bg-white text-slate-900 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            K3LH
+            Kecakapan & K3
           </button>
           <button
-            onClick={() => setFilter("database")}
+            onClick={() => setFilter("jaringan")}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-              filter === "database"
+              filter === "jaringan"
                 ? "bg-white text-slate-900 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            Basis Data
+            Teknologi Jaringan
+          </button>
+          <button
+            onClick={() => setFilter("terstruktur")}
+            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+              filter === "terstruktur"
+                ? "bg-white text-slate-900 shadow-xs"
+                : "text-slate-600 hover:text-slate-900"
+            }`}
+          >
+            Pemrograman Terstruktur
           </button>
           <button
             onClick={() => setFilter("oop")}
@@ -167,17 +164,7 @@ export const LandingCurriculum: React.FC = () => {
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            OOP
-          </button>
-          <button
-            onClick={() => setFilter("gim")}
-            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-              filter === "gim"
-                ? "bg-white text-slate-900 shadow-xs"
-                : "text-slate-600 hover:text-slate-900"
-            }`}
-          >
-            Gim
+            PBO
           </button>
         </div>
       </div>

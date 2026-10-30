@@ -3,22 +3,28 @@ import { ModuleSection } from '../../../types';
 export const bab5: ModuleSection = {
   id: "bab5",
   numberPrefix: "5.",
-  title: "Keamanan Perangkat Lunak & Sistem Terapan (Cybersecurity)",
+  title: "Manajemen Proyek, Budaya Mutu, dan HAKI",
   paragraphs: [
-    "Seiring pesatnya laju digitalisasi, ancaman hacker, malware, data leak, dan Ransomware (virus penyandera data) menjadi teror harian dunia korporasi. Konsep keamanan modern bergeser dari sekadar firewall jaringan konvensional menuju arsitektur holistik:"
+    "Manajemen proyek membantu tim mencapai hasil yang disepakati dengan mengatur tujuan, ruang lingkup, waktu, sumber daya, tanggung jawab, risiko, dan komunikasi. Pekerjaan dapat dicatat sebagai daftar tugas atau backlog, diprioritaskan, dibagi menjadi bagian yang dapat diperiksa, lalu ditinjau bersama.",
+    "Budaya mutu berarti setiap anggota menjaga kualitas sejak memahami kebutuhan sampai pemeliharaan: mengikuti kriteria, meninjau pekerjaan, menguji perubahan, mencatat keputusan, dan memperbaiki penyebab masalah. Mutu mencakup kesesuaian fungsi, kemudahan penggunaan, keandalan, dan kemudahan pemeliharaan.",
+    "HAKI berkaitan dengan hak atas karya, identitas usaha, invensi, dan penggunaan materi milik pihak lain. Dalam proyek, periksa lisensi kode, gambar, audio, font, dan pustaka yang dipakai; cantumkan atribusi sesuai syarat lisensi dan sepakati kepemilikan hasil kerja dengan pihak terkait."
   ],
   bulletPoints: [
     {
-      label: "Zero Trust Architecture (ZTA)",
-      description: "Prinsip kerja terkini yang mengasumsikan bahwa tidak ada siapapun di dalam atau di luar jaringan yang boleh dipercaya otomatis. Setiap akses request wajib melalui verifikasi identitas berlapis (Multi-Factor Authentication)."
+      label: "Tujuan dan ruang lingkup",
+      description: "Nyatakan hasil yang ingin dicapai, fitur yang termasuk, batasan, kriteria selesai, dan pihak yang menyetujui perubahan."
     },
     {
-      label: "Mitigasi OWASP Top 10",
-      description: "Perlindungan aplikasi web dari serangan klasik mematikan seperti SQL Injection (dicegah dengan Prepared Statements), Cross-Site Scripting / XSS (sanitasi input HTML), dan Broken Access Control."
+      label: "Perencanaan dan koordinasi",
+      description: "Bagi pekerjaan menjadi tugas yang jelas, tetapkan penanggung jawab dan urutan, perkirakan waktu, lalu komunikasikan kemajuan serta hambatan."
     },
     {
-      label: "DevSecOps & Code Audit",
-      description: "Mengintegrasikan pemindaian celah keamanan sejak baris kode pertama ditulis (Static Application Security Testing) sebelum kode dideploy ke server produksi."
+      label: "Risiko dan evaluasi",
+      description: "Catat hal yang dapat menghambat proyek, siapkan langkah penanganan yang masuk akal, dan evaluasi hasil terhadap kebutuhan pengguna."
+    },
+    {
+      label: "Mutu dan HAKI",
+      description: "Gunakan tinjauan kode, pengujian, dokumentasi, lisensi yang sesuai, dan atribusi untuk menjaga kualitas serta menghormati hak pencipta."
     }
   ]
 };

@@ -25,11 +25,7 @@ export const AdminListSkeleton: React.FC<{
   rows?: number;
   className?: string;
 }> = ({ rows = 3, className = "" }) => (
-  <div
-    role="status"
-    aria-live="polite"
-    className={`space-y-3 ${className}`}
-  >
+  <div role="status" aria-live="polite" className={`space-y-3 ${className}`}>
     <span className="sr-only">Memuat data...</span>
     <div aria-hidden="true" className="space-y-3">
       {Array.from({ length: rows }).map((_, i) => (

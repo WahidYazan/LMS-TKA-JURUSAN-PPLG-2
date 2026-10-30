@@ -21,16 +21,16 @@ export default function DashboardPage() {
   const questionCount = questions?.length ?? quizQuestionsPPLG.length;
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'wawasan' | 'k3' | 'db' | 'oop' | 'gim'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'wawasan' | 'k3' | 'jaringan' | 'terstruktur' | 'oop'>('all');
 
   const filteredModules = useMemo(() => {
     return displayModules.filter((mod) => {
-      // Category filter
+      // Category filter sesuai 5 Muatan Resmi Pusmendik
       if (selectedCategory === 'wawasan' && mod.number !== 1) return false;
       if (selectedCategory === 'k3' && mod.number !== 2) return false;
-      if (selectedCategory === 'db' && mod.number !== 3) return false;
-      if (selectedCategory === 'oop' && mod.number !== 4) return false;
-      if (selectedCategory === 'gim' && mod.number !== 5) return false;
+      if (selectedCategory === 'jaringan' && mod.number !== 3) return false;
+      if (selectedCategory === 'terstruktur' && mod.number !== 4) return false;
+      if (selectedCategory === 'oop' && mod.number !== 5) return false;
 
       // Search filter
       if (!searchQuery.trim()) return true;
@@ -103,6 +103,7 @@ export default function DashboardPage() {
                 >
                   Wawasan
                 </button>
+
                 <button
                   onClick={() => setSelectedCategory('k3')}
                   className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
@@ -111,17 +112,27 @@ export default function DashboardPage() {
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  K3LH
+                  K3 & Budaya Kerja
                 </button>
                 <button
-                  onClick={() => setSelectedCategory('db')}
+                  onClick={() => setSelectedCategory('jaringan')}
                   className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-                    selectedCategory === 'db'
+                    selectedCategory === 'jaringan'
                       ? 'bg-white text-slate-900 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Basis Data
+                  Jaringan Komputer
+                </button>
+                <button
+                  onClick={() => setSelectedCategory('terstruktur')}
+                  className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+                    selectedCategory === 'terstruktur'
+                      ? 'bg-white text-slate-900 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Pemrograman Terstruktur
                 </button>
                 <button
                   onClick={() => setSelectedCategory('oop')}
@@ -131,17 +142,7 @@ export default function DashboardPage() {
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  OOP
-                </button>
-                <button
-                  onClick={() => setSelectedCategory('gim')}
-                  className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-                    selectedCategory === 'gim'
-                      ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  Gim
+                  PBO / OOP
                 </button>
               </div>
             </div>

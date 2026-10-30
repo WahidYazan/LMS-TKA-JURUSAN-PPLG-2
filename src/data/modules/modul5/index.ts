@@ -9,30 +9,30 @@ export const modul5: ModuleContent = {
   id: "modul5",
   number: 5,
   moduleBadge: "MODUL 5",
-  title: "Pemrograman Berorientasi Objek (OOP) & Dasar Gim",
-  cardTitle: "OOP & Dasar Gim",
-  shortDesc: "Class & object, 4 pilar OOP, arsitektur game loop, physics engine, dan komponen collider.",
+  title: "Pemrograman Berorientasi Objek",
+  cardTitle: "Pemrograman Berorientasi Objek (OOP)",
+  shortDesc: "Pemahaman dan penerapan konsep class dan object, prinsip dasar OOP, access modifier, enkapsulasi, inheritance, dan polymorphism untuk merancang struktur program yang modular dan terorganisasi.",
   heroImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
   tableOfContents: [
     {
       id: "bab1",
-      title: "1. Class, Object & Constructor"
+      title: "1. Class, Object, Atribut, Method, dan Constructor"
     },
     {
       id: "bab2",
-      title: "2. 4 Pilar Utama OOP"
+      title: "2. Access Modifier dan Enkapsulasi"
     },
     {
       id: "bab3",
-      title: "3. Prinsip Desain SOLID"
+      title: "3. Pewarisan (Inheritance)"
     },
     {
       id: "bab4",
-      title: "4. Arsitektur Game Loop & Komponen"
+      title: "4. Polymorphism dan Method Overriding"
     },
     {
       id: "bab5",
-      title: "5. Fisika Gim & Collision Detection"
+      title: "5. Menerapkan OOP pada Proyek PPLG"
     }
   ],
   sections: [bab1, bab2, bab3, bab4, bab5]

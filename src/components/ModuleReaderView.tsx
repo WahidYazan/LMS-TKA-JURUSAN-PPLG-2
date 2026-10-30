@@ -47,7 +47,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
   // Track scroll progress
   useEffect(() => {
     const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const totalHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight > 0) {
         const currentProgress = (window.scrollY / totalHeight) * 100;
         setScrollProgress(Math.min(100, Math.max(0, currentProgress)));
@@ -71,7 +72,6 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
   return (
     <div className="flex-1 bg-[#f8fafc] text-slate-800 font-sans relative">
-      
       {/* READING PROGRESS BAR AT TOP */}
       <div className="fixed top-16 left-0 right-0 h-1 bg-slate-200 z-40">
         <div
@@ -82,18 +82,28 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24 lg:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
           {/* MAIN READER ARTICLE (8 of 12) */}
           <article className="lg:col-span-8 bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-xs">
-            
             {/* Breadcrumb and utility bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
-                <Link href="/tka" className="hover:text-blue-600 transition-colors">Beranda</Link>
+                <Link
+                  href="/tka"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Beranda
+                </Link>
                 <span aria-hidden="true">/</span>
-                <Link href="/tka/modul" className="hover:text-blue-600 transition-colors">Modul Belajar</Link>
+                <Link
+                  href="/tka/modul"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  Modul Belajar
+                </Link>
                 <span aria-hidden="true">/</span>
-                <span className="text-blue-600 font-bold">Modul 0{module.number}</span>
+                <span className="text-blue-600 font-bold">
+                  Modul 0{module.number}
+                </span>
               </div>
 
               <div className="flex items-center gap-3 text-xs text-slate-500">
@@ -101,7 +111,9 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
                   <span>~20 Menit Belajar</span>
                 </span>
-                <span aria-hidden="true" className="text-slate-300">·</span>
+                <span aria-hidden="true" className="text-slate-300">
+                  ·
+                </span>
                 <button
                   onClick={handleCopyLink}
                   className="flex items-center gap-1 text-slate-500 hover:text-blue-600 cursor-pointer transition-colors"
@@ -118,7 +130,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 MODUL 0{module.number}
               </span>
               <span className="text-xs font-semibold text-slate-500">
-                {module.sections?.length || 5} Bab Pembahasan · Standar Pusmendik
+                {module.sections?.length || 5} Bab Pembahasan · Standar
+                Pusmendik
               </span>
             </div>
 
@@ -156,7 +169,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                       0{sIdx + 1}
                     </span>
                     <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                      {section.numberPrefix ? `${section.numberPrefix} ` : ""}{section.title}
+                      {section.numberPrefix ? `${section.numberPrefix} ` : ""}
+                      {section.title}
                     </h2>
                   </div>
 
@@ -203,7 +217,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                       {/* IDE Titlebar */}
                       <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 text-xs text-slate-400">
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1.5" aria-hidden="true">
+                          <div
+                            className="flex items-center gap-1.5"
+                            aria-hidden="true"
+                          >
                             <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                             <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
@@ -214,13 +231,20 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                         </div>
 
                         <button
-                          onClick={() => handleCopyCode(section.codeSnippet!.code, section.id)}
+                          onClick={() =>
+                            handleCopyCode(
+                              section.codeSnippet!.code,
+                              section.id,
+                            )
+                          }
                           className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-md bg-slate-800/80 hover:bg-slate-800"
                         >
                           {copiedIndex === section.id ? (
                             <>
                               <Check className="w-3.5 h-3.5 text-emerald-400" />
-                              <span className="text-emerald-400 font-bold">Tersalin!</span>
+                              <span className="text-emerald-400 font-bold">
+                                Tersalin!
+                              </span>
                             </>
                           ) : (
                             <>
@@ -237,7 +261,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
 
                       {section.codeSnippet.explanation && (
                         <div className="px-4 py-2.5 bg-slate-950 border-t border-slate-800 text-xs text-slate-400">
-                          <strong>Keterangan:</strong> {section.codeSnippet.explanation}
+                          <strong>Keterangan:</strong>{" "}
+                          {section.codeSnippet.explanation}
                         </div>
                       )}
                     </div>
@@ -316,12 +341,10 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 )}
               </div>
             </div>
-
           </article>
 
           {/* SIDEBAR (4 of 12) */}
           <aside className="hidden lg:block lg:col-span-4 sticky top-28 space-y-5">
-            
             {/* Table of contents card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
               <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
@@ -356,7 +379,8 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 Simulasi Ujian Modul {module.number}
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Uji penguasaan Anda atas materi modul ini melalui {soalModulIni} butir soal studi kasus HOTS dengan evaluasi instan.
+                Uji penguasaan Anda atas materi modul ini melalui {soalModulIni}{" "}
+                butir soal studi kasus HOTS dengan evaluasi instan.
               </p>
               <Link
                 href={`/tka/quiz?module=${module.number}`}
@@ -366,9 +390,7 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-
           </aside>
-
         </div>
       </div>
 
@@ -418,7 +440,6 @@ export const ModuleReaderView: React.FC<ModuleReaderViewProps> = ({
           </div>
         </div>
       </div>
-
     </div>
   );
 };

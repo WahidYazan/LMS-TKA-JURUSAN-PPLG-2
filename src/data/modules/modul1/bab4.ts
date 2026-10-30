@@ -5,20 +5,29 @@ export const bab4: ModuleSection = {
   numberPrefix: "4.",
   title: "Teknologi Komputasi Awan (Cloud Computing Terkini)",
   paragraphs: [
-    "Modern software engineering sangat bergantung pada arsitektur komputasi awan. Layanan komputasi awan terbagi menjadi tiga tingkatan model layanan utama:"
+    "Perkembangan teknologi mengubah cara perangkat lunak dan gim dirancang, dibangun, diuji, dan digunakan. Saat membaca tren, pengembang perlu bertanya masalah apa yang diselesaikan teknologi itu, keterampilan apa yang dibutuhkan, dan apa dampak biaya, keamanan, privasi, aksesibilitas, serta ketergantungannya.",
+    "Komputasi awan adalah salah satu contoh teknologi penunjang: sumber daya komputasi dapat disediakan melalui jaringan sesuai kebutuhan. Model layanan membantu menjelaskan pembagian tanggung jawab antara penyedia dan pengguna."
   ],
   bulletPoints: [
     {
       label: "IaaS (Infrastructure as a Service)",
-      description: "Menyewa perangkat keras mentah (RAM, vCPU, Harddisk) di awan. Developer memiliki kebebasan penuh menginstal OS dan web server sendiri (Contoh: AWS EC2, Google Compute Engine)."
+      description: "Menyediakan sumber daya komputasi seperti mesin virtual, penyimpanan, dan jaringan. Pengguna mengatur sistem operasi dan perangkat lunak yang berjalan di atasnya."
     },
     {
       label: "PaaS (Platform as a Service)",
-      description: "Lingkungan siap pakai untuk para programmer. Anda hanya perlu mengunggah kode aplikasi tanpa pusing mengurus konfigurasi OS server dasar (Contoh: Google Cloud Run, Vercel, Firebase App Hosting)."
+      description: "Menyediakan lingkungan untuk membangun dan menjalankan aplikasi sehingga tim tidak perlu mengelola seluruh lapisan server sendiri."
     },
     {
       label: "SaaS (Software as a Service)",
-      description: "Aplikasi siap pakai yang langsung dinikmati oleh pengguna akhir melalui peramban web (Contoh: Google Workspace, Microsoft Office 365, Figma, Canva)."
+      description: "Menyediakan aplikasi yang langsung digunakan pelanggan melalui web atau aplikasi, sementara penyedia mengelola sebagian besar infrastrukturnya."
+    },
+    {
+      label: "API dan integrasi",
+      description: "API memungkinkan aplikasi bertukar data atau memakai layanan lain; pengembang perlu memahami kontrak, izin akses, batas penggunaan, dan perlindungan kredensial."
+    },
+    {
+      label: "AI, perangkat bergerak, dan gim",
+      description: "AI dapat membantu pekerjaan tertentu dengan pengawasan manusia; perangkat bergerak dan mesin gim membuka pengalaman baru. Setiap pilihan tetap perlu diuji terhadap kebutuhan dan keterbatasan proyek."
     }
   ]
 };

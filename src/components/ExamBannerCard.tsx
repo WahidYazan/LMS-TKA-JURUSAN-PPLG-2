@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { Terminal, ArrowRight, CheckCircle2 } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
+import { Terminal, ArrowRight, CheckCircle2 } from "lucide-react";
 
 interface ExamBannerCardProps {
   moduleCount: number;
@@ -12,12 +12,16 @@ export const ExamBannerCard: React.FC<ExamBannerCardProps> = ({
   questionCount,
 }) => {
   return (
-    <div
-      className="relative rounded-3xl bg-gradient-to-br from-[#090e1a] via-[#0f1b3b] to-[#090d1a] text-white p-6 sm:p-7 flex flex-col justify-between shadow-xl border border-slate-800 overflow-hidden group min-h-[340px] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
-    >
+    <div className="relative rounded-3xl bg-gradient-to-br from-[#090e1a] via-[#0f1b3b] to-[#090d1a] text-white p-6 sm:p-7 flex flex-col justify-between shadow-xl border border-slate-800 overflow-hidden group min-h-[340px] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
       {/* Decorative ambient lighting */}
-      <div className="absolute top-0 right-0 -mr-10 -mt-10 w-44 h-44 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 rounded-full bg-amber-500/15 blur-3xl pointer-events-none" aria-hidden="true" />
+      <div
+        className="absolute top-0 right-0 -mr-10 -mt-10 w-44 h-44 rounded-full bg-blue-500/20 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 rounded-full bg-amber-500/15 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
@@ -38,9 +42,10 @@ export const ExamBannerCard: React.FC<ExamBannerCardProps> = ({
         <h3 className="font-black text-white text-lg sm:text-xl mb-2 group-hover:text-amber-200 transition-colors">
           Simulasi Ujian TKA PPLG
         </h3>
-        
+
         <p className="text-slate-300 text-xs sm:text-sm line-clamp-3 leading-relaxed mb-4">
-          Uji kesiapan Anda menghadapi asesmen kejuruan nasional lewat {questionCount} soal studi kasus HOTS dari {moduleCount} modul.
+          Uji kesiapan Anda menghadapi asesmen kejuruan nasional lewat{" "}
+          {questionCount} soal studi kasus HOTS dari {moduleCount} modul.
         </p>
 
         {/* Feature bullets */}

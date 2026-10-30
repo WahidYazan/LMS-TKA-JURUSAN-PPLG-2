@@ -9,30 +9,30 @@ export const modul1: ModuleContent = {
   id: "modul1",
   number: 1,
   moduleBadge: "MODUL 1",
-  title: "Wawasan Dunia Kerja Bidang PPLG",
-  cardTitle: "Wawasan Kerja",
-  shortDesc: "Pengenalan profesi, proses bisnis, dan tren teknologi perangkat lunak dan gim industri.",
+  title: "Wawasan Dunia Kerja Bidang Pengembangan Perangkat Lunak dan Gim",
+  cardTitle: "Wawasan Dunia Kerja PPLG",
+  shortDesc: "Pemahaman terhadap proses bisnis pengembangan perangkat lunak dan gim, perkembangan teknologi, peluang usaha, manajemen proyek, HAKI, serta budaya industri.",
   heroImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
   tableOfContents: [
     {
       id: "bab1",
-      title: "1. Profil Pekerjaan & Jabatan"
+      title: "1. Profesi dan Peran dalam Tim PPLG"
     },
     {
       id: "bab2",
-      title: "2. Technopreneurship & Peluang Usaha"
+      title: "2. Kewirausahaan dan Peluang Usaha Digital"
     },
     {
       id: "bab3",
-      title: "3. Proses Bisnis Layanan Perangkat Lunak"
+      title: "3. Proses Bisnis dan Siklus Pengembangan Perangkat Lunak"
     },
     {
       id: "bab4",
-      title: "4. Teknologi Komputasi Awan (Cloud)"
+      title: "4. Perkembangan Teknologi dan Dunia Kerja PPLG"
     },
     {
       id: "bab5",
-      title: "5. Keamanan Perangkat Lunak (Cybersecurity)"
+      title: "5. Manajemen Proyek, Budaya Mutu, dan HAKI"
     }
   ],
   sections: [bab1, bab2, bab3, bab4, bab5]

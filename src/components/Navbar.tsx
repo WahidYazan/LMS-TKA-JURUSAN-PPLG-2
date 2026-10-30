@@ -13,6 +13,7 @@ import {
   LogIn,
   FileCode2,
   ClipboardCheck,
+  ShieldCheck,
 } from "lucide-react";
 import { ModuleContent } from "../types";
 import { SiteLogo } from "./SiteLogo";
@@ -61,6 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const isLanding = pathname === "/tka";
+  const isKerangka = pathname === "/tka/kerangka-asesmen";
   const isModul = pathname === "/tka/modul";
   const isModule = pathname.startsWith("/tka/module/");
   const isQuiz = pathname.startsWith("/tka/quiz");
@@ -135,6 +137,22 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
               <span>Simulasi Ujian</span>
             </Link>
+
+            {/* <Link
+              href="/tka/kerangka-asesmen"
+              className={`px-3 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap min-h-[40px] ${
+                isKerangka
+                  ? "text-blue-600 bg-blue-50/80 font-bold"
+                  : "hover:text-blue-600 hover:bg-slate-50"
+              }`}
+              aria-current={isKerangka ? "page" : undefined}
+            >
+              <ShieldCheck
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
+              <span>Kerangka Asesmen</span>
+            </Link> */}
 
             {/* <button
               onClick={handleOpenCheatsheet}
@@ -294,6 +312,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                 aria-hidden="true"
               />
               <span>Simulasi Ujian TKA</span>
+            </Link>
+
+            <Link
+              href="/tka/kerangka-asesmen"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`w-full px-3.5 py-3 rounded-xl transition-colors cursor-pointer flex items-center gap-3 min-h-[44px] text-sm font-semibold ${
+                isKerangka
+                  ? "text-blue-600 bg-blue-50 font-bold"
+                  : "text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <ShieldCheck
+                className="w-4 h-4 text-slate-400"
+                aria-hidden="true"
+              />
+              <span>Kerangka Asesmen</span>
             </Link>
 
             <button

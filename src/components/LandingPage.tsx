@@ -5,6 +5,7 @@ import { LandingHero } from "./landing/LandingHero";
 import { LandingStats } from "./landing/LandingStats";
 import { LandingCurriculum } from "./landing/LandingCurriculum";
 import { LandingFeatures } from "./landing/LandingFeatures";
+import { LandingOfficial } from "./landing/LandingOfficial";
 import { LandingCta } from "./landing/LandingCta";
 import { SiteFooter } from "./SiteFooter";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
@@ -34,9 +35,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         {landingStatsVisible && <LandingStats />}
         {landingCurriculumVisible && <LandingCurriculum />}
         {/* {landingFeaturesVisible && <LandingFeatures />} */}
-        {landingOfficialVisible && (
-          <div className="hidden">LandingOfficial placeholder</div>
-        )}
+        {/* {landingOfficialVisible && <LandingOfficial />} */}
         {landingCtaVisible && <LandingCta />}
       </main>
       <SiteFooter />

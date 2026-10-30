@@ -99,7 +99,7 @@ export default function AdminLoginPage() {
   const passwordFilled = password.length > 0;
 
   return (
-    <div className="relative min-h-screen bg-[#f5f6f1] text-slate-900 font-sans">
+    <div className="relative min-h-screen bg-[#f3f6fa] text-slate-900 font-sans">
       {/* ── Masthead ─────────────────────────────────────────── */}
       <header className="absolute right-0 top-0 z-20 w-full bg-transparent lg:w-1/2">
         <div className="w-full px-4 sm:px-8 lg:px-12 h-20 flex items-center gap-3">
@@ -118,9 +118,9 @@ export default function AdminLoginPage() {
               <span className="block text-[13px] font-extrabold tracking-tight text-slate-900 truncate">
                 SMK Telekomunikasi Tunas Harapan
               </span>
-              <span className="mt-1 block font-mono text-[10px] font-semibold tracking-[0.14em] text-teal-700 uppercase truncate">
+              {/* <span className="mt-1 block font-mono text-[10px] font-semibold tracking-[0.14em] text-slate-900 uppercase truncate">
                 PPLG · Panel Internal
-              </span>
+              </span> */}
             </span>
           </Link>
 
@@ -129,7 +129,7 @@ export default function AdminLoginPage() {
 
       {/* ── Isi ──────────────────────────────────────────────── */}
       <main className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-2">
-          <div className="relative flex min-h-screen min-w-0 flex-col justify-center bg-[#f5f6f1] px-4 pb-20 pt-24 sm:px-8 lg:px-12">
+          <div className="relative flex min-h-screen min-w-0 flex-col justify-center bg-[#f3f6fa] px-4 pb-20 pt-24 sm:px-8 lg:px-12">
             <Link
               href="/tka"
               className="absolute left-4 top-5 inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:bg-white hover:text-slate-900 sm:left-8 lg:left-12"
@@ -138,7 +138,7 @@ export default function AdminLoginPage() {
               Kembali ke situs
             </Link>
             {/* ── Kolom form ── */}
-            <div className="mx-auto w-full max-w-md min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-900/10 sm:p-8">
+            <div className="mx-auto w-full max-w-md min-w-0 rounded-2xl bg-white p-5 shadow-2xl shadow-slate-900/10 sm:p-8">
               <section
                 aria-labelledby="login-heading"
                 className="relative overflow-visible rounded-2xl bg-transparent"
@@ -148,7 +148,7 @@ export default function AdminLoginPage() {
                     id="login-heading"
                     className="text-xl font-extrabold tracking-tight text-slate-900"
                   >
-                    Formulir masuk
+                    Form Login
                   </h2>
                   {/* <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200/80 rounded-full px-2.5 py-1">
                     <span
@@ -165,11 +165,12 @@ export default function AdminLoginPage() {
                     <div className="flex items-baseline justify-between gap-3 mb-2">
                       <label
                         htmlFor="admin-email"
-                        className="text-[13px] font-extrabold text-slate-800"
+                        className="inline-flex items-center gap-2 text-[13px] font-extrabold text-slate-800"
                       >
-                        <span className="font-mono text-[11px] text-teal-700 font-semibold mr-2">
+                        <Mail className="h-4 w-4 text-[#315f8c]" aria-hidden="true" />
+                        {/* <span className="font-mono text-[11px] text-[#315f8c] font-semibold mr-2">
                           01
-                        </span>
+                        </span> */}
                         Email
                       </label>
                       {/* <span className="hidden sm:block text-[11px] text-slate-400 truncate">
@@ -177,16 +178,12 @@ export default function AdminLoginPage() {
                       </span> */}
                     </div>
                     <div
-                      className={`flex items-center gap-2.5 rounded-xl border bg-white px-3.5 transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/20 ${
+                      className={`flex items-center gap-2.5 rounded-xl border bg-white px-3.5 transition-all focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-600/20 ${
                         error && !emailFilled
                           ? "border-rose-300"
                           : "border-slate-300"
                       }`}
                     >
-                      <Mail
-                        className="w-[18px] h-[18px] text-slate-400 shrink-0"
-                        aria-hidden="true"
-                      />
                       <input
                         id="admin-email"
                         type="email"
@@ -198,11 +195,11 @@ export default function AdminLoginPage() {
                         inputMode="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="nama@sekolah.sch.id"
+                        placeholder="nama@test.com"
                         className="w-full min-w-0 bg-transparent py-3.5 text-[14px] font-medium text-slate-900 placeholder:text-slate-400 placeholder:font-normal focus:outline-none min-h-[48px]"
                       />
                       {emailFilled && (
-                        <span className="shrink-0 font-mono text-[10px] font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-400/30 rounded px-1.5 py-0.5">
+                        <span className="shrink-0 font-mono text-[10px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded px-1.5 py-0.5">
                           OK
                         </span>
                       )}
@@ -214,11 +211,12 @@ export default function AdminLoginPage() {
                     <div className="flex items-baseline justify-between gap-3 mb-2">
                       <label
                         htmlFor="admin-password"
-                        className="text-[13px] font-extrabold text-slate-800"
+                        className="inline-flex items-center gap-2 text-[13px] font-extrabold text-slate-800"
                       >
-                        <span className="font-mono text-[11px] text-teal-700 font-semibold mr-2">
+                        <Lock className="h-4 w-4 text-[#315f8c]" aria-hidden="true" />
+                        {/* <span className="font-mono text-[11px] text-[#315f8c] font-semibold mr-2">
                           02
-                        </span>
+                        </span> */}
                         Kata sandi
                       </label>
                       {/* <span className="text-[11px] text-slate-400">
@@ -226,14 +224,10 @@ export default function AdminLoginPage() {
                       </span> */}
                     </div>
                     <div
-                      className={`flex items-center gap-2.5 rounded-xl border bg-white px-3.5 transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/20 ${
+                      className={`flex items-center gap-2.5 rounded-xl border bg-white px-3.5 transition-all focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-600/20 ${
                         error ? "border-rose-300" : "border-slate-300"
                       }`}
                     >
-                      <Lock
-                        className="w-[18px] h-[18px] text-slate-400 shrink-0"
-                        aria-hidden="true"
-                      />
                       <input
                         id="admin-password"
                         type={showPassword ? "text" : "password"}
@@ -303,7 +297,7 @@ export default function AdminLoginPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#0f9688] hover:bg-[#0d8277] active:bg-[#0b6c64] text-white font-bold text-[14px] rounded-xl py-3.5 px-4 min-h-[52px] shadow-lg shadow-teal-700/20 transition-all active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#315f8c] hover:bg-[#294f78] active:bg-[#203f61] text-white font-bold text-[14px] rounded-xl py-3.5 px-4 min-h-[52px] shadow-lg shadow-blue-900/20 transition-all active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
                   >
                     {submitting ? (
                       <>
@@ -324,10 +318,10 @@ export default function AdminLoginPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pt-1 text-[12.5px] text-slate-500">
                     <span className="inline-flex items-center gap-1.5 font-semibold">
                       <ShieldCheck
-                        className="w-4 h-4 text-emerald-600"
+                        className="w-4 h-4 text-blue-700"
                         aria-hidden="true"
                       />
-                      Sesi dijaga Supabase Auth
+                      Form Login Only
                     </span>
                     <span
                       aria-hidden="true"
@@ -335,26 +329,26 @@ export default function AdminLoginPage() {
                     >
                       ·
                     </span>
-                    <span>
+                    {/* <span>
                       Lupa sandi?{" "}
                       <span className="font-bold text-slate-700">
                         Hubungi TU / operator
                       </span>{" "}
                       untuk reset.
-                    </span>
+                    </span> */}
                   </div>
                 </form>
               </section>
 
-              <p className="mt-4 font-mono text-[11px] leading-relaxed tracking-wide text-slate-400">
+              {/* <p className="mt-4 font-mono text-[11px] leading-relaxed tracking-wide text-slate-400">
                 SELURUH PERCOBAAN MASUK TERCATAT. JANGAN BAGIKAN AKUN — SATU
                 AKUN UNTUK SATU PETUGAS.
-              </p>
+              </p> */}
             </div>
           </div>
 
             {/* ── Kolom ledger ── */}
-            <aside className="relative flex min-h-screen min-w-0 flex-col justify-center overflow-hidden bg-[linear-gradient(180deg,#effcf8_0%,#22a899_44%,#103b3a_100%)] px-6 pb-12 pt-28 sm:px-10 lg:px-14">
+            <aside className="relative flex min-h-screen min-w-0 flex-col justify-center overflow-hidden bg-[linear-gradient(180deg,#365b7c_0%,#244768_44%,#152b45_100%)] px-6 pb-12 pt-28 sm:px-10 lg:px-14">
               <div
                 className="absolute inset-0 opacity-[0.12]"
                 aria-hidden="true"
@@ -365,21 +359,21 @@ export default function AdminLoginPage() {
                 }}
               />
               <div className="relative z-10 mx-auto w-full max-w-2xl">
-                <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] tracking-[0.16em] uppercase text-teal-50/80">
+                <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] tracking-[0.16em] uppercase text-blue-50/80">
                   <span className="inline-flex items-center gap-1.5 font-semibold text-white">
                     <KeyRound className="w-3.5 h-3.5" aria-hidden="true" />
-                    Akses staf — AD/01
+                    Akses Admin
                   </span>
-                  <span aria-hidden="true" className="text-teal-50/50">
+                  <span aria-hidden="true" className="text-blue-50/50">
                     /
                   </span>
-                  <span>Tahun ajaran 2025/2026</span>
-                  <span
+                  {/* <span>Tahun ajaran 2025/2026</span> */}
+                  {/* <span
                     aria-hidden="true"
-                    className="hidden sm:inline text-teal-50/50"
+                    className="hidden sm:inline text-blue-50/50"
                   >
                     /
-                  </span>
+                  </span> */}
                   <span className="hidden sm:inline">
                     Khusus guru &amp; operator
                   </span>
@@ -389,10 +383,15 @@ export default function AdminLoginPage() {
                   Masuk untuk mengelola{" "}
                   <span className="whitespace-nowrap">konten TKA</span>.
                 </h1>
-                <p className="mt-5 max-w-xl text-sm leading-relaxed text-teal-50/90 sm:text-base">
-                  Gunakan email dinas yang terdaftar di Supabase Auth. Halaman
-                  ini tidak untuk siswa — siswa langsung belajar tanpa akun.
+                <p className="mt-5 max-w-xl text-sm leading-relaxed text-blue-50/90 sm:text-base">
+                  Platform pembelajaran TKA untuk mengelola materi, simulasi
+                  soal dalam satu tempat.
                 </p>
+                {/* <p className="mt-5 max-w-xl text-sm leading-relaxed text-blue-50/90 sm:text-base">
+                  Platform pembelajaran TKA untuk mengelola materi, simulasi
+                  soal, dan cheatsheet dalam satu tempat agar siswa belajar
+                  lebih terarah.
+                </p> */}
               </div>
 
               {/* <section
@@ -451,15 +450,15 @@ export default function AdminLoginPage() {
 
               <section
                 aria-label="Tata tertib operator"
-                className="relative z-10 mx-auto mt-10 w-full max-w-2xl border-t border-teal-50/25 pt-6"
+                className="relative z-10 mx-auto mt-10 w-full max-w-2xl border-t border-blue-50/25 pt-6"
               >
-                <p className="font-mono text-[11px] font-semibold tracking-[0.16em] uppercase text-teal-50/80 mb-3">
+                <p className="font-mono text-[11px] font-semibold tracking-[0.16em] uppercase text-blue-50/80 mb-3">
                   Tata tertib singkat
                 </p>
-                <ol className="space-y-2.5 text-[13px] leading-relaxed text-teal-50/95">
+                <ol className="space-y-2.5 text-[13px] leading-relaxed text-blue-50/95">
                   {RULES.map((rule, i) => (
                     <li key={i} className="flex gap-2.5">
-                      <span className="font-mono text-[11px] font-bold text-teal-50 mt-0.5 shrink-0">
+                      <span className="font-mono text-[11px] font-bold text-blue-50 mt-0.5 shrink-0">
                         {String.fromCharCode(97 + i)}.
                       </span>
                       <span>{rule}</span>
@@ -471,7 +470,7 @@ export default function AdminLoginPage() {
       </main>
 
       {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="border-t border-slate-200 bg-[#f5f6f1] lg:absolute lg:bottom-0 lg:left-0 lg:w-1/2 lg:border-0 lg:bg-transparent">
+      <footer className="border-t border-slate-200 bg-[#f3f6fa] lg:absolute lg:bottom-0 lg:left-0 lg:w-1/2 lg:border-0 lg:bg-transparent">
         <div className="mx-auto w-full max-w-md px-4 py-4 text-[12px] text-slate-500 sm:px-8 lg:px-0 lg:pb-6 flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-3">
           <p className="font-semibold text-slate-400">
             © {year} SMK Telekomunikasi Tunas Harapan

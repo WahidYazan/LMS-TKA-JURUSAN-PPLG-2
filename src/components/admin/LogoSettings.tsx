@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Image as ImageIcon,
-  RotateCcw,
-  Save,
-  Loader2,
-} from "lucide-react";
+import { Image as ImageIcon, RotateCcw, Save, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { describeError, isMissingSchemaError, MIGRATION_HINT } from "@/lib/adminError";
+import {
+  describeError,
+  isMissingSchemaError,
+  MIGRATION_HINT,
+} from "@/lib/adminError";
 import { invalidateContent, DEFAULT_LOGO } from "@/lib/content";
 import { AdminCard } from "./AdminPrimitives";
 
@@ -66,10 +65,12 @@ export const LogoSettings: React.FC = () => {
     setError(null);
     try {
       const value = draft.trim();
-      const { error: err } = await supabase.from("site_settings").upsert(
-        { key: LOGO_KEY, value, updated_at: new Date().toISOString() },
-        { onConflict: "key" },
-      );
+      const { error: err } = await supabase
+        .from("site_settings")
+        .upsert(
+          { key: LOGO_KEY, value, updated_at: new Date().toISOString() },
+          { onConflict: "key" },
+        );
       if (err) throw err;
       invalidateContent("siteSettings");
       setSavedUrl(value);
@@ -115,8 +116,8 @@ export const LogoSettings: React.FC = () => {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-bold text-slate-900">Logo Web</p>
           <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-            Logo tampil di navbar publik dan sidebar admin. Simpan URL baru untuk
-            mengganti, atau reset untuk kembali ke logo bawaan.
+            Logo tampil di navbar publik dan sidebar admin. Simpan URL baru
+            untuk mengganti, atau reset untuk kembali ke logo bawaan.
           </p>
 
           <div className="mt-4 flex flex-col sm:flex-row gap-4 sm:items-center">

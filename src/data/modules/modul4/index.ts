@@ -9,30 +9,30 @@ export const modul4: ModuleContent = {
   id: "modul4",
   number: 4,
   moduleBadge: "MODUL 4",
-  title: "Pemrograman Terstruktur & Algoritma Efisien",
-  cardTitle: "Logika Algoritma",
-  shortDesc: "Flowchart ISO, pseudocode, tipe data, struktur kontrol percabangan dan perulangan.",
+  title: "Pemrograman Terstruktur",
+  cardTitle: "Pemrograman Terstruktur",
+  shortDesc: "Pemahaman dan analisis penggunaan tipe data, struktur data, struktur kontrol percabangan dan perulangan, fungsi, prosedur, serta desain modular program untuk merancang solusi berbasis algoritma.",
   heroImage: "https://images.unsplash.com/photo-1516116211227-bbc045763266?auto=format&fit=crop&w=1200&q=80",
   tableOfContents: [
     {
       id: "bab1",
-      title: "1. Logika Algoritma & Flowchart ISO"
+      title: "1. Dekomposisi Masalah dan Representasi Algoritma"
     },
     {
       id: "bab2",
-      title: "2. Tipe Data Primitif vs Komposit"
+      title: "2. Tipe Data dan Struktur Data"
     },
     {
       id: "bab3",
-      title: "3. Struktur Kontrol Percabangan"
+      title: "3. Percabangan dan Logika Boolean"
     },
     {
       id: "bab4",
-      title: "4. Perulangan & Optimasi Kompleksitas"
+      title: "4. Perulangan, Penelusuran, dan Efektivitas Algoritma"
     },
     {
       id: "bab5",
-      title: "5. Fungsi Modular & Penanganan Error"
+      title: "5. Fungsi, Prosedur, dan Modularisasi Program"
     }
   ],
   sections: [bab1, bab2, bab3, bab4, bab5]

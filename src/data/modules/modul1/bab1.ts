@@ -21,34 +21,49 @@ export const bab1: ModuleSection = {
   numberPrefix: "1.",
   title: "Profil Pekerjaan dan Jabatan Kerja (Job Profile)",
   paragraphs: [
-    'Dunia industri saat ini telah memasuki era Revolusi Industri 4.0 dan bersiap menuju Society 5.0, di mana segala aspek kehidupan terkoneksi ke dalam ekosistem digital. Lulusan Pengembangan Perangkat Lunak dan Gim (PPLG) tidak lagi hanya dipandang sebagai "tukang ketik kode", melainkan arsitek solusi digital yang sangat dibutuhkan oleh korporasi global, BUMN, hingga instansi pemerintahan.',
-    "Berikut adalah klasifikasi jabatan profesional yang dapat ditekuni oleh lulusan PPLG:",
+    "Pekerjaan PPLG mencakup kegiatan merancang, membuat, menguji, merilis, dan memelihara perangkat lunak atau gim. Produk dibuat oleh tim dengan peran yang saling melengkapi; ukuran tim dapat berubah sesuai tujuan dan skala proyek.",
+    "Memahami tugas setiap profesi membantu tim membagi pekerjaan, memilih jalur karier, dan berkomunikasi dengan tepat. Satu orang dapat memegang beberapa peran pada proyek kecil, tetapi tanggung jawab tiap pekerjaan tetap perlu jelas.",
   ],
   bulletPoints: [
     {
-      label: "Software Engineer / Fullstack Developer",
+      label: "Business Analyst / System Analyst",
       description:
-        "Merancang, membangun, dan memelihara aplikasi web dan sistem enterprise menggunakan bahasa pemrograman modern seperti TypeScript, PHP, Python, atau Java.",
+        "Menggali kebutuhan pengguna dan pemilik produk, mendokumentasikan kebutuhan, serta menjelaskan alur dan aturan sistem agar dapat dipahami tim desain dan pengembang.",
     },
     {
-      label: "Mobile Application Developer",
+      label: "UI/UX Designer",
       description:
-        "Mengembangkan aplikasi native atau cross-platform (Flutter, React Native) untuk ekosistem Android dan iOS yang dioptimalkan untuk performa gawai seluler.",
+        "Mempelajari kebutuhan pengguna, menyusun alur dan wireframe, membuat rancangan antarmuka, lalu mengevaluasi kemudahan penggunaan melalui prototipe atau uji pengguna.",
     },
     {
-      label: "Game Developer & Technical Artist",
+      label: "Frontend Developer",
       description:
-        "Mewujudkan mekanika permainan, sistem kecerdasan buatan (AI) musuh, fisika gerak karakter, dan integrasi aset 2D/3D pada game engine terkemuka (Unity, Unreal Engine, Godot).",
+        "Membangun bagian aplikasi yang berinteraksi langsung dengan pengguna dan menghubungkan tampilan dengan layanan atau API.",
     },
     {
-      label: "Quality Assurance (QA) & Automation Tester",
+      label: "Backend Developer",
       description:
-        "Menjamin perangkat lunak yang dirilis terbebas dari bug kritis melalui pengujian fungsionalitas, performa, dan keamanan secara otomatis.",
+        "Membuat logika bisnis dan layanan di sisi server, mengelola validasi serta akses data, dan menyediakan API untuk aplikasi klien.",
     },
     {
-      label: "Database Administrator & Data Engineer",
+      label: "Quality Assurance (QA) / Software Tester",
       description:
-        "Merancang arsitektur basis data, memastikan integritas ACID, normalisasi relasional, optimasi kueri berkecepatan tinggi, serta backup disaster recovery.",
+        "Menyusun skenario uji, memeriksa kesesuaian fungsi dengan kebutuhan, mencatat langkah untuk mengulang bug, dan melaporkan hasil pengujian.",
+    },
+    {
+      label: "Game Developer",
+      description:
+        "Menerapkan aturan dan interaksi gim, menghubungkan masukan pemain dengan perubahan keadaan permainan, serta bekerja bersama perancang dan pembuat aset.",
+    },
+    {
+      label: "DevOps / System Administrator",
+      description:
+        "Membantu menyiapkan lingkungan pengembangan dan layanan, mengatur proses build atau rilis, serta memantau agar aplikasi dapat dijalankan sesuai kebutuhan.",
+    },
+    {
+      label: "Project Manager / Product Owner",
+      description:
+        "Menjaga tujuan dan prioritas produk, mengatur koordinasi serta rencana kerja, dan membantu tim menyelesaikan hambatan dengan pemangku kepentingan.",
     },
   ],
   media: bab1Media,

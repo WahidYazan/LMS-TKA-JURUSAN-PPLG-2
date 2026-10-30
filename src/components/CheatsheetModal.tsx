@@ -1,29 +1,37 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { X, Search, Check, Copy, Terminal } from 'lucide-react';
-import { loadCheatsheet } from '../lib/content';
-import { cheatsheetData as defaultCheatsheet } from '../data/cheatsheet';
-import { useContent } from '../hooks/useContent';
+import React, { useState, useEffect } from "react";
+import { X, Search, Check, Copy, Terminal } from "lucide-react";
+import { loadCheatsheet } from "../lib/content";
+import { cheatsheetData as defaultCheatsheet } from "../data/cheatsheet";
+import { useContent } from "../hooks/useContent";
 
 interface CheatsheetModalProps {
   onClose: () => void;
 }
 
-export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => {
-  const { data: cheatsheetData, loading } = useContent(loadCheatsheet, defaultCheatsheet);
-  const activeCheatsheet = cheatsheetData && cheatsheetData.length > 0 ? cheatsheetData : defaultCheatsheet;
-  const [activeTab, setActiveTab] = useState<string>('git');
-  const [searchQuery, setSearchQuery] = useState('');
+export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({
+  onClose,
+}) => {
+  const { data: cheatsheetData, loading } = useContent(
+    loadCheatsheet,
+    defaultCheatsheet,
+  );
+  const activeCheatsheet =
+    cheatsheetData && cheatsheetData.length > 0
+      ? cheatsheetData
+      : defaultCheatsheet;
+  const [activeTab, setActiveTab] = useState<string>("git");
+  const [searchQuery, setSearchQuery] = useState("");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
   const handleCopy = (text: string, key: string) => {
@@ -34,13 +42,17 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
 
   const sections = activeCheatsheet;
   const currentSection =
-    sections.find(s => s.id === activeTab) || sections[0];
+    sections.find((s) => s.id === activeTab) || sections[0];
 
   const filteredItems = currentSection
-    ? currentSection.items.filter(item =>
-        item.commandOrConcept.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (item.example && item.example.toLowerCase().includes(searchQuery.toLowerCase()))
+    ? currentSection.items.filter(
+        (item) =>
+          item.commandOrConcept
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (item.example &&
+            item.example.toLowerCase().includes(searchQuery.toLowerCase())),
       )
     : [];
 
@@ -64,7 +76,8 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
                 Cheatsheet & Rangkuman TKA PPLG
               </h3>
               <p className="text-xs text-slate-500">
-                Sintaks ringkas, status kode, dan prinsip inti Rekayasa Perangkat Lunak
+                Sintaks ringkas, status kode, dan prinsip inti Rekayasa
+                Perangkat Lunak
               </p>
             </div>
           </div>
@@ -81,14 +94,14 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
         {/* Filter bar */}
         <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white">
           <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto p-1 bg-slate-100 rounded-xl">
-            {sections.map(sec => (
+            {sections.map((sec) => (
               <button
                 key={sec.id}
                 onClick={() => setActiveTab(sec.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === sec.id
-                    ? 'bg-white text-slate-900 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 {sec.category}
@@ -102,7 +115,7 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
               type="text"
               placeholder="Cari konsep atau perintah..."
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
           </div>
@@ -141,7 +154,12 @@ export const CheatsheetModal: React.FC<CheatsheetModalProps> = ({ onClose }) => 
                   </div>
 
                   <button
-                    onClick={() => handleCopy(item.example || item.commandOrConcept, uniqueKey)}
+                    onClick={() =>
+                      handleCopy(
+                        item.example || item.commandOrConcept,
+                        uniqueKey,
+                      )
+                    }
                     className="self-start sm:self-center flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-blue-50 cursor-pointer shrink-0 transition-colors"
                   >
                     {copiedKey === uniqueKey ? (

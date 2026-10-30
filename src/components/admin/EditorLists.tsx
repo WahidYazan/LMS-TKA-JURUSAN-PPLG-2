@@ -77,7 +77,9 @@ export const BulletListEditor: React.FC<{
           label="Label"
           value={b.label}
           onChange={(v) =>
-            onChange(value.map((old, idx) => (idx === i ? { ...old, label: v } : old)))
+            onChange(
+              value.map((old, idx) => (idx === i ? { ...old, label: v } : old)),
+            )
           }
         />
         <TextAreaField
@@ -199,7 +201,9 @@ export const MediaListEditor: React.FC<{
           label="URL (src)"
           value={m.src}
           onChange={(v) =>
-            onChange(value.map((old, idx) => (idx === i ? { ...old, src: v } : old)))
+            onChange(
+              value.map((old, idx) => (idx === i ? { ...old, src: v } : old)),
+            )
           }
           placeholder="https://..."
         />
