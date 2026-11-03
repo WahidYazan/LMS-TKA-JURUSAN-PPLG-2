@@ -16,7 +16,7 @@ export default function HomePage() {
         currentPath={pathname}
         onOpenCheatsheet={() => setIsCheatsheetOpen(true)}
       />
-      <LandingPage onOpenCheatsheet={() => setIsCheatsheetOpen(true)} />
+      <LandingPage />
       {isCheatsheetOpen && (
         <CheatsheetModal onClose={() => setIsCheatsheetOpen(false)} />
       )}

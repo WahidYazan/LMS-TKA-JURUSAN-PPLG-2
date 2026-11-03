@@ -150,8 +150,8 @@ create table if not exists public.site_settings (
 );
 
 -- ============ ADMIN CHECK ============
--- Ganti email di bawah dengan email admin yang kamu buat di
--- Authentication → Users. Tambah email lain dengan `in (...)`.
+-- Email di bawah harus cocok dengan akun admin di Authentication → Users.
+-- Tambah email admin lain ke daftar ini jika diperlukan.
 
 create or replace function public.is_admin()
 returns boolean
@@ -159,7 +159,7 @@ language sql
 stable
 as $$
   select coalesce(
-    auth.jwt() ->> 'email' in ('admin@example.com'),
+    lower(auth.jwt() ->> 'email') in ('haikal@gmail.com'),
     false
   );
 $$;

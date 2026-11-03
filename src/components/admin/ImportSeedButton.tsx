@@ -15,7 +15,6 @@ export const ImportSeedButton: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const run = async () => {
-    setConfirming(false);
     setRunning(true);
     setError(null);
     try {
@@ -25,6 +24,7 @@ export const ImportSeedButton: React.FC = () => {
       setError(describeError("Gagal import data", err));
     } finally {
       setRunning(false);
+      setConfirming(false);
     }
   };
 
@@ -80,9 +80,12 @@ export const ImportSeedButton: React.FC = () => {
 
       {confirming && (
         <ConfirmDeleteDialog
-          label="data bawaan ke database"
-          detail="Seluruh konten (soal, modul, cheatsheet, landing) akan reset ke bawaan. Tabel yang sudah berisi data tidak akan disentuh. Lanjutkan?"
-          confirming={false}
+          title="Konfirmasi Impor"
+          question="Impor data bawaan ke database?"
+          detail="Data bawaan hanya akan ditambahkan ke tabel yang masih kosong. Tabel yang sudah berisi data akan dilewati dan tidak dihapus atau diubah. Lanjutkan?"
+          confirming={running}
+          confirmLabel="Ya, Impor"
+          confirmingLabel="Mengimpor..."
           onCancel={() => setConfirming(false)}
           onConfirm={() => void run()}
         />

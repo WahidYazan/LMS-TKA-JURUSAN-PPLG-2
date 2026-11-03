@@ -139,7 +139,7 @@ export const LandingFeatures: React.FC = () => {
 
         {/* Dynamic Feature Grid */}
         <div className="gap-6" style={gridStyle}>
-          {featuresWithDynamicData.map((feature, idx) => {
+          {featuresWithDynamicData.map((feature) => {
             const Icon = iconMap[feature.tone] || CheckCircle2;
             const bgClass = toneBgMap[feature.tone] || toneBgMap.blue;
             const linkClass = toneLinkMap[feature.tone] || toneLinkMap.blue;

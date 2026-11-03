@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAdminAuth } from "../../contexts/AdminAuthContext";
+import { isAuthSessionMissingError } from "@/lib/auth";
+import { useAdminTheme } from "@/hooks/useAdminTheme";
 import { SiteLogo } from "../SiteLogo";
 import { TextSizeSettingsButton } from "../TextSizeSettings";
+import { AdminModal } from "./AdminModal";
 import {
   LayoutDashboard,
   HelpCircle,
@@ -16,6 +19,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Menu,
+  Moon,
+  Sun,
   X,
 } from "lucide-react";
 
@@ -89,11 +94,133 @@ const NavItem: React.FC<{
   </Link>
 );
 
+const AdminNameRequiredDialog: React.FC = () => {
+  const { saveName, logout } = useAdminAuth();
+  const [name, setName] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [needsLogin, setNeedsLogin] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedName = name.trim();
+    if (!normalizedName) {
+      setError("Nama wajib diisi untuk melanjutkan.");
+      return;
+    }
+
+    setSaving(true);
+    setError(null);
+    try {
+      await saveName(normalizedName);
+    } catch (err: unknown) {
+      if (isAuthSessionMissingError(err)) {
+        setNeedsLogin(true);
+        setError("Sesi login tidak ditemukan atau sudah berakhir. Silakan masuk ulang.");
+        return;
+      }
+      setError(
+        err instanceof Error ? err.message : "Gagal menyimpan nama. Coba lagi.",
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <AdminModal
+      title="Lengkapi Nama Admin"
+      onClose={() => {}}
+      dismissible={false}
+    >
+      <form onSubmit={(event) => void handleSubmit(event)} className="p-5 sm:p-6">
+        <p className="mb-4 text-sm leading-relaxed text-slate-600">
+          Nama wajib diisi sebelum melanjutkan. Nama ini akan ditampilkan di
+          panel admin sebagai pengganti alamat email. Nama boleh terdiri dari
+          beberapa kata, misalnya “Haikal Pratama”.
+        </p>
+        <label
+          htmlFor="admin-display-name"
+          className="mb-1.5 block text-xs font-bold text-slate-700"
+        >
+          Nama admin
+        </label>
+        <input
+          autoFocus
+          id="admin-display-name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          maxLength={80}
+          required
+          value={name}
+          onChange={(event) => {
+            setName(event.currentTarget.value);
+            setError(null);
+          }}
+          placeholder="Contoh: Haikal Pratama"
+          className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/30"
+        />
+        {error && (
+          <p className="mt-2 text-xs font-semibold text-rose-600" role="alert">
+            {error}
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={!name.trim() || saving}
+          className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {saving ? "Menyimpan nama..." : "Simpan Nama"}
+        </button>
+        {needsLogin && (
+          <button
+            type="button"
+            onClick={() => void logout()}
+            className="mt-2 inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50"
+          >
+            Keluar dan Masuk Ulang
+          </button>
+        )}
+      </form>
+    </AdminModal>
+  );
+};
+
+const AdminThemeToggle: React.FC<{ collapsed?: boolean }> = ({
+  collapsed = false,
+}) => {
+  const [theme, setTheme] = useAdminTheme();
+  const isDark = theme === "dark";
+  const label = isDark ? "Tema Terang" : "Tema Gelap";
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      title={collapsed ? label : undefined}
+      aria-label={label}
+      aria-pressed={isDark}
+      className={`w-full flex items-center rounded-xl text-[13px] font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer min-h-[44px] ${
+        collapsed ? "justify-center px-0" : "gap-3 px-3"
+      }`}
+    >
+      {isDark ? (
+        <Sun className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+      ) : (
+        <Moon className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+      )}
+      {!collapsed && <span>{label}</span>}
+    </button>
+  );
+};
+
 export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const pathname = usePathname();
-  const { email, logout } = useAdminAuth();
+  const { name, logout } = useAdminAuth();
+  const [theme] = useAdminTheme();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -151,7 +278,10 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f8fb] text-slate-800 font-sans">
+    <div
+      data-admin-theme={theme}
+      className="min-h-screen bg-[#f5f8fb] text-slate-800 font-sans"
+    >
       {/* ── SIDEBAR DESKTOP ─────────────────────────────────── */}
       <aside
         className={`hidden lg:flex fixed inset-y-0 flex-col bg-white border-r border-slate-200 z-40 transition-[width] duration-200 ease-in-out ${
@@ -197,6 +327,9 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
         </nav>
 
         <div className="mt-auto p-3 pt-4 border-t border-slate-300">
+          <div className="mb-2">
+            <AdminThemeToggle collapsed={collapsed} />
+          </div>
           {!collapsed ? (
             <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 mb-2">
               <p className="font-mono text-[9.5px] font-semibold tracking-[0.14em] uppercase text-slate-400">
@@ -204,9 +337,9 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
               </p>
               <p
                 className="text-xs font-bold text-slate-700 truncate mt-0.5"
-                title={email ?? ""}
+                title={name ?? ""}
               >
-                {email}
+                {name}
               </p>
             </div>
           ) : null}
@@ -313,16 +446,19 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
         </nav>
 
         <div className="p-3 pt-4 border-t border-slate-300">
-          {email && (
+          <div className="mb-2">
+            <AdminThemeToggle />
+          </div>
+          {name && (
             <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 mb-2">
               <p className="font-mono text-[9.5px] font-semibold tracking-[0.14em] uppercase text-slate-400">
                 Masuk sebagai
               </p>
               <p
                 className="text-xs font-bold text-slate-700 truncate mt-0.5"
-                title={email}
+                title={name}
               >
-                {email}
+                {name}
               </p>
             </div>
           )}
@@ -349,6 +485,7 @@ export const AdminShell: React.FC<{ children: React.ReactNode }> = ({
           {children}
         </div>
       </main>
+      {!name && <AdminNameRequiredDialog />}
     </div>
   );
 };

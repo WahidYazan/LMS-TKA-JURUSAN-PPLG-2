@@ -10,6 +10,7 @@ import {
 } from "@/lib/adminError";
 import { invalidateContent, DEFAULT_LOGO } from "@/lib/content";
 import { AdminCard } from "./AdminPrimitives";
+import { ConfirmDeleteDialog } from "./AdminModal";
 
 const LOGO_KEY = "logo_url";
 
@@ -20,6 +21,9 @@ export const LogoSettings: React.FC = () => {
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
   const [needsMigration, setNeedsMigration] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<"save" | "reset" | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(() =>
     supabase ? null : "Supabase belum dikonfigurasi (.env.local)",
   );
@@ -79,6 +83,7 @@ export const LogoSettings: React.FC = () => {
       setError(describeError("Gagal menyimpan logo", err));
     } finally {
       setBusy(false);
+      setConfirmAction(null);
     }
   };
 
@@ -101,6 +106,7 @@ export const LogoSettings: React.FC = () => {
       setError(describeError("Gagal menghapus logo", err));
     } finally {
       setBusy(false);
+      setConfirmAction(null);
     }
   };
 
@@ -108,8 +114,9 @@ export const LogoSettings: React.FC = () => {
   const disabled = !supabase || busy || loading || needsMigration;
 
   return (
-    <AdminCard>
-      <div className="flex items-start gap-3">
+    <>
+      <AdminCard>
+        <div className="flex items-start gap-3">
         <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
           <ImageIcon className="w-5 h-5" aria-hidden="true" />
         </div>
@@ -176,7 +183,7 @@ export const LogoSettings: React.FC = () => {
 
           <div className="mt-3 flex flex-wrap gap-2">
             <button
-              onClick={() => void handleSave()}
+              onClick={() => setConfirmAction("save")}
               disabled={disabled}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold shadow-md shadow-sky-500/20 transition-all cursor-pointer min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -188,7 +195,7 @@ export const LogoSettings: React.FC = () => {
               Simpan Logo
             </button>
             <button
-              onClick={() => void handleReset()}
+              onClick={() => setConfirmAction("reset")}
               disabled={disabled || !savedUrl}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-bold transition-colors cursor-pointer min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -196,8 +203,40 @@ export const LogoSettings: React.FC = () => {
               Reset ke Bawaan
             </button>
           </div>
+          </div>
         </div>
-      </div>
-    </AdminCard>
+      </AdminCard>
+
+      {confirmAction && (
+        <ConfirmDeleteDialog
+          title={
+            confirmAction === "save"
+              ? "Konfirmasi Ganti Logo"
+              : "Konfirmasi Reset Logo"
+          }
+          question={
+            confirmAction === "save"
+              ? "Simpan perubahan logo?"
+              : "Kembalikan logo ke bawaan?"
+          }
+          detail={
+            confirmAction === "save"
+              ? "Logo baru akan digunakan di navbar publik dan sidebar admin. Lanjutkan?"
+              : "Pengaturan logo kustom akan dihapus dan logo bawaan digunakan di seluruh situs. Lanjutkan?"
+          }
+          confirming={busy}
+          confirmLabel={confirmAction === "save" ? "Ya, Simpan" : "Ya, Reset"}
+          confirmingLabel={
+            confirmAction === "save" ? "Menyimpan..." : "Mereset..."
+          }
+          onCancel={() => {
+            if (!busy) setConfirmAction(null);
+          }}
+          onConfirm={() =>
+            void (confirmAction === "save" ? handleSave() : handleReset())
+          }
+        />
+      )}
+    </>
   );
 };

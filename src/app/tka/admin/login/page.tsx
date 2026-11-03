@@ -11,47 +11,12 @@ import {
   EyeOff,
   ArrowRight,
   ArrowLeft,
-  ArrowUpRight,
   ShieldCheck,
   TriangleAlert,
   Loader2,
   KeyRound,
-  ClipboardList,
-  BookOpenText,
-  FileCode2,
-  LayoutTemplate,
 } from "lucide-react";
 import { SiteLogo } from "@/components/SiteLogo";
-import { useSiteStats } from "@/hooks/useSiteStats";
-
-const SCOPE_BASE = [
-  {
-    icon: BookOpenText,
-    code: "MOD",
-    title: "Modul belajar",
-    getDesc: (totalModules: number) =>
-      `${totalModules} modul · bab, materi & contoh kode`,
-  },
-  {
-    icon: ClipboardList,
-    code: "SOAL",
-    title: "Soal simulasi TKA",
-    getDesc: (_m: number, totalQuestions: number) =>
-      `${totalQuestions} studi kasus HOTS + pembahasan`,
-  },
-  {
-    icon: FileCode2,
-    code: "CHTS",
-    title: "Cheatsheet",
-    getDesc: () => "Ringkasan Git, SQL, OOP, game loop",
-  },
-  {
-    icon: LayoutTemplate,
-    code: "LP",
-    title: "Landing page",
-    getDesc: () => "Hero, fitur, statistik & footer",
-  },
-];
 
 const RULES: React.ReactNode[] = [
   <>
@@ -65,7 +30,6 @@ const RULES: React.ReactNode[] = [
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { totalModules, totalQuestions } = useSiteStats();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

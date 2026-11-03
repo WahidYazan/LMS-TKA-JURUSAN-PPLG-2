@@ -3,14 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import {
-  GraduationCap,
   ExternalLink,
-  BookOpen,
   CheckCircle2,
-  AlertCircle,
-  HelpCircle,
-  Layers,
-  Sparkles,
   ArrowRight,
   Server,
   Database,
@@ -20,18 +14,9 @@ import {
   ShieldCheck,
   Award,
 } from "lucide-react";
-import {
-  kerangkaAsesmenPusmendik,
-  ContohSoalPusmendik,
-} from "@/data/pusmendik/kerangkaAsesmen";
+import { kerangkaAsesmenPusmendik } from "@/data/pusmendik/kerangkaAsesmen";
 
-interface KerangkaAsesmenViewProps {
-  isCompact?: boolean;
-}
-
-export const KerangkaAsesmenView: React.FC<KerangkaAsesmenViewProps> = ({
-  isCompact = false,
-}) => {
+export const KerangkaAsesmenView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     "definisi" | "muatan" | "kompetensi" | "matriks" | "soal"
   >("muatan");

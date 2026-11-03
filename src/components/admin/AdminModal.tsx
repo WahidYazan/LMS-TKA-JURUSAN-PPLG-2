@@ -8,19 +8,22 @@ export const AdminModal: React.FC<{
   onClose: () => void;
   children: React.ReactNode;
   wide?: boolean;
-}> = ({ title, onClose, children, wide }) => {
+  dismissible?: boolean;
+}> = ({ title, onClose, children, wide, dismissible = true }) => {
   useEffect(() => {
+    if (!dismissible) return;
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [dismissible, onClose]);
 
   return (
     <div
       className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in"
-      onClick={onClose}
+      onClick={dismissible ? onClose : undefined}
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -35,13 +38,15 @@ export const AdminModal: React.FC<{
           <h3 className="text-base font-extrabold tracking-tight text-slate-900">
             {title}
           </h3>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
-            aria-label="Tutup"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {dismissible && (
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
+              aria-label="Tutup"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
         <div className="flex-1 overflow-y-auto">{children}</div>
       </div>
@@ -50,20 +55,36 @@ export const AdminModal: React.FC<{
 };
 
 export const ConfirmDeleteDialog: React.FC<{
-  label: string;
+  label?: string;
   detail?: string;
   confirming: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-}> = ({ label, detail, confirming, onCancel, onConfirm }) => (
-  <AdminModal title="Konfirmasi Hapus" onClose={onCancel}>
+  title?: string;
+  question?: string;
+  confirmLabel?: string;
+  confirmingLabel?: string;
+}> = ({
+  label,
+  detail,
+  confirming,
+  onCancel,
+  onConfirm,
+  title = "Konfirmasi Hapus",
+  question,
+  confirmLabel = "Ya, Hapus",
+  confirmingLabel = "Menghapus...",
+}) => (
+  <AdminModal title={title} onClose={onCancel}>
     <div className="p-5 sm:p-6">
       <div className="flex items-start gap-3 mb-5">
         <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
           <AlertTriangle className="w-5 h-5" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-sm font-bold text-slate-900">Hapus {label}?</p>
+          <p className="text-sm font-bold text-slate-900">
+            {question ?? `Hapus ${label ?? "data ini"}?`}
+          </p>
           <p className="text-xs text-slate-500 mt-1 leading-relaxed">
             {detail ?? "Tindakan ini tidak bisa dibatalkan."}
           </p>
@@ -81,7 +102,7 @@ export const ConfirmDeleteDialog: React.FC<{
           disabled={confirming}
           className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm cursor-pointer min-h-[44px] transition-colors disabled:opacity-60 shadow-md shadow-rose-600/20"
         >
-          {confirming ? "Menghapus..." : "Ya, Hapus"}
+          {confirming ? confirmingLabel : confirmLabel}
         </button>
       </div>
     </div>

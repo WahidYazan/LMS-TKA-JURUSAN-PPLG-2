@@ -7,18 +7,10 @@ import {
   ArrowRight,
   BookOpen,
   ClipboardCheck,
-  FileCode2,
-  GraduationCap,
 } from "lucide-react";
 import { useSiteStats } from "../../hooks/useSiteStats";
 
-interface LandingHeroProps {
-  onOpenCheatsheet?: () => void;
-}
-
-export const LandingHero: React.FC<LandingHeroProps> = ({
-  onOpenCheatsheet,
-}) => {
+export const LandingHero: React.FC = () => {
   const { totalModules, totalQuestions } = useSiteStats();
   return (
     <section className="relative bg-[#090e1a] text-white pt-10 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24 overflow-hidden border-b border-slate-800/80">
@@ -93,15 +85,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 <span>Simulasi Ujian ({totalQuestions} Soal)</span>
               </Link>
 
-              {/* {onOpenCheatsheet && (
-                <button
-                  onClick={onOpenCheatsheet}
-                  className="inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 font-semibold text-sm border border-white/15 active:scale-95 transition-all cursor-pointer min-h-[48px]"
-                >
-                  <FileCode2 className="w-4.5 h-4.5 text-sky-400 shrink-0" aria-hidden="true" />
-                  <span>Cheatsheet</span>
-                </button>
-              )} */}
             </div>
 
             {/* Unboxed Metadata & Trust Indicators */}

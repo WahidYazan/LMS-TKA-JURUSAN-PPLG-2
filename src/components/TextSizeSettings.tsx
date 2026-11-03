@@ -8,13 +8,13 @@ import {
   useId,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
 import { usePathname } from "next/navigation";
-import { Minus, Plus, Type } from "lucide-react";
+import { Minus, Plus, Type, X } from "lucide-react";
 
 type TextSizeSettingsContextValue = {
   size: number;
-  ready: boolean;
   setSize: (size: number) => void;
 };
 
@@ -22,6 +22,71 @@ const DEFAULT_SIZE = 100;
 const MIN_SIZE = 85;
 const MAX_SIZE = 130;
 const STORAGE_KEY = "tka-text-size-admin";
+const STORAGE_CHANGE_EVENT = "tka-text-size-change";
+
+let cachedSize = DEFAULT_SIZE;
+let hasReadStoredSize = false;
+
+function normalizeTextSize(value: string | null) {
+  const size = value === null ? Number.NaN : Number(value);
+  return Number.isFinite(size)
+    ? Math.min(MAX_SIZE, Math.max(MIN_SIZE, size))
+    : DEFAULT_SIZE;
+}
+
+function readStoredSize() {
+  try {
+    return normalizeTextSize(window.localStorage.getItem(STORAGE_KEY));
+  } catch {
+    // Keep the default size when localStorage is unavailable.
+    return DEFAULT_SIZE;
+  }
+}
+
+function getTextSizeSnapshot() {
+  if (!hasReadStoredSize) {
+    cachedSize = readStoredSize();
+    hasReadStoredSize = true;
+  }
+
+  return cachedSize;
+}
+
+function subscribeToTextSize(onStoreChange: () => void) {
+  const handleStorageChange = (event: StorageEvent) => {
+    if (event.key !== STORAGE_KEY && event.key !== null) return;
+
+    cachedSize = normalizeTextSize(event.newValue);
+    hasReadStoredSize = true;
+    onStoreChange();
+  };
+  const handleLocalChange = () => onStoreChange();
+
+  window.addEventListener("storage", handleStorageChange);
+  window.addEventListener(STORAGE_CHANGE_EVENT, handleLocalChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+    window.removeEventListener(STORAGE_CHANGE_EVENT, handleLocalChange);
+  };
+}
+
+function getServerTextSizeSnapshot() {
+  return DEFAULT_SIZE;
+}
+
+function updateTextSize(size: number) {
+  cachedSize = Math.min(MAX_SIZE, Math.max(MIN_SIZE, size));
+  hasReadStoredSize = true;
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, String(cachedSize));
+  } catch {
+    // The current page still updates if localStorage is unavailable.
+  }
+
+  window.dispatchEvent(new Event(STORAGE_CHANGE_EVENT));
+}
 
 const TextSizeSettingsContext =
   createContext<TextSizeSettingsContextValue | null>(null);
@@ -31,42 +96,18 @@ export function TextSizeSettingsProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [size, setSize] = useState(DEFAULT_SIZE);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    try {
-      const storedValue = window.localStorage.getItem(STORAGE_KEY);
-      const value = storedValue === null ? Number.NaN : Number(storedValue);
-      if (Number.isFinite(value)) {
-        setSize(Math.min(MAX_SIZE, Math.max(MIN_SIZE, value)));
-      }
-    } catch {
-      // Keep the default size when localStorage is unavailable.
-    }
-    setReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (!ready) return;
-
-    try {
-      window.localStorage.setItem(STORAGE_KEY, String(size));
-    } catch {
-      // The current page still updates if localStorage is unavailable.
-    }
-  }, [ready, size]);
+  const size = useSyncExternalStore(
+    subscribeToTextSize,
+    getTextSizeSnapshot,
+    getServerTextSizeSnapshot,
+  );
 
   const value = useMemo(
     () => ({
       size,
-      ready,
-      setSize: (size: number) => {
-        const nextSize = Math.min(MAX_SIZE, Math.max(MIN_SIZE, size));
-        setSize(nextSize);
-      },
+      setSize: updateTextSize,
     }),
-    [ready, size],
+    [size],
   );
 
   return (
@@ -84,17 +125,18 @@ function ActiveTextSizeScope() {
   const settings = useContext(TextSizeSettingsContext);
   const isAdmin =
     pathname === "/tka/admin" || pathname.startsWith("/tka/admin/");
+  const size = settings?.size;
 
   useEffect(() => {
-    if (!settings?.ready) return;
+    if (size === undefined) return;
 
     const root = document.documentElement;
     root.dataset.textSizeScope = isAdmin ? "admin" : "tka";
     root.style.setProperty(
       "--site-text-scale",
-      String(isAdmin ? settings.size / 100 : 1),
+      String(isAdmin ? size / 100 : 1),
     );
-  }, [isAdmin, settings?.ready, settings?.size]);
+  }, [isAdmin, size]);
 
   return null;
 }
@@ -136,11 +178,22 @@ export function TextSizeSettingsButton({
           aria-label="Pengaturan ukuran teks admin"
           className="fixed right-4 top-20 z-[70] w-72 rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-xl md:absolute md:right-0 md:top-full md:mt-2"
         >
-          <div className="mb-4">
-            <h2 className="text-sm font-bold text-slate-900">Ukuran teks</h2>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500">
-              Pengaturan ini hanya berlaku untuk panel admin.
-            </p>
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-bold text-slate-900">Ukuran teks</h2>
+              <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                Pengaturan ini hanya berlaku untuk panel admin.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Tutup pengaturan ukuran teks"
+              title="Tutup"
+              className="-mr-2 -mt-2 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
           </div>
 
           <div className="flex items-center gap-3">

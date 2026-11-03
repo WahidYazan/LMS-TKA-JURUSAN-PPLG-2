@@ -11,13 +11,11 @@ import {
   Check,
   CheckCircle2,
   XCircle,
-  RotateCcw,
   Trophy,
   AlertCircle,
   Bookmark,
   ArrowRight,
   Layers,
-  GraduationCap,
 } from "lucide-react";
 
 const initialQuestions: QuizQuestion[] = quizQuestionsPPLG.map((q) => ({
@@ -165,17 +163,6 @@ export const QuizSimulatorView: React.FC = () => {
       ...prev,
       [modNum]: true,
     }));
-  };
-
-  const handleResetModule = (modNum: number) => {
-    setSelectedAnswers((prev) => {
-      const next = { ...prev };
-      (shuffledByModule?.get(modNum) ?? []).forEach(
-        ({ q }) => delete next[q.id],
-      );
-      return next;
-    });
-    setEvaluatedModules((prev) => ({ ...prev, [modNum]: false }));
   };
 
   const scrollToQuestion = (qId: string) => {
@@ -545,7 +532,7 @@ export const QuizSimulatorView: React.FC = () => {
                                 <div className="flex items-center gap-2 font-black text-rose-900 mb-2">
                                   <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
                                   <span>
-                                    Analisis Kurang Tepat — Kunci Jawaban: Pilihan{" "}
+                                    Analisis Kurang Tepat Kunci Jawaban: Pilihan{" "}
                                     {String.fromCharCode(
                                       65 + optionOrder.indexOf(q.correctIndex),
                                     )}
@@ -621,16 +608,6 @@ export const QuizSimulatorView: React.FC = () => {
                             : `Jawab ${unansweredCount} Soal Lagi`}
                       </span>
                     </button>
-
-                    {isCurrentModuleEvaluated && (
-                      <button
-                        onClick={() => handleResetModule(activeModuleTab)}
-                        className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs min-h-[48px] flex items-center justify-center gap-2 cursor-pointer transition-colors"
-                      >
-                        <RotateCcw className="w-4 h-4" />
-                        <span>Ulangi Modul</span>
-                      </button>
-                    )}
 
                     {(() => {
                       const currentIdx = moduleNumbers.indexOf(activeModuleTab);

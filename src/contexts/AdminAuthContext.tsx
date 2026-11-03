@@ -8,19 +8,27 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { getSessionOnce, onAuthChange, signOut } from "../lib/auth";
+import {
+  getDisplayName,
+  getSessionOnce,
+  onAuthChange,
+  signOut,
+  updateAdminDisplayName,
+} from "../lib/auth";
 
 type AuthStatus = "checking" | "signedIn" | "signedOut";
 
 interface AdminAuthValue {
   status: AuthStatus;
-  email: string | null;
+  name: string | null;
+  saveName: (name: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
 const AdminAuthContext = createContext<AdminAuthValue>({
   status: "checking",
-  email: null,
+  name: null,
+  saveName: async () => {},
   logout: async () => {},
 });
 
@@ -32,19 +40,19 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [status, setStatus] = useState<AuthStatus>("checking");
-  const [email, setEmail] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
     getSessionOnce().then((session) => {
       if (!mounted) return;
       setStatus(session ? "signedIn" : "signedOut");
-      setEmail(session?.user?.email ?? null);
+      setName(getDisplayName(session?.user));
     });
-    const unsubscribe = onAuthChange((signedIn, userEmail) => {
+    const unsubscribe = onAuthChange((signedIn, userName) => {
       if (!mounted) return;
       setStatus(signedIn ? "signedIn" : "signedOut");
-      setEmail(userEmail);
+      setName(userName);
     });
     return () => {
       mounted = false;
@@ -55,12 +63,17 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = useCallback(async () => {
     await signOut();
     setStatus("signedOut");
-    setEmail(null);
+    setName(null);
+  }, []);
+
+  const saveName = useCallback(async (displayName: string) => {
+    const updatedName = await updateAdminDisplayName(displayName);
+    setName(updatedName);
   }, []);
 
   const value = useMemo(
-    () => ({ status, email, logout }),
-    [status, email, logout],
+    () => ({ status, name, saveName, logout }),
+    [status, name, saveName, logout],
   );
 
   return (

@@ -463,8 +463,8 @@ export default function AdminLandingPage() {
               Lebar Container (Width Mode)
             </h3>
             <p className="text-sm text-slate-500 mb-6">
-              Mode "Auto": Container menyesuaikan lebar berdasarkan jumlah item
-              (semakin sedikit item, semakin sempit). Mode "Full": Container
+              Mode &quot;Auto&quot;: Container menyesuaikan lebar berdasarkan jumlah item
+              (semakin sedikit item, semakin sempit). Mode &quot;Full&quot;: Container
               memenuhi lebar layar penuh.
             </p>
             <div className="space-y-4">

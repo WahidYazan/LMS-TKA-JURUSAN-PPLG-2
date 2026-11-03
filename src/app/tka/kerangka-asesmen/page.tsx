@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { KerangkaAsesmenView } from "@/components/pusmendik/KerangkaAsesmenView";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, ArrowLeft, BookOpen, ClipboardCheck } from "lucide-react";
+import { ShieldCheck, BookOpen, ClipboardCheck } from "lucide-react";
 import Link from "next/link";
 
 export default function KerangkaAsesmenPage() {
